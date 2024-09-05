@@ -1,9 +1,6 @@
-@MedHelpApi_HostAddress = http://localhost:5174
+@MedHelpApi_HostAddress = http://localhost:5058
 
 GET {{MedHelpApi_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
-
-
-
