@@ -1,21 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-/* Light theme, by default */
-:root {
-  --primary-color: #afc0b7; /* Color principal del tema */
-  --background-color: #0b0e0d;
-  --text-color: #f1f4f3;
-  --secondary: #504356;
-  --accent: #937684;
-}
 
-/* Dark theme, we need to toggle it */
-body.dark-theme {
-  --primary-color: #3f5047; /* Color principal del tema */
-  --background-color: #f1f4f3;
-  --text-color: #0b0e0d;
-  --secondary: #b6a9bc;
-  --accent: #896c7a;
-}
 
 
 html, body { height: 100%; }
