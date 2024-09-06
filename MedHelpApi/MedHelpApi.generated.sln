@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedHelpApi", "MedHelpApi.csproj", "{7C49396D-A402-4488-AD19-6508AC0B5064}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedHelpApi", "MedHelpApi.csproj", "{EE76A2E7-88EA-48DC-982B-9B874CC17796}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7C49396D-A402-4488-AD19-6508AC0B5064}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7C49396D-A402-4488-AD19-6508AC0B5064}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7C49396D-A402-4488-AD19-6508AC0B5064}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7C49396D-A402-4488-AD19-6508AC0B5064}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE76A2E7-88EA-48DC-982B-9B874CC17796}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE76A2E7-88EA-48DC-982B-9B874CC17796}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE76A2E7-88EA-48DC-982B-9B874CC17796}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE76A2E7-88EA-48DC-982B-9B874CC17796}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
