@@ -1,3 +1,6 @@
+using System;
+using MedHelpApi.Services;
+using MedHelpApi.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,10 +10,6 @@ namespace MedHelpApi.Controllers
     [ApiController]
     public class SpecialtiesController : ControllerBase
     {
-        [HttpGet]
-        public decimal Get(decimal a, decimal b)
-        {
-            return a + b;
-        }
+
     }
 }

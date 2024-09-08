@@ -1,11 +1,32 @@
+using MedHelpApi.Models;
+using MedHelpApi.Services;
+using MedHelpApi.Services.Interfaces;
+using Microsoft.AspNetCore.Components.RenderTree;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddSingleton<ISpecialtiesService, SpecialtiesService>();
+
+//Entity Framework
+builder.Services.AddDbContext<MedHelpContext>(options => {
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MedhelpConnection"));
+});
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var allowedOrigins = builder.Configuration.GetValue<string>("AllowedOrigins")!.Split(",");
+
+builder.Services.AddCors( opciones => {
+    opciones.AddDefaultPolicy( policy => {
+        policy.WithOrigins(allowedOrigins).AllowAnyHeader().AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
@@ -17,6 +38,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthorization();
 
