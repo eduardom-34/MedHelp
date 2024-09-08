@@ -13,6 +13,6 @@ public class Specialties
   public string? SpecialtiesDescription { get; set;}
 
   [ForeignKey("CategoriesID")]
-  public virtual Categories Categories {get; set;}
+  public virtual required Categories Categories {get; set;}
 
 }
