@@ -3,6 +3,7 @@ using MedHelpApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MedHelpApi.Migrations
 {
     [DbContext(typeof(MedHelpContext))]
-    partial class MedHelpContextModelSnapshot : ModelSnapshot
+    [Migration("20240908045602_SingularNamesFix")]
+    partial class SingularNamesFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,10 +32,10 @@ namespace MedHelpApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryID"));
 
-                    b.Property<string>("Description")
+                    b.Property<string>("CategoryDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("CategoryName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CategoryID");
@@ -51,10 +54,10 @@ namespace MedHelpApi.Migrations
                     b.Property<int>("CategoriesID")
                         .HasColumnType("int");
 
-                    b.Property<string>("Description")
+                    b.Property<string>("SpecialtyDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("SpecialtyName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SpecialtyID");

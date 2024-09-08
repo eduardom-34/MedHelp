@@ -4,15 +4,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MedHelpApi.Models;
 
-public class Specialties
+public class Specialty
 {
   [Key]
   [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-  public int SpecialtiesID { get; set;}
-  public string? SpecialtiesName { get; set;}
-  public string? SpecialtiesDescription { get; set;}
+  public int SpecialtyID { get; set;}
+  public string? Name { get; set;}
+  public string? Description { get; set;}
 
   [ForeignKey("CategoriesID")]
-  public virtual required Categories Categories {get; set;}
+  public virtual required Category Categories {get; set;}
 
 }

@@ -4,12 +4,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MedHelpApi.Models;
 
-public class Categories
+public class Category
 {
   [Key]
   [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-  public int CategoriesID { get; set;}
-  public string? CategoriesName { get; set;}
-  public string? CategoriesDescription { get; set;}
+  public int CategoryID { get; set;}
+  public string? Name { get; set;}
+  public string? Description { get; set;}
 
 }
