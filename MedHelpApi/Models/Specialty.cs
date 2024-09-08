@@ -12,7 +12,9 @@ public class Specialty
   public string? Name { get; set;}
   public string? Description { get; set;}
 
-  [ForeignKey("CategoriesID")]
-  public virtual required Category Categories {get; set;}
+  public int CategoryID { get; set;}
+
+  [ForeignKey("CategoryID")]
+  public virtual required Category Category {get; set;}
 
 }
