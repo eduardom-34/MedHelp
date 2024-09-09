@@ -1,6 +1,9 @@
+using FluentValidation;
+using MedHelpApi.DTOs;
 using MedHelpApi.Models;
 using MedHelpApi.Services;
 using MedHelpApi.Services.Interfaces;
+using MedHelpApi.Validators;
 using Microsoft.AspNetCore.Components.RenderTree;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,10 +12,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddSingleton<ISpecialtiesService, SpecialtiesService>();
 
-//Entity Framework
+//Entity Framework Context
+
 builder.Services.AddDbContext<MedHelpContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("MedhelpConnection"));
 });
+
+//Validators
+
+builder.Services.AddScoped<IValidator<SpecialtyInsertDto>, SpecialtyInsertValidator>();
 
 
 builder.Services.AddControllers();
@@ -20,6 +28,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+//CORS
 var allowedOrigins = builder.Configuration.GetValue<string>("AllowedOrigins")!.Split(",");
 
 builder.Services.AddCors( opciones => {

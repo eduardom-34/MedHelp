@@ -1,3 +1,4 @@
+using FluentValidation;
 using MedHelpApi.DTOs;
 using MedHelpApi.Models;
 using Microsoft.AspNetCore.Http;
@@ -11,9 +12,11 @@ namespace MedHelpApi.Controllers
     public class SpecialtyController : ControllerBase
     {
         private MedHelpContext _context;
+        private IValidator<SpecialtyInsertDto> _specialtyInsertValidator;
 
-        public SpecialtyController(MedHelpContext context){
+        public SpecialtyController(MedHelpContext context, IValidator<SpecialtyInsertDto> specialtyInsertValidator){
             _context = context;
+            _specialtyInsertValidator = specialtyInsertValidator;
         }
 
         [HttpGet]
@@ -50,6 +53,13 @@ namespace MedHelpApi.Controllers
         [HttpPost]
         public async Task<ActionResult<SpecialtyDto>> Add(SpecialtyInsertDto specialtyInsertDto)
         {
+            var validationResult = await _specialtyInsertValidator.ValidateAsync(specialtyInsertDto);
+
+            if (!validationResult.IsValid )
+            {
+                return BadRequest(validationResult.Errors);
+            }
+
             var specialty = new Specialty()
             {
                 Name = specialtyInsertDto.Name,
