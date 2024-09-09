@@ -47,5 +47,30 @@ namespace MedHelpApi.Controllers
             return Ok(specialtyDto);
         }
 
+        [HttpPost]
+        public async Task<ActionResult<SpecialtyDto>> Add(SpecialtyInsertDto specialtyInsertDto)
+        {
+            var specialty = new Specialty()
+            {
+                Name = specialtyInsertDto.Name,
+                Description = specialtyInsertDto.Description,
+                CategoryID = specialtyInsertDto.CategoryID
+
+            };
+
+            await _context.Specialty.AddAsync(specialty);
+            await _context.SaveChangesAsync();
+
+            var specialtyDto = new SpecialtyDto
+            {
+                Id = specialty.SpecialtyID,
+                Name = specialty.Name,
+                Description = specialty.Description,
+                CategoryID = specialty.CategoryID
+            };
+            
+            return CreatedAtAction(nameof(GetById), new { id = specialty.SpecialtyID }, specialtyDto);
+        }
+
     }
 }

@@ -15,6 +15,6 @@ public class Specialty
   public int CategoryID { get; set;}
 
   [ForeignKey("CategoryID")]
-  public virtual required Category Category {get; set;}
+  public virtual Category? Category {get; set;}
 
 }
