@@ -13,10 +13,14 @@ namespace MedHelpApi.Controllers
     {
         private MedHelpContext _context;
         private IValidator<SpecialtyInsertDto> _specialtyInsertValidator;
+        private IValidator<SpecialtyUpdateDto> _specialtyUpdateValidator;
 
-        public SpecialtyController(MedHelpContext context, IValidator<SpecialtyInsertDto> specialtyInsertValidator){
+        public SpecialtyController(MedHelpContext context, 
+            IValidator<SpecialtyInsertDto> specialtyInsertValidator, 
+            IValidator<SpecialtyUpdateDto> specialtyUpdateValidator){
             _context = context;
             _specialtyInsertValidator = specialtyInsertValidator;
+            _specialtyUpdateValidator = specialtyUpdateValidator;
         }
 
         [HttpGet]
@@ -81,9 +85,16 @@ namespace MedHelpApi.Controllers
             
             return CreatedAtAction(nameof(GetById), new { id = specialty.SpecialtyID }, specialtyDto);
         }
+
         [HttpPut("{id}")]
         public async Task<ActionResult<SpecialtyDto>> Update(int id, SpecialtyUpdateDto specialtyUpdateDto)
         {
+            var validationResult = await _specialtyUpdateValidator.ValidateAsync(specialtyUpdateDto);
+            if( !validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
+
             var specialty = await _context.Specialty.FindAsync(id);
 
             if( specialty == null)

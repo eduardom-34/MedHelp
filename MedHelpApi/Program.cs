@@ -21,6 +21,7 @@ builder.Services.AddDbContext<MedHelpContext>(options => {
 //Validators
 
 builder.Services.AddScoped<IValidator<SpecialtyInsertDto>, SpecialtyInsertValidator>();
+builder.Services.AddScoped<IValidator<SpecialtyUpdateDto>, SpecialtyUpdateValidator>();
 
 
 builder.Services.AddControllers();
