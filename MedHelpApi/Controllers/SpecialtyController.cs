@@ -12,17 +12,15 @@ namespace MedHelpApi.Controllers
     [ApiController]
     public class SpecialtyController : ControllerBase
     {
-        private MedHelpContext _context;
         private IValidator<SpecialtyInsertDto> _specialtyInsertValidator;
         private IValidator<SpecialtyUpdateDto> _specialtyUpdateValidator;
-        private ISpecialtyService _specialtyService;
+        private ICommonService<SpecialtyDto, SpecialtyInsertDto, SpecialtyUpdateDto> _specialtyService;
 
         public SpecialtyController(MedHelpContext context, 
             IValidator<SpecialtyInsertDto> specialtyInsertValidator, 
             IValidator<SpecialtyUpdateDto> specialtyUpdateValidator,
-            ISpecialtyService specialtyService
+            [FromKeyedServices("specialtyService")] ICommonService<SpecialtyDto, SpecialtyInsertDto, SpecialtyUpdateDto> specialtyService
             ){
-            _context = context;
             _specialtyInsertValidator = specialtyInsertValidator;
             _specialtyUpdateValidator = specialtyUpdateValidator;
             _specialtyService = specialtyService;

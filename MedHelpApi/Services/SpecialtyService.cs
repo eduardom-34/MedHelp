@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MedHelpApi.Services;
 
-public class SpecialtyService : ISpecialtyService
+public class SpecialtyService : ICommonService<SpecialtyDto, SpecialtyInsertDto, SpecialtyUpdateDto>
 {
     private MedHelpContext _context;
 

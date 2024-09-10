@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // builder.Services.AddSingleton<ISpecialtiesService, SpecialtiesService>();
-builder.Services.AddScoped<ISpecialtyService, SpecialtyService>();
+builder.Services.AddKeyedScoped<ICommonService<SpecialtyDto, SpecialtyInsertDto, SpecialtyUpdateDto>, SpecialtyService>("specialtyService");
 
 //Entity Framework Context
 
