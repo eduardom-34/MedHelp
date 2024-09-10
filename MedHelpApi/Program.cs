@@ -1,4 +1,5 @@
 using FluentValidation;
+using MedHelpApi.AutoMappers;
 using MedHelpApi.DTOs;
 using MedHelpApi.Models;
 using MedHelpApi.Repository;
@@ -27,6 +28,9 @@ builder.Services.AddDbContext<MedHelpContext>(options => {
 
 builder.Services.AddScoped<IValidator<SpecialtyInsertDto>, SpecialtyInsertValidator>();
 builder.Services.AddScoped<IValidator<SpecialtyUpdateDto>, SpecialtyUpdateValidator>();
+
+// Mappers
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 
 builder.Services.AddControllers();
