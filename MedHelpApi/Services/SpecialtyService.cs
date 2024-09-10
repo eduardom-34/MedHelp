@@ -44,7 +44,26 @@ public class SpecialtyService : ISpecialtyService
     }
     public async Task<SpecialtyDto> Add(SpecialtyInsertDto specialtyInsertDto)
     {
-        throw new NotImplementedException();
+        var specialty = new Specialty()
+            {
+                Name = specialtyInsertDto.Name,
+                Description = specialtyInsertDto.Description,
+                CategoryID = specialtyInsertDto.CategoryID
+
+            };
+
+            await _context.Specialty.AddAsync(specialty);
+            await _context.SaveChangesAsync();
+
+            var specialtyDto = new SpecialtyDto
+            {
+                Id = specialty.SpecialtyID,
+                Name = specialty.Name,
+                Description = specialty.Description,
+                CategoryID = specialty.CategoryID
+            };
+            
+            return specialtyDto;
     }
 
     public async Task<SpecialtyDto> Update(int id, SpecialtyUpdateDto specialtyUpdateDto)

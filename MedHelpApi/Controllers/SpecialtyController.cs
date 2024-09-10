@@ -50,26 +50,9 @@ namespace MedHelpApi.Controllers
                 return BadRequest(validationResult.Errors);
             }
 
-            var specialty = new Specialty()
-            {
-                Name = specialtyInsertDto.Name,
-                Description = specialtyInsertDto.Description,
-                CategoryID = specialtyInsertDto.CategoryID
+            var specialtyDto = await _specialtyService.Add(specialtyInsertDto);
 
-            };
-
-            await _context.Specialty.AddAsync(specialty);
-            await _context.SaveChangesAsync();
-
-            var specialtyDto = new SpecialtyDto
-            {
-                Id = specialty.SpecialtyID,
-                Name = specialty.Name,
-                Description = specialty.Description,
-                CategoryID = specialty.CategoryID
-            };
-            
-            return CreatedAtAction(nameof(GetById), new { id = specialty.SpecialtyID }, specialtyDto);
+            return CreatedAtAction(nameof(GetById), new { id = specialtyDto.Id }, specialtyDto);
         }
 
         [HttpPut("{id}")]
