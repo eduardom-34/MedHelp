@@ -1,6 +1,7 @@
 using FluentValidation;
 using MedHelpApi.DTOs;
 using MedHelpApi.Models;
+using MedHelpApi.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,44 +15,29 @@ namespace MedHelpApi.Controllers
         private MedHelpContext _context;
         private IValidator<SpecialtyInsertDto> _specialtyInsertValidator;
         private IValidator<SpecialtyUpdateDto> _specialtyUpdateValidator;
+        private ISpecialtyService _specialtyService;
 
         public SpecialtyController(MedHelpContext context, 
             IValidator<SpecialtyInsertDto> specialtyInsertValidator, 
-            IValidator<SpecialtyUpdateDto> specialtyUpdateValidator){
+            IValidator<SpecialtyUpdateDto> specialtyUpdateValidator,
+            ISpecialtyService specialtyService
+            ){
             _context = context;
             _specialtyInsertValidator = specialtyInsertValidator;
             _specialtyUpdateValidator = specialtyUpdateValidator;
+            _specialtyService = specialtyService;
         }
 
         [HttpGet]
         public async Task<IEnumerable<SpecialtyDto>> Get() => 
-        await _context.Specialty.Select(s => new SpecialtyDto{
-            Id = s.SpecialtyID,
-            Name = s.Name,
-            Description = s.Description,
-            CategoryID = s.CategoryID
-
-        }).ToListAsync();
+        await _specialtyService.Get();
 
         [HttpGet("{id}")]
         public async Task<ActionResult<SpecialtyDto>> GetById(int id)
         {
-            var specialty = await _context.Specialty.FindAsync(id);
+            var specialtyDto = await _specialtyService.GetById(id);
 
-            if (specialty == null) 
-            {
-                return NotFound();
-            }
-
-            var specialtyDto = new SpecialtyDto
-            {
-                Id = specialty.SpecialtyID,
-                Name = specialty.Name,
-                Description = specialty.Description,
-                CategoryID = specialty.CategoryID
-            };
-
-            return Ok(specialtyDto);
+            return specialtyDto == null ? NotFound() : Ok(specialtyDto);
         }
 
         [HttpPost]

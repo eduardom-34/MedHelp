@@ -10,7 +10,8 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddSingleton<ISpecialtiesService, SpecialtiesService>();
+// builder.Services.AddSingleton<ISpecialtiesService, SpecialtiesService>();
+builder.Services.AddScoped<ISpecialtyService, SpecialtyService>();
 
 //Entity Framework Context
 

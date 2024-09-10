@@ -1,10 +1,11 @@
 using System;
+using MedHelpApi.DTOs;
 
 namespace MedHelpApi.Services.Interfaces;
 
 public interface ISpecialtyService
 {
-  Task<IEnumerable<SpecialtyDTO>> Get();
+  Task<IEnumerable<SpecialtyDto>> Get();
   Task<SpecialtyDto> GetById(int id);
   Task<SpecialtyDto> Add(SpecialtyInsertDto specialtyInsertDto);
   Task<SpecialtyDto> Update(int id, SpecialtyUpdateDto specialtyUpdateDto);
