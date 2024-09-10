@@ -1,6 +1,7 @@
 using FluentValidation;
 using MedHelpApi.DTOs;
 using MedHelpApi.Models;
+using MedHelpApi.Repository;
 using MedHelpApi.Services;
 using MedHelpApi.Services.Interfaces;
 using MedHelpApi.Validators;
@@ -12,6 +13,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // builder.Services.AddSingleton<ISpecialtiesService, SpecialtiesService>();
 builder.Services.AddKeyedScoped<ICommonService<SpecialtyDto, SpecialtyInsertDto, SpecialtyUpdateDto>, SpecialtyService>("specialtyService");
+
+//Repository
+builder.Services.AddScoped<IRepository<Specialty>, SpecialtyRepository>();
 
 //Entity Framework Context
 

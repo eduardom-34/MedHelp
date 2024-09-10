@@ -16,7 +16,7 @@ namespace MedHelpApi.Controllers
         private IValidator<SpecialtyUpdateDto> _specialtyUpdateValidator;
         private ICommonService<SpecialtyDto, SpecialtyInsertDto, SpecialtyUpdateDto> _specialtyService;
 
-        public SpecialtyController(MedHelpContext context, 
+        public SpecialtyController(
             IValidator<SpecialtyInsertDto> specialtyInsertValidator, 
             IValidator<SpecialtyUpdateDto> specialtyUpdateValidator,
             [FromKeyedServices("specialtyService")] ICommonService<SpecialtyDto, SpecialtyInsertDto, SpecialtyUpdateDto> specialtyService
