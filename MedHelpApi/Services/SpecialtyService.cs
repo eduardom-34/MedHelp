@@ -93,6 +93,23 @@ public class SpecialtyService : ISpecialtyService
 
     public async Task<SpecialtyDto> Delete(int id)
     {
-        throw new NotImplementedException();
+        var specialty = await _context.Specialty.FindAsync(id);
+
+        if ( specialty != null)
+        {
+            var specialtyDto = new SpecialtyDto
+            {
+                Id = specialty.SpecialtyID,
+                Name = specialty.Name,
+                Description = specialty.Description,
+                CategoryID = specialty.CategoryID
+            };
+
+            _context.Remove(specialty);
+            await _context.SaveChangesAsync();
+            return specialtyDto;
+        }
+
+        return null;
     }
 }
