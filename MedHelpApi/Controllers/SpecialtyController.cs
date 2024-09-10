@@ -63,28 +63,10 @@ namespace MedHelpApi.Controllers
             {
                 return BadRequest(validationResult.Errors);
             }
+            
+            var specialtyDto = await _specialtyService.Update(id, specialtyUpdateDto);
 
-            var specialty = await _context.Specialty.FindAsync(id);
-
-            if( specialty == null)
-            {
-                return NotFound();
-            }
-
-            specialty.Name = specialtyUpdateDto.Name;
-            specialty.Description = specialtyUpdateDto.Description;
-            specialty.CategoryID = specialtyUpdateDto.CategoryID;
-            await _context.SaveChangesAsync();
-
-            var specialtyDto = new SpecialtyDto
-            {
-                Id = specialty.SpecialtyID,
-                Name = specialty.Name,
-                Description = specialty.Description,
-                CategoryID = specialty.CategoryID
-            };
-
-            return Ok(specialtyDto);
+            return specialtyDto == null ? BadRequest(validationResult.Errors) : Ok(specialtyDto);
         }
 
         [HttpDelete("{id}")]
