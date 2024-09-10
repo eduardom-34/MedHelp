@@ -22,15 +22,14 @@ public class SpecialtyRepository : IRepository<Specialty>
     public async Task Add(Specialty specialty)
         => await _context.Specialties.AddAsync(specialty);
 
-    public void Update(Specialty entity)
+    public void Update(Specialty specialty)
     {
-        throw new NotImplementedException();
+        _context.Specialties.Attach(specialty);
+        _context.Specialties.Entry(specialty).State = EntityState.Modified;
     }
 
-    public void Delete(Specialty entity)
-    {
-        throw new NotImplementedException();
-    }
+    public void Delete(Specialty specialty)
+    => _context.Specialties.Remove(specialty);
 
     public async Task Save()
         => await _context.SaveChangesAsync();

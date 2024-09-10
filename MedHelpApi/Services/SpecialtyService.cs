@@ -9,12 +9,10 @@ namespace MedHelpApi.Services;
 
 public class SpecialtyService : ICommonService<SpecialtyDto, SpecialtyInsertDto, SpecialtyUpdateDto>
 {
-    private MedHelpContext _context;
     private IRepository<Specialty> _specialtyRepository;
 
-    public SpecialtyService(MedHelpContext context, IRepository<Specialty> specialtyRepository)
+    public SpecialtyService(IRepository<Specialty> specialtyRepository)
     {
-        _context = context;
         _specialtyRepository = specialtyRepository;
     }
     public async Task<IEnumerable<SpecialtyDto>> Get()
@@ -76,15 +74,17 @@ public class SpecialtyService : ICommonService<SpecialtyDto, SpecialtyInsertDto,
 
     public async Task<SpecialtyDto> Update(int id, SpecialtyUpdateDto specialtyUpdateDto)
     {
-        var specialty = await _context.Specialties.FindAsync(id);
+        var specialty = await _specialtyRepository.GetById(id);
 
         if ( specialty != null)
         {
             specialty.Name = specialtyUpdateDto.Name;
             specialty.Description = specialtyUpdateDto.Description;
             specialty.CategoryID = specialtyUpdateDto.CategoryID;
-
-            await _context.SaveChangesAsync();
+            
+            _specialtyRepository.Update(specialty);
+            await _specialtyRepository.Save();
+            
             var specialtyDto = new SpecialtyDto
             {
                 Id = specialty.SpecialtyID,
@@ -101,7 +101,7 @@ public class SpecialtyService : ICommonService<SpecialtyDto, SpecialtyInsertDto,
 
     public async Task<SpecialtyDto> Delete(int id)
     {
-        var specialty = await _context.Specialties.FindAsync(id);
+        var specialty = await _specialtyRepository.GetById(id);
 
         if ( specialty != null)
         {
@@ -112,9 +112,9 @@ public class SpecialtyService : ICommonService<SpecialtyDto, SpecialtyInsertDto,
                 Description = specialty.Description,
                 CategoryID = specialty.CategoryID
             };
-
-            _context.Remove(specialty);
-            await _context.SaveChangesAsync();
+            
+            _specialtyRepository.Delete(specialty);
+            await  _specialtyRepository.Save();
             return specialtyDto;
         }
 
