@@ -9,8 +9,8 @@ public class MedHelpContext : DbContext
   : base(options)
   {}
 
-  public DbSet<Specialty> Specialty { get; set; }
-  public DbSet<Category> Category { get; set; } 
+  public DbSet<Specialty> Specialties { get; set; }
+  public DbSet<Category> Categories { get; set; } 
 
 
 }
