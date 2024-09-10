@@ -60,8 +60,8 @@ public class SpecialtyService : ICommonService<SpecialtyDto, SpecialtyInsertDto,
 
             };
 
-            await _context.Specialties.AddAsync(specialty);
-            await _context.SaveChangesAsync();
+            await _specialtyRepository.Add(specialty);
+            await _specialtyRepository.Save();
 
             var specialtyDto = new SpecialtyDto
             {

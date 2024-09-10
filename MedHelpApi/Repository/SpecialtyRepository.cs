@@ -19,10 +19,8 @@ public class SpecialtyRepository : IRepository<Specialty>
     public async Task<Specialty> GetById(int id)
         => await _context.Specialties.FindAsync(id);
     
-    public Task Add(Specialty entity)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task Add(Specialty specialty)
+        => await _context.Specialties.AddAsync(specialty);
 
     public void Update(Specialty entity)
     {
@@ -34,8 +32,6 @@ public class SpecialtyRepository : IRepository<Specialty>
         throw new NotImplementedException();
     }
 
-    public Task Save()
-    {
-        throw new NotImplementedException();
-    }
+    public async Task Save()
+        => await _context.SaveChangesAsync();
 }
