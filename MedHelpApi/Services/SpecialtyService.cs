@@ -1,4 +1,5 @@
 using System;
+using AutoMapper;
 using MedHelpApi.DTOs;
 using MedHelpApi.Models;
 using MedHelpApi.Repository;
@@ -10,23 +11,20 @@ namespace MedHelpApi.Services;
 public class SpecialtyService : ICommonService<SpecialtyDto, SpecialtyInsertDto, SpecialtyUpdateDto>
 {
     private IRepository<Specialty> _specialtyRepository;
+    private IMapper _mapper;
 
-    public SpecialtyService(IRepository<Specialty> specialtyRepository)
+    public SpecialtyService(IRepository<Specialty> specialtyRepository,
+        IMapper mapper
+    )
     {
         _specialtyRepository = specialtyRepository;
+        _mapper = mapper;
     }
     public async Task<IEnumerable<SpecialtyDto>> Get()
     {
         var specialties = await _specialtyRepository.Get();
         
-        return specialties.Select( s => new SpecialtyDto()
-        {
-            Id = s.SpecialtyID,
-            Name = s.Name,
-            Description = s.Description,
-            CategoryID = s.CategoryID
-
-        });
+        return specialties.Select( s => _mapper.Map<SpecialtyDto>(s));
     }
         
     public async Task<SpecialtyDto> GetById(int id)
@@ -35,13 +33,7 @@ public class SpecialtyService : ICommonService<SpecialtyDto, SpecialtyInsertDto,
 
         if (specialty != null)
         {
-            var specialtyDto = new SpecialtyDto
-            {
-                Id = specialty.SpecialtyID,
-                Name = specialty.Name,
-                Description = specialty.Description,
-                CategoryID = specialty.CategoryID
-            };
+            var specialtyDto = _mapper.Map<SpecialtyDto>(specialty);
 
             return specialtyDto;
         }
@@ -50,24 +42,12 @@ public class SpecialtyService : ICommonService<SpecialtyDto, SpecialtyInsertDto,
     }
     public async Task<SpecialtyDto> Add(SpecialtyInsertDto specialtyInsertDto)
     {
-        var specialty = new Specialty()
-            {
-                Name = specialtyInsertDto.Name,
-                Description = specialtyInsertDto.Description,
-                CategoryID = specialtyInsertDto.CategoryID
-
-            };
+        var specialty = _mapper.Map<Specialty>(specialtyInsertDto);
 
             await _specialtyRepository.Add(specialty);
             await _specialtyRepository.Save();
 
-            var specialtyDto = new SpecialtyDto
-            {
-                Id = specialty.SpecialtyID,
-                Name = specialty.Name,
-                Description = specialty.Description,
-                CategoryID = specialty.CategoryID
-            };
+            var specialtyDto =  _mapper.Map<SpecialtyDto>(specialty);
             
             return specialtyDto;
     }
@@ -78,20 +58,12 @@ public class SpecialtyService : ICommonService<SpecialtyDto, SpecialtyInsertDto,
 
         if ( specialty != null)
         {
-            specialty.Name = specialtyUpdateDto.Name;
-            specialty.Description = specialtyUpdateDto.Description;
-            specialty.CategoryID = specialtyUpdateDto.CategoryID;
+            specialty = _mapper.Map<SpecialtyUpdateDto, Specialty>(specialtyUpdateDto, specialty);
             
             _specialtyRepository.Update(specialty);
             await _specialtyRepository.Save();
             
-            var specialtyDto = new SpecialtyDto
-            {
-                Id = specialty.SpecialtyID,
-                Name = specialty.Name,
-                Description = specialty.Description,
-                CategoryID = specialty.CategoryID
-            };
+            var specialtyDto = _mapper.Map<SpecialtyDto>(specialty);
 
             return specialtyDto;
         }
@@ -105,13 +77,7 @@ public class SpecialtyService : ICommonService<SpecialtyDto, SpecialtyInsertDto,
 
         if ( specialty != null)
         {
-            var specialtyDto = new SpecialtyDto
-            {
-                Id = specialty.SpecialtyID,
-                Name = specialty.Name,
-                Description = specialty.Description,
-                CategoryID = specialty.CategoryID
-            };
+            var specialtyDto = _mapper.Map<SpecialtyDto>(specialty);
             
             _specialtyRepository.Delete(specialty);
             await  _specialtyRepository.Save();
