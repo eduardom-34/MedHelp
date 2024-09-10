@@ -119,7 +119,7 @@ namespace MedHelpApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult<SpecialtyDto>> Delete(int id)
         {
             var specialty = await _context.Specialty.FindAsync(id);
 
@@ -131,7 +131,15 @@ namespace MedHelpApi.Controllers
             _context.Specialty.Remove(specialty);
             await _context.SaveChangesAsync();
 
-            return Ok();
+            var specialtyDto = new SpecialtyDto
+            {
+                Id = specialty.SpecialtyID,
+                Name = specialty.Name,
+                Description = specialty.Description,
+                CategoryID = specialty.CategoryID
+            };
+
+            return Ok(specialtyDto);
         }
 
     }
