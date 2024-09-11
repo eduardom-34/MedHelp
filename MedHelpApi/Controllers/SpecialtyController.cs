@@ -48,6 +48,11 @@ namespace MedHelpApi.Controllers
                 return BadRequest(validationResult.Errors);
             }
 
+            if( !_specialtyService.Validate(specialtyInsertDto) )
+            {
+                return BadRequest(_specialtyService.Errors);
+            }
+
             var specialtyDto = await _specialtyService.Add(specialtyInsertDto);
 
             return CreatedAtAction(nameof(GetById), new { id = specialtyDto.Id }, specialtyDto);
@@ -60,6 +65,11 @@ namespace MedHelpApi.Controllers
             if( !validationResult.IsValid)
             {
                 return BadRequest(validationResult.Errors);
+            }
+
+            if( !_specialtyService.Validate(specialtyUpdateDto) )
+            {
+                return BadRequest(_specialtyService.Errors);
             }
             
             var specialtyDto = await _specialtyService.Update(id, specialtyUpdateDto);

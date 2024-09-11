@@ -12,6 +12,7 @@ public class SpecialtyService : ICommonService<SpecialtyDto, SpecialtyInsertDto,
 {
     private IRepository<Specialty> _specialtyRepository;
     private IMapper _mapper;
+    public List<string> Errors { get; }
 
     public SpecialtyService(IRepository<Specialty> specialtyRepository,
         IMapper mapper
@@ -86,4 +87,15 @@ public class SpecialtyService : ICommonService<SpecialtyDto, SpecialtyInsertDto,
 
         return null;
     }
+
+    public bool Validate(SpecialtyInsertDto specialtyInsertDto)
+    {
+        return true;
+    }
+
+    public  bool Validate(SpecialtyUpdateDto specialtyUpdateDto)
+    {
+        return true;
+    }
+
 }
