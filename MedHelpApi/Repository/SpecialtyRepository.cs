@@ -1,6 +1,8 @@
 using System;
 using MedHelpApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
+using Microsoft.VisualBasic.FileIO;
 
 namespace MedHelpApi.Repository;
 
@@ -33,4 +35,7 @@ public class SpecialtyRepository : IRepository<Specialty>
 
     public async Task Save()
         => await _context.SaveChangesAsync();
+
+    public IEnumerable<Specialty> Search(Func<Specialty, bool> filter)
+    => _context.Specialties.Where(filter).ToList();
 }

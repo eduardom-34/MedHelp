@@ -20,6 +20,7 @@ public class SpecialtyService : ICommonService<SpecialtyDto, SpecialtyInsertDto,
     {
         _specialtyRepository = specialtyRepository;
         _mapper = mapper;
+        Errors = new List<string>();
     }
     public async Task<IEnumerable<SpecialtyDto>> Get()
     {
@@ -90,11 +91,22 @@ public class SpecialtyService : ICommonService<SpecialtyDto, SpecialtyInsertDto,
 
     public bool Validate(SpecialtyInsertDto specialtyInsertDto)
     {
+        if (_specialtyRepository.Search(s => s.Name == specialtyInsertDto.Name).Count() > 0)
+        {
+            Errors.Add($"You can't add and specialty more then once. This name was already added");
+            return false;
+        }
         return true;
     }
 
     public  bool Validate(SpecialtyUpdateDto specialtyUpdateDto)
     {
+        if (_specialtyRepository.Search(s => s.Name == specialtyUpdateDto.Name 
+        && specialtyUpdateDto.Id != s.SpecialtyID ).Count() > 0)
+        {
+            Errors.Add($"You can't add and specialty mora then once. This name was already added");
+            return false;
+        }
         return true;
     }
 
