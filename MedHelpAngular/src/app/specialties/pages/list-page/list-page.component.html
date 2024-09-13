@@ -9,7 +9,9 @@
         <mat-card-title>Cardiologist</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <p>A cardiologist specializes in diagnosing and treating diseases of the heart and blood vessels, such as heart attacks, arrhythmias, and hypertension.</p>
+        <p *ngFor="let specialty of specialties">
+          {{ specialty.description }}
+        </p>
       </mat-card-content>
     </mat-card>
 
