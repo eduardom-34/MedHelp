@@ -1,3 +1,8 @@
 h1{
   font-size: 2rem;
 }
+
+
+mat-card {
+  background-color: #b3c6b8;
+}

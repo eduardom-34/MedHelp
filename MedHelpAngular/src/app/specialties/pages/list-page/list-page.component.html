@@ -4,12 +4,14 @@
 
   <div>
 
-    <mat-card class="col-12 md:col-3 xl:col-3">
+    <mat-card class="col-12 md:col-3 xl:col-3" *ngFor="let specialty of specialties" class="mb-3">
       <mat-card-header>
-        <mat-card-title>Cardiologist</mat-card-title>
+        <mat-card-title>
+          {{ specialty.name }}
+        </mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <p *ngFor="let specialty of specialties">
+        <p>
           {{ specialty.description }}
         </p>
       </mat-card-content>
