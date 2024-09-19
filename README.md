@@ -5,3 +5,5 @@ We need to reestructure the frontend
 I need to create the others endpoins on the API
 
 Focus a lil bit more in backend
+
+Controller to add Category
