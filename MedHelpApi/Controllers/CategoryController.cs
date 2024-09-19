@@ -45,5 +45,28 @@ namespace MedHelpApi.Controllers
             return Ok(categoryDto);
         }
 
+        [HttpPost]
+        public async Task<ActionResult<CategoryDto>> Add(CategoryInsertDto categoryInsertDto)
+        {
+            var category = new Category()
+            {
+                Name = categoryInsertDto.Name,
+                Description = categoryInsertDto.Description
+            };
+
+            await _context.Categories.AddAsync(category);
+            await _context.SaveChangesAsync();
+
+            var categoryDto = new CategoryDto
+            {
+                Id = category.CategoryID,
+                Name = category.Name,
+                Description = category.Description
+            };
+
+            return CreatedAtAction(nameof(GetById), new { id = category.CategoryID}, categoryDto);
+
+        }
+
     }
 }
