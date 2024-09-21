@@ -1,3 +1,4 @@
+using FluentValidation.Validators;
 using MedHelpApi.DTOs;
 using MedHelpApi.Models;
 using Microsoft.AspNetCore.Http;
@@ -90,6 +91,22 @@ namespace MedHelpApi.Controllers
             };
 
             return Ok(categoryDto);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var category = await _context.Categories.FindAsync(id);
+
+            if(category == null)
+            {
+                return NotFound();
+            }
+
+            _context.Categories.Remove(category);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
 
     }
