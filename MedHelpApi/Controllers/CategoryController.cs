@@ -68,5 +68,29 @@ namespace MedHelpApi.Controllers
 
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Category>> Update(int id, CategoryUpdateDto categoryUpdateDto)
+        {
+            var category = await _context.Categories.FindAsync(id);
+
+            if(category == null)
+            {
+                return NotFound();
+            }
+
+            category.Name = categoryUpdateDto.Name;
+            category.Description = categoryUpdateDto.Description;
+            await _context.SaveChangesAsync();
+
+            var categoryDto = new CategoryDto
+            {
+                Id = category.CategoryID,
+                Name = category.Name,
+                Description = category.Description
+            };
+
+            return Ok(categoryDto);
+        }
+
     }
 }
