@@ -1,3 +1,4 @@
+using FluentValidation;
 using FluentValidation.Validators;
 using MedHelpApi.DTOs;
 using MedHelpApi.Models;
@@ -12,10 +13,12 @@ namespace MedHelpApi.Controllers
     public class CategoryController : ControllerBase
     {
         private MedHelpContext _context;
+        private IValidator<CategoryInsertDto> _categoryInsertValidator;
 
-        public CategoryController(MedHelpContext context)
+        public CategoryController(MedHelpContext context, IValidator<CategoryInsertDto> categoryInsertValidator)
         {
             _context = context;
+            _categoryInsertValidator = categoryInsertValidator;
         }
 
         [HttpGet]
@@ -49,6 +52,13 @@ namespace MedHelpApi.Controllers
         [HttpPost]
         public async Task<ActionResult<CategoryDto>> Add(CategoryInsertDto categoryInsertDto)
         {
+            var validationResult = await _categoryInsertValidator.ValidateAsync(categoryInsertDto);
+
+            if( !validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
+
             var category = new Category()
             {
                 Name = categoryInsertDto.Name,
