@@ -2,6 +2,8 @@ using FluentValidation;
 using FluentValidation.Validators;
 using MedHelpApi.DTOs;
 using MedHelpApi.Models;
+using MedHelpApi.Services;
+using MedHelpApi.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,14 +17,17 @@ namespace MedHelpApi.Controllers
         private MedHelpContext _context;
         private IValidator<CategoryInsertDto> _categoryInsertValidator;
         private IValidator<CategoryUpdateDto> _categoryUpdateValidator;
+        private ICategoryService _categoryService;
 
         public CategoryController(MedHelpContext context, 
         IValidator<CategoryInsertDto> categoryInsertValidator, 
-        IValidator<CategoryUpdateDto> categoryUpdateValidator)
+        IValidator<CategoryUpdateDto> categoryUpdateValidator,
+        ICategoryService categoryService)
         {
             _context = context;
             _categoryInsertValidator = categoryInsertValidator;
             _categoryUpdateValidator = categoryUpdateValidator;
+            _categoryService = categoryService;
         }
 
         [HttpGet]
