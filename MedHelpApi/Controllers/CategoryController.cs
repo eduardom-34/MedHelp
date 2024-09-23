@@ -14,11 +14,15 @@ namespace MedHelpApi.Controllers
     {
         private MedHelpContext _context;
         private IValidator<CategoryInsertDto> _categoryInsertValidator;
+        private IValidator<CategoryUpdateDto> _categoryUpdateValidator;
 
-        public CategoryController(MedHelpContext context, IValidator<CategoryInsertDto> categoryInsertValidator)
+        public CategoryController(MedHelpContext context, 
+        IValidator<CategoryInsertDto> categoryInsertValidator, 
+        IValidator<CategoryUpdateDto> categoryUpdateValidator)
         {
             _context = context;
             _categoryInsertValidator = categoryInsertValidator;
+            _categoryUpdateValidator = categoryUpdateValidator;
         }
 
         [HttpGet]
@@ -82,6 +86,12 @@ namespace MedHelpApi.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<Category>> Update(int id, CategoryUpdateDto categoryUpdateDto)
         {
+            var validationResult = await _categoryUpdateValidator.ValidateAsync(categoryUpdateDto);
+            if(!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
+
             var category = await _context.Categories.FindAsync(id);
 
             if(category == null)

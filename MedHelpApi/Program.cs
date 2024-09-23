@@ -29,6 +29,7 @@ builder.Services.AddDbContext<MedHelpContext>(options => {
 builder.Services.AddScoped<IValidator<SpecialtyInsertDto>, SpecialtyInsertValidator>();
 builder.Services.AddScoped<IValidator<SpecialtyUpdateDto>, SpecialtyUpdateValidator>();
 builder.Services.AddScoped<IValidator<CategoryInsertDto>, CategoryInsertValidator >();
+builder.Services.AddScoped<IValidator<CategoryUpdateDto>, CategoryUpdateValidator >();
 
 // Mappers
 builder.Services.AddAutoMapper(typeof(MappingProfile));
