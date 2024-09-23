@@ -73,7 +73,7 @@ namespace MedHelpApi.Controllers
             await _context.SaveChangesAsync();
 
             var categoryDto = new CategoryDto
-            {
+            { 
                 Id = category.CategoryID,
                 Name = category.Name,
                 Description = category.Description
@@ -114,7 +114,7 @@ namespace MedHelpApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult<CategoryDto>> Delete(int id)
         {
             var category = await _context.Categories.FindAsync(id);
 
@@ -126,7 +126,14 @@ namespace MedHelpApi.Controllers
             _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            var categoryDto = new CategoryDto
+            {
+                Id = category.CategoryID,
+                Name = category.Name,
+                Description = category.Description
+            };
+
+            return Ok(categoryDto);
         }
 
     }
