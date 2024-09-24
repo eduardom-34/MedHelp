@@ -51,24 +51,10 @@ namespace MedHelpApi.Controllers
             {
                 return BadRequest(validationResult.Errors);
             }
-
-            var category = new Category()
-            {
-                Name = categoryInsertDto.Name,
-                Description = categoryInsertDto.Description
-            };
-
-            await _context.Categories.AddAsync(category);
-            await _context.SaveChangesAsync();
-
-            var categoryDto = new CategoryDto
-            { 
-                Id = category.CategoryID,
-                Name = category.Name,
-                Description = category.Description
-            };
-
-            return CreatedAtAction(nameof(GetById), new { id = category.CategoryID}, categoryDto);
+            
+            var categoryDto = await _categoryService.Add(categoryInsertDto);
+            
+            return CreatedAtAction(nameof(GetById), new { id = categoryDto.Id}, categoryDto);
 
         }
 
