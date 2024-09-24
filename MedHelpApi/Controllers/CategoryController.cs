@@ -75,24 +75,9 @@ namespace MedHelpApi.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<CategoryDto>> Delete(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
+            var categoryDto = await _categoryService.Delete(id);
 
-            if(category == null)
-            {
-                return NotFound();
-            }
-
-            _context.Categories.Remove(category);
-            await _context.SaveChangesAsync();
-
-            var categoryDto = new CategoryDto
-            {
-                Id = category.CategoryID,
-                Name = category.Name,
-                Description = category.Description
-            };
-
-            return Ok(categoryDto);
+            return categoryDto == null ? NotFound() : Ok(categoryDto);
         }
 
     }

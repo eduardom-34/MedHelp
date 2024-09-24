@@ -87,6 +87,24 @@ public class CategoryService : ICategoryService
 
     public async Task<CategoryDto> Delete(int id)
     {
-        throw new NotImplementedException();
+        var category = await _context.Categories.FindAsync(id);
+
+        if( category != null)
+        {
+            var categoryDto = new CategoryDto
+            {
+                Id = category.CategoryID,
+                Name = category.Name,
+                Description = category.Description
+
+            };
+
+            _context.Remove(category);
+            await _context.SaveChangesAsync();
+            return categoryDto;
+        }
+
+        return null;
+
     }
 }
