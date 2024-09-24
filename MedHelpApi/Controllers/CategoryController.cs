@@ -66,26 +66,10 @@ namespace MedHelpApi.Controllers
             {
                 return BadRequest(validationResult.Errors);
             }
+            
+            var categoryDto = await _categoryService.Update(id, categoryUpdateDto);
 
-            var category = await _context.Categories.FindAsync(id);
-
-            if(category == null)
-            {
-                return NotFound();
-            }
-
-            category.Name = categoryUpdateDto.Name;
-            category.Description = categoryUpdateDto.Description;
-            await _context.SaveChangesAsync();
-
-            var categoryDto = new CategoryDto
-            {
-                Id = category.CategoryID,
-                Name = category.Name,
-                Description = category.Description
-            };
-
-            return Ok(categoryDto);
+            return categoryDto == null ? NotFound() : Ok(categoryDto);
         }
 
         [HttpDelete("{id}")]

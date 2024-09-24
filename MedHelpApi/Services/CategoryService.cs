@@ -61,9 +61,28 @@ public class CategoryService : ICategoryService
         return categoryDto;
     }
 
-    public async Task<CategoryDto> Update(int id, CategoryInsertDto categoryInsertDto)
+    public async Task<CategoryDto> Update(int id, CategoryUpdateDto categoryUpdateDto)
     {
-        throw new NotImplementedException();
+        var category = await _context.Categories.FindAsync(id);
+
+        if(category != null)
+        {
+            category.Name = categoryUpdateDto.Name;
+            category.Description = categoryUpdateDto.Description;
+
+            await _context.SaveChangesAsync();
+
+            var categoryDto = new CategoryDto 
+            {
+                Id = category.CategoryID,
+                Name = category.Name,
+                Description = category.Description
+            };
+
+            return categoryDto;
+        }
+
+        return null;
     }
 
     public async Task<CategoryDto> Delete(int id)
