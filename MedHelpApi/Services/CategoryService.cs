@@ -1,4 +1,5 @@
 using System;
+using AutoMapper;
 using MedHelpApi.DTOs;
 using MedHelpApi.Models;
 using MedHelpApi.Repository;
@@ -10,11 +11,14 @@ namespace MedHelpApi.Services;
 public class CategoryService : ICategoryService
 {
     private IRepository<Category> _categoryRepository;
+    private IMapper _mapper;
 
     public CategoryService(
-        IRepository<Category> categoryRepository)
+        IRepository<Category> categoryRepository,
+        IMapper mapper)
     {
         _categoryRepository = categoryRepository;
+        _mapper = mapper;
     }
     public async Task<IEnumerable<CategoryDto>> Get()
     {
@@ -46,11 +50,7 @@ public class CategoryService : ICategoryService
     }
     public async Task<CategoryDto> Add(CategoryInsertDto categoryInsertDto)
     {
-        var category = new Category()
-        {
-            Name = categoryInsertDto.Name,
-            Description = categoryInsertDto.Description
-        };
+        var category = _mapper.Map<Category>(categoryInsertDto);
 
         await _categoryRepository.Add(category);
         await _categoryRepository.Save();
