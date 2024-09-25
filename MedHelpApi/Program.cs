@@ -17,6 +17,7 @@ builder.Services.AddKeyedScoped<ICommonService<SpecialtyDto, SpecialtyInsertDto,
 
 //Repository
 builder.Services.AddScoped<IRepository<Specialty>, SpecialtyRepository>();
+builder.Services.AddScoped<IRepository<Category>, CategoryRepository>();
 
 //Entity Framework Context
 

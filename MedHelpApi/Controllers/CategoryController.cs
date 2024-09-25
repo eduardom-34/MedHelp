@@ -14,17 +14,15 @@ namespace MedHelpApi.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private MedHelpContext _context;
         private IValidator<CategoryInsertDto> _categoryInsertValidator;
         private IValidator<CategoryUpdateDto> _categoryUpdateValidator;
         private ICategoryService _categoryService;
 
-        public CategoryController(MedHelpContext context, 
+        public CategoryController(
         IValidator<CategoryInsertDto> categoryInsertValidator, 
         IValidator<CategoryUpdateDto> categoryUpdateValidator,
         ICategoryService categoryService)
         {
-            _context = context;
             _categoryInsertValidator = categoryInsertValidator;
             _categoryUpdateValidator = categoryUpdateValidator;
             _categoryService = categoryService;
