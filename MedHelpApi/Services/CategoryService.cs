@@ -1,6 +1,7 @@
 using System;
 using MedHelpApi.DTOs;
 using MedHelpApi.Models;
+using MedHelpApi.Repository;
 using MedHelpApi.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,22 +10,28 @@ namespace MedHelpApi.Services;
 public class CategoryService : ICategoryService
 {
     private MedHelpContext _context;
+    private IRepository<Category> _categoryRepository;
 
-    public CategoryService(MedHelpContext context)
+    public CategoryService(MedHelpContext context,
+        IRepository<Category> categoryRepository)
     {
         _context = context;
+        _categoryRepository = categoryRepository;
+        
     }
-    public async Task<IEnumerable<CategoryDto>> Get() =>
-        await _context.Categories.Select(c => new CategoryDto
-        {
+    public async Task<IEnumerable<CategoryDto>> Get()
+    {
+        var categories = await _categoryRepository.Get();
+        return categories.Select(c => new CategoryDto() {
             Id = c.CategoryID,
             Name = c.Name,
             Description = c.Description
-        }).ToListAsync();
+        });
+    }
 
     public async Task<CategoryDto> GetById(int id)
     {
-        var category = await _context.Categories.FindAsync(id);
+        var category = await _categoryRepository.GetById(id);
 
         if (category != null)
         {

@@ -1,20 +1,26 @@
 using System;
 using MedHelpApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace MedHelpApi.Repository;
 
 public class CategoryRepository : IRepository<Category>
 {
 
-    public Task<IEnumerable<Category>> Get()
+  private MedHelpContext _context;
+
+    public CategoryRepository(MedHelpContext context)
     {
-        throw new NotImplementedException();
+        _context = context;
     }
 
-    public Task<Category> GetById(int id)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<IEnumerable<Category>> Get()
+      => await _context.Categories.ToListAsync();
+
+    public async Task<Category> GetById(int id)
+      => await _context.Categories.FindAsync(id);
+    
+
     public Task Add(Category entity)
     {
         throw new NotImplementedException();
