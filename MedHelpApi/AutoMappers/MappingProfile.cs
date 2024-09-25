@@ -18,5 +18,8 @@ public class MappingProfile : Profile
 
     //Categories mapping
     CreateMap<CategoryInsertDto, Category>();
+    CreateMap<Category, CategoryDto>()
+          .ForMember(dto => dto.Id,
+                    m => m.MapFrom(c => c.CategoryID));
   }
 }

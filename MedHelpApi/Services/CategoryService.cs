@@ -23,11 +23,7 @@ public class CategoryService : ICategoryService
     public async Task<IEnumerable<CategoryDto>> Get()
     {
         var categories = await _categoryRepository.Get();
-        return categories.Select(c => new CategoryDto() {
-            Id = c.CategoryID,
-            Name = c.Name,
-            Description = c.Description
-        });
+        return categories.Select(c => _mapper.Map<CategoryDto>(c));
     }
 
     public async Task<CategoryDto> GetById(int id)
@@ -36,12 +32,7 @@ public class CategoryService : ICategoryService
 
         if (category != null)
         {
-            var categoryDto = new CategoryDto
-            {
-                Id = category.CategoryID,
-                Name = category.Name,
-                Description = category.Description
-            };
+            var categoryDto = _mapper.Map<CategoryDto>(category);
 
             return categoryDto;
         }
@@ -55,12 +46,7 @@ public class CategoryService : ICategoryService
         await _categoryRepository.Add(category);
         await _categoryRepository.Save();
 
-        var categoryDto = new CategoryDto
-        {
-            Id = category.CategoryID,
-            Name = category.Name,
-            Description = category.Description
-        };
+        var categoryDto = _mapper.Map<CategoryDto>(category);
 
         return categoryDto;
     }
@@ -77,12 +63,7 @@ public class CategoryService : ICategoryService
             _categoryRepository.Update(category);
             await _categoryRepository.Save();
 
-            var categoryDto = new CategoryDto 
-            {
-                Id = category.CategoryID,
-                Name = category.Name,
-                Description = category.Description
-            };
+            var categoryDto = _mapper.Map<CategoryDto>(category);
 
             return categoryDto;
         }
@@ -96,13 +77,7 @@ public class CategoryService : ICategoryService
 
         if( category != null)
         {
-            var categoryDto = new CategoryDto
-            {
-                Id = category.CategoryID,
-                Name = category.Name,
-                Description = category.Description
-
-            };
+            var categoryDto = _mapper.Map<CategoryDto>(category);
             
             _categoryRepository.Delete(category);
             await _categoryRepository.Save();
