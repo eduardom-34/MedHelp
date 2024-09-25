@@ -9,15 +9,12 @@ namespace MedHelpApi.Services;
 
 public class CategoryService : ICategoryService
 {
-    private MedHelpContext _context;
     private IRepository<Category> _categoryRepository;
 
-    public CategoryService(MedHelpContext context,
+    public CategoryService(
         IRepository<Category> categoryRepository)
     {
-        _context = context;
         _categoryRepository = categoryRepository;
-        
     }
     public async Task<IEnumerable<CategoryDto>> Get()
     {
@@ -95,7 +92,7 @@ public class CategoryService : ICategoryService
 
     public async Task<CategoryDto> Delete(int id)
     {
-        var category = await _context.Categories.FindAsync(id);
+        var category = await _categoryRepository.GetById(id);
 
         if( category != null)
         {
@@ -106,9 +103,9 @@ public class CategoryService : ICategoryService
                 Description = category.Description
 
             };
-
-            _context.Remove(category);
-            await _context.SaveChangesAsync();
+            
+            _categoryRepository.Delete(category);
+            await _categoryRepository.Save();
             return categoryDto;
         }
 

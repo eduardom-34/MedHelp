@@ -31,9 +31,7 @@ public class CategoryRepository : IRepository<Category>
     }
 
     public void Delete(Category entity)
-    {
-        throw new NotImplementedException();
-    }
+      => _context.Categories.Remove(entity);
 
     public async Task Save()
       => await  _context.SaveChangesAsync();
