@@ -21,5 +21,6 @@ public class MappingProfile : Profile
     CreateMap<Category, CategoryDto>()
           .ForMember(dto => dto.Id,
                     m => m.MapFrom(c => c.CategoryID));
+    CreateMap<CategoryUpdateDto, Category>();
   }
 }

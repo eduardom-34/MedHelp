@@ -57,8 +57,7 @@ public class CategoryService : ICategoryService
 
         if(category != null)
         {
-            category.Name = categoryUpdateDto.Name;
-            category.Description = categoryUpdateDto.Description;
+            category = _mapper.Map<CategoryUpdateDto, Category>(categoryUpdateDto, category);
 
             _categoryRepository.Update(category);
             await _categoryRepository.Save();
