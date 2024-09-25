@@ -55,8 +55,8 @@ public class CategoryService : ICategoryService
             Description = categoryInsertDto.Description
         };
 
-        await _context.Categories.AddAsync(category);
-        await _context.SaveChangesAsync();
+        await _categoryRepository.Add(category);
+        await _categoryRepository.Save();
 
         var categoryDto = new CategoryDto
         {

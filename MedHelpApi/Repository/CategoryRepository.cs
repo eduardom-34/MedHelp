@@ -21,10 +21,8 @@ public class CategoryRepository : IRepository<Category>
       => await _context.Categories.FindAsync(id);
     
 
-    public Task Add(Category entity)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task Add(Category entity)
+    => await _context.Categories.AddAsync(entity);
 
     public void Update(Category entity)
     {
@@ -36,10 +34,9 @@ public class CategoryRepository : IRepository<Category>
         throw new NotImplementedException();
     }
 
-    public Task Save()
-    {
-        throw new NotImplementedException();
-    }
+    public async Task Save()
+      => await  _context.SaveChangesAsync();
+
     public IEnumerable<Category> Search(Func<Category, bool> filter)
     {
         throw new NotImplementedException();
