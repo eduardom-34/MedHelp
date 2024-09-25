@@ -26,7 +26,8 @@ public class CategoryRepository : IRepository<Category>
 
     public void Update(Category entity)
     {
-        throw new NotImplementedException();
+      _context.Attach(entity);
+      _context.Categories.Entry(entity).State = EntityState.Modified;
     }
 
     public void Delete(Category entity)

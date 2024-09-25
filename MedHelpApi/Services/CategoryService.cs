@@ -70,14 +70,15 @@ public class CategoryService : ICategoryService
 
     public async Task<CategoryDto> Update(int id, CategoryUpdateDto categoryUpdateDto)
     {
-        var category = await _context.Categories.FindAsync(id);
+        var category = await _categoryRepository.GetById(id);
 
         if(category != null)
         {
             category.Name = categoryUpdateDto.Name;
             category.Description = categoryUpdateDto.Description;
 
-            await _context.SaveChangesAsync();
+            _categoryRepository.Update(category);
+            await _categoryRepository.Save();
 
             var categoryDto = new CategoryDto 
             {
