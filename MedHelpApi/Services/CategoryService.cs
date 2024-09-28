@@ -4,6 +4,7 @@ using MedHelpApi.DTOs;
 using MedHelpApi.Models;
 using MedHelpApi.Repository;
 using MedHelpApi.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace MedHelpApi.Services;
@@ -12,6 +13,7 @@ public class CategoryService : ICategoryService
 {
     private IRepository<Category> _categoryRepository;
     private IMapper _mapper;
+    public List<string> Errors { get; }
 
     public CategoryService(
         IRepository<Category> categoryRepository,
@@ -19,6 +21,7 @@ public class CategoryService : ICategoryService
     {
         _categoryRepository = categoryRepository;
         _mapper = mapper;
+        Errors = new List<string>();
     }
     public async Task<IEnumerable<CategoryDto>> Get()
     {
@@ -90,5 +93,27 @@ public class CategoryService : ICategoryService
 
         return null;
 
+    }
+
+    public bool Validate(CategoryInsertDto categoryInsertDto)
+    {
+        if (_categoryRepository.Search(c => c.Name == categoryInsertDto.Name).Count() > 0 )
+        {
+            Errors.Add("This Category already exists");
+            return false;
+        }
+        return true;
+    }
+
+    public bool Validate(CategoryUpdateDto categoryUpdateDto)
+    {
+        if (_categoryRepository.Search(c => c.Name == categoryUpdateDto.Name 
+        && categoryUpdateDto.Id != c.CategoryID).Count() > 0 )
+        {
+            Errors.Add("This Category already exists");
+            return false;
+        }
+
+        return true;
     }
 }

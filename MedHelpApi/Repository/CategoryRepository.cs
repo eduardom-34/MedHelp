@@ -38,6 +38,6 @@ public class CategoryRepository : IRepository<Category>
 
     public IEnumerable<Category> Search(Func<Category, bool> filter)
     {
-        throw new NotImplementedException();
+      return _context.Categories.Where(filter).ToList();
     }
 }

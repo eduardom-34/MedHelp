@@ -49,6 +49,11 @@ namespace MedHelpApi.Controllers
             {
                 return BadRequest(validationResult.Errors);
             }
+
+            if( !_categoryService.Validate(categoryInsertDto))
+            {
+                return BadRequest(_categoryService.Errors);
+            }
             
             var categoryDto = await _categoryService.Add(categoryInsertDto);
             
@@ -64,6 +69,12 @@ namespace MedHelpApi.Controllers
             {
                 return BadRequest(validationResult.Errors);
             }
+
+            if( !_categoryService.Validate(categoryUpdateDto))
+            {
+                return BadRequest(_categoryService.Errors);
+            }
+            
             
             var categoryDto = await _categoryService.Update(id, categoryUpdateDto);
 
