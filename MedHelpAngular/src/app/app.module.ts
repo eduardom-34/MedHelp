@@ -4,7 +4,6 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SharedModule } from './shared/shared.module';
 import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
@@ -12,9 +11,6 @@ import { provideHttpClient } from '@angular/common/http';
     AppComponent
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
-    SharedModule
   ],
   providers: [
     provideAnimationsAsync(),
