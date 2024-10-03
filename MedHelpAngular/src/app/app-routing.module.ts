@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MedhelpModule } from './medhelp/medhelp.module';
 import { Error404PageComponent } from './shared/pages/error404-page/error404-page.component';
 
 const routes: Routes = [

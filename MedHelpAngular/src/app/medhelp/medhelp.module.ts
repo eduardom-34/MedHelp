@@ -4,14 +4,13 @@ import { CommonModule } from '@angular/common';
 import { MedhelpRoutingModule } from './medhelp-routing.module';
 import { SpecialtyPageComponent } from './pages/specialty-page/specialty-page.component';
 import { LayoutPageComponent } from './pages/layout-page/layout-page.component';
-import { SpecialtiesListComponent } from './pages/specialties-list/specialties-list.component';
-
+import { ListSpecialtiesPageComponent } from './pages/list-specialties/list-specialties.component';
 
 @NgModule({
   declarations: [
     SpecialtyPageComponent,
     LayoutPageComponent,
-    SpecialtiesListComponent
+    ListSpecialtiesPageComponent,
   ],
   imports: [
     CommonModule,

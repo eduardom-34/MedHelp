@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutPageComponent } from './pages/layout-page/layout-page.component';
 import { SpecialtyPageComponent } from './pages/specialty-page/specialty-page.component';
-import { SpecialtiesListComponent } from './pages/specialties-list/specialties-list.component';
+import { ListSpecialtiesPageComponent } from './pages/list-specialties/list-specialties.component';
 
 const routes: Routes = [
   {
@@ -10,12 +10,20 @@ const routes: Routes = [
     component: LayoutPageComponent,
     children: [
       {
-        path: 'specialties',
-        component: SpecialtiesListComponent
-      },
-      {
         path: 'specialty',
         component: SpecialtyPageComponent
+      },
+      {
+        path: 'list-specialties',
+        component: ListSpecialtiesPageComponent
+      },
+      {
+        path: ':id',
+        component: SpecialtyPageComponent
+      },
+      {
+        path: '**',
+        redirectTo: 'list-specialties'
       }
     ]
   }
