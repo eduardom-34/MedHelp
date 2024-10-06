@@ -7,4 +7,17 @@ import { Component } from '@angular/core';
 })
 export class LayoutPageComponent {
 
+  public sidebarItems = [
+    {
+      label: 'List',
+      icon: 'label',
+      url: './list-specialties'
+    },
+    {
+      label: 'Specialty',
+      icon: 'add',
+      url: './specialty'
+    }
+  ]
+
 }
