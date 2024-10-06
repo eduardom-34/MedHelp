@@ -1,1 +1,28 @@
-<p>register works!</p>
+<div class="flex flex-column">
+  <span class="test-lg bt-4">Sign up</span>
+
+  <mat-form-field class="mt-3">
+    <mat-label>Username</mat-label>
+    <input type="text" matInput placeholder="Username">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input type="text" matInput placeholder="Username">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input type="password" matInput placeholder="Password">
+  </mat-form-field>
+
+  <button mat-button mat-flat-button >
+    <mat-icon>save</mat-icon>
+    Login
+  </button>
+
+  <div class="div flex justify-content-end mt-5">
+    <a routerLink="/auth/login">Have an account already?</a>
+  </div>
+
+</div>
