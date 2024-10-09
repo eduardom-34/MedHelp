@@ -20,6 +20,7 @@ builder.Services.AddKeyedScoped<ICommonService<PacientDto, PacientInsertDto, Pac
 //Repository
 builder.Services.AddScoped<IRepository<Specialty>, SpecialtyRepository>();
 builder.Services.AddScoped<IRepository<Category>, CategoryRepository>();
+builder.Services.AddScoped<IRepository<Pacient>, PacientRepository>();
 
 //Entity Framework Context
 

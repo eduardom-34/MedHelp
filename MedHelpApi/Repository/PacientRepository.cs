@@ -15,29 +15,24 @@ public PacientRepository( MedHelpContext context)
 
     public async Task<IEnumerable<Pacient>> Get()
       => await _context.Pacients.ToListAsync();
-  public Task<Pacient> GetById(int id)
-  {
-    throw new NotImplementedException();
-  }
-  public Task Add(Pacient entity)
-  {
-    throw new NotImplementedException();
-  }
+  public async Task<Pacient> GetById(int id)
+    => await _context.Pacients.FindAsync(id);
+    
+  public async Task Add(Pacient pacient)
+    => await _context.Pacients.AddAsync(pacient);
 
-  public void Update(Pacient entity)
+  public void Update(Pacient pacient)
   {
     throw new NotImplementedException();
   }
-  public void Delete(Pacient entity)
+  public void Delete(Pacient pacient)
   {
     throw new NotImplementedException();
   }
 
 
-  public Task Save()
-  {
-    throw new NotImplementedException();
-  }
+  public async Task Save()
+    => await _context.SaveChangesAsync();
 
   public IEnumerable<Pacient> Search(Func<Pacient, bool> filter)
   {
