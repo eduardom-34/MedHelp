@@ -14,6 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // builder.Services.AddSingleton<ISpecialtiesService, SpecialtiesService>();
 builder.Services.AddKeyedScoped<ICommonService<SpecialtyDto, SpecialtyInsertDto, SpecialtyUpdateDto>, SpecialtyService>("specialtyService");
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IPacientService, PacientService>();
 
 //Repository
 builder.Services.AddScoped<IRepository<Specialty>, SpecialtyRepository>();
@@ -31,7 +33,7 @@ builder.Services.AddScoped<IValidator<SpecialtyInsertDto>, SpecialtyInsertValida
 builder.Services.AddScoped<IValidator<SpecialtyUpdateDto>, SpecialtyUpdateValidator>();
 builder.Services.AddScoped<IValidator<CategoryInsertDto>, CategoryInsertValidator >();
 builder.Services.AddScoped<IValidator<CategoryUpdateDto>, CategoryUpdateValidator >();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
+
 
 // Mappers
 builder.Services.AddAutoMapper(typeof(MappingProfile));
