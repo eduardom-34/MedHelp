@@ -10,9 +10,9 @@ namespace MedHelpApi.Controllers
     [ApiController]
     public class PacientController : ControllerBase
     {
-        private IPacientService _pacientService;
+        private ICommonService<PacientDto, PacientInsertDto, PacientUpdateDto> _pacientService;
 
-        public PacientController( IPacientService pacientService)
+        public PacientController( [FromKeyedServices("PacientService")] ICommonService<PacientDto, PacientInsertDto, PacientUpdateDto> pacientService)
         {
             _pacientService = pacientService;
         }
@@ -20,5 +20,7 @@ namespace MedHelpApi.Controllers
         [HttpGet]
         public async Task<IEnumerable<PacientDto>> Get()
             => await _pacientService.Get();
+
+        
     }
 }

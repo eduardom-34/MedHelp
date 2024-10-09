@@ -15,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 // builder.Services.AddSingleton<ISpecialtiesService, SpecialtiesService>();
 builder.Services.AddKeyedScoped<ICommonService<SpecialtyDto, SpecialtyInsertDto, SpecialtyUpdateDto>, SpecialtyService>("specialtyService");
 builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<IPacientService, PacientService>();
+builder.Services.AddKeyedScoped<ICommonService<PacientDto, PacientInsertDto, PacientUpdateDto>, PacientService>("pacientService");
 
 //Repository
 builder.Services.AddScoped<IRepository<Specialty>, SpecialtyRepository>();
