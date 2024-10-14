@@ -15,12 +15,14 @@ var builder = WebApplication.CreateBuilder(args);
 // builder.Services.AddSingleton<ISpecialtiesService, SpecialtiesService>();
 builder.Services.AddKeyedScoped<ICommonService<SpecialtyDto, SpecialtyInsertDto, SpecialtyUpdateDto>, SpecialtyService>("specialtyService");
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddKeyedScoped<IUserService<UserDto, UserInsertDto, UserUpdateDto>, UserService>("userService");
 
 //Repository
 builder.Services.AddScoped<IRepository<Specialty>, SpecialtyRepository>();
 builder.Services.AddScoped<IRepository<Category>, CategoryRepository>();
-//Entity Framework Context
+builder.Services.AddScoped<IRepository<User>, UserRepository>();
 
+//Entity Framework Context
 builder.Services.AddDbContext<MedHelpContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("MedhelpConnection"));
 });
