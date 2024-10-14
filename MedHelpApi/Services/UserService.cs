@@ -1,12 +1,26 @@
 using System;
+using System.Security.Cryptography;
+using System.Text;
 using MedHelpApi.DTOs;
+using MedHelpApi.Models;
+using MedHelpApi.Repository;
 using MedHelpApi.Services.Interfaces;
+using Microsoft.Extensions.Configuration.UserSecrets;
 
 namespace MedHelpApi.Services;
 
 public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto>
 {
-    public List<string> Errors => throw new NotImplementedException();
+    private IRepository<User> _userRepository;
+    public List<string> Errors { get; }
+
+    public UserService(
+        IRepository<User> userRepository
+    )
+    {
+        _userRepository = userRepository;
+        Errors = new List<string>();
+    }
 
     public Task<IEnumerable<UserDto>> Get()
     {
@@ -17,11 +31,42 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto>
         throw new NotImplementedException();
     }
 
-    public Task<UserDto> Add(UserInsertDto specialtyInsertDto)
+    public async Task<UserDto> Add(UserInsertDto userInsertDto)
     {
-        throw new NotImplementedException();
+        using var hmac = new HMACSHA512();
+        var user = new User
+        {
+            FirstName = userInsertDto.FirstName,
+            LastName = userInsertDto.LastName,
+            UserName = userInsertDto.UserName.ToLower(),
+            Email = userInsertDto.Email,
+            BirthDate = userInsertDto.BirthDate,
+            SignUpDate = DateTime.Now,
+            PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(userInsertDto.Password)),
+            PasswordSalt = hmac.Key
+        };
+
+        await _userRepository.Add(user);
+        await _userRepository.Save();
+
+        var userDto = new UserDto
+        {
+            UserID = user.UserID,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            UserName = user.UserName,
+            Email = user.Email,
+            BirthDate = user.BirthDate,
+            SignUpDate = DateTime.Now,
+            PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(userInsertDto.Password)),
+            PasswordSalt = hmac.Key
+
+        };
+
+        return userDto;
+
     }
-    public Task<UserDto> Update(int id, UserUpdateDto specialtyUpdateDto)
+    public Task<UserDto> Update(int id, UserUpdateDto userUpdateDto)
     {
         throw new NotImplementedException();
     }
@@ -30,13 +75,26 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto>
     {
         throw new NotImplementedException();
     }
-    public bool Validate(UserInsertDto dto)
+    public bool Validate(UserInsertDto userInsertDto)
     {
-        throw new NotImplementedException();
+        if( _userRepository.Search(u => u.UserName == userInsertDto.UserName).Count() > 0)
+        {
+            Errors.Add("This Usernames is alreay being used, please user another one");
+            return false;
+        }
+
+        return true;
     }
 
-    public bool Validate(UserUpdateDto dto)
+    public bool Validate(UserUpdateDto userUpdateDto)
     {
-        throw new NotImplementedException();
+        if( _userRepository.Search(u => u.UserName == userUpdateDto.UserName 
+        && userUpdateDto.Id !=  u.UserID).Count() > 0)
+        {
+            Errors.Add("This username is already in used, please use another one");
+            return false;
+        }
+
+        return true;
     }
 }

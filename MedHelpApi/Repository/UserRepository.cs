@@ -1,42 +1,41 @@
 using System;
+using System.Runtime.CompilerServices;
 using MedHelpApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace MedHelpApi.Repository;
 
 public class UserRepository : IRepository<User>
 {
-    public Task<IEnumerable<User>> Get()
+    private MedHelpContext _context;
+
+    public UserRepository(MedHelpContext context)
     {
-        throw new NotImplementedException();
+        _context = context;
     }
 
-    public Task<User> GetById(int id)
-    {
-        throw new NotImplementedException();
-    }
-    public Task Add(User entity)
-    {
-        throw new NotImplementedException();
-    }
-    public void Update(User entity)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<IEnumerable<User>> Get()
+        => await _context.Users.ToListAsync();
 
-    public void Delete(User entity)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<User> GetById(int id)
+        => await _context.Users.FindAsync(id);
+    public async Task Add(User user)
+        => await _context.Users.AddAsync(user);
 
 
-    public Task Save()
+    public void Update(User user)
     {
-        throw new NotImplementedException();
+        _context.Users.Attach(user);
+        _context.Users.Entry(user).State = EntityState.Modified;
     }
+
+    public void Delete(User user)
+        => _context.Users.Remove(user);
+
+
+    public async Task Save()
+        => await _context.SaveChangesAsync();
 
     public IEnumerable<User> Search(Func<User, bool> filter)
-    {
-        throw new NotImplementedException();
-    }
-
+    => _context.Users.Where(filter).ToList();
 }
