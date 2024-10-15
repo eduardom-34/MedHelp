@@ -7,6 +7,7 @@ using MedHelpApi.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.VisualBasic;
 
 namespace MedHelpApi.Controllers
 {
@@ -29,7 +30,6 @@ namespace MedHelpApi.Controllers
             _userUpdateValidator = userUpdateValidator;
         }
 
-// TODO: Add the other endpoint, get, getById etc...
         [HttpGet]
         public async Task<IEnumerable<UserDto>> Get()
             => await _userService.Get();
@@ -64,6 +64,32 @@ namespace MedHelpApi.Controllers
             var userDto = await _userService.Add(userInsertDto);
 
             return CreatedAtAction(nameof(GetById), new { id = userDto.Id }, userDto);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<UserDto>> Update(int id, UserUpdateDto userUpdateDto)
+        {
+            var validationResult = await _userUpdateValidator.ValidateAsync(userUpdateDto);
+
+            if(!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
+
+            if( !_userService.Validate(userUpdateDto)){
+                return BadRequest(_userService.Errors);
+            }
+
+            var userDto = await _userService.Update(id, userUpdateDto);
+
+            return userDto == null ? BadRequest(_userService.Errors) : Ok(userDto);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<UserDto>> Delete(int id)
+        {
+            var userDto = await _userService.Delete(id);
+            return userDto == null ? NotFound() : Ok(userDto);
         }
     }
 }

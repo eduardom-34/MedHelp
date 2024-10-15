@@ -5,6 +5,7 @@ using MedHelpApi.DTOs;
 using MedHelpApi.Models;
 using MedHelpApi.Repository;
 using MedHelpApi.Services.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Configuration.UserSecrets;
 
 namespace MedHelpApi.Services;
@@ -98,14 +99,65 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto>
         return userDto;
 
     }
-    public Task<UserDto> Update(int id, UserUpdateDto userUpdateDto)
+    public async Task<UserDto> Update(int id, UserUpdateDto userUpdateDto)
     {
-        throw new NotImplementedException();
+        using var hmac = new HMACSHA512();
+        var user = await _userRepository.GetById(id);
+
+        if( user != null )
+        {
+            user.FirstName = userUpdateDto.FirstName;
+            user.LastName = userUpdateDto.LastName;
+            user.UserName = userUpdateDto.UserName;
+            user.Email = userUpdateDto.Email;
+            user.BirthDate = userUpdateDto.BirthDate;
+            user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(userUpdateDto.Password!));
+            user.PasswordSalt = hmac.Key;
+
+            await _userRepository.Save();
+
+            var userDto = new UserDto
+            {
+                Id = user.UserID,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserName = user.UserName,
+                Email = user.Email,
+                BirthDate = user.BirthDate,
+                PasswordHash = user.PasswordHash,
+                PasswordSalt = user.PasswordSalt
+
+            };
+            return userDto;
+        }
+
+        return null;
     }
 
-    public Task<UserDto> Delete(int id)
+    public async Task<UserDto> Delete(int id)
     {
-        throw new NotImplementedException();
+        var user = await _userRepository.GetById(id);
+        if (user != null)
+        {
+            var userDto = new UserDto
+            {
+                Id = user.UserID,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserName = user.UserName,
+                Email = user.Email,
+                BirthDate = user.BirthDate,
+                SignUpDate = user.SignUpDate,
+                PasswordHash = user.PasswordHash,
+                PasswordSalt = user.PasswordSalt
+            };
+
+            _userRepository.Delete(user);
+            await _userRepository.Save();
+            return userDto;
+        }
+
+        return null;
     }
     public bool Validate(UserInsertDto userInsertDto)
     {
