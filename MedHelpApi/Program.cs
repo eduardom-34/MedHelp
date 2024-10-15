@@ -34,6 +34,7 @@ builder.Services.AddScoped<IValidator<SpecialtyUpdateDto>, SpecialtyUpdateValida
 builder.Services.AddScoped<IValidator<CategoryInsertDto>, CategoryInsertValidator >();
 builder.Services.AddScoped<IValidator<CategoryUpdateDto>, CategoryUpdateValidator >();
 builder.Services.AddScoped<IValidator<UserInsertDto>, UserInsertValidator >();
+builder.Services.AddScoped<IValidator<UserUpdateDto>, UserUpdateValidator >();
 
 
 // Mappers

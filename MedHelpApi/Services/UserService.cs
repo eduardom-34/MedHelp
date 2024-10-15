@@ -22,10 +22,22 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto>
         Errors = new List<string>();
     }
 
-    public Task<IEnumerable<UserDto>> Get()
+    public async Task<IEnumerable<UserDto>> Get()
     {
-        throw new NotImplementedException();
+        var users = await _userRepository.Get();
+
+        return users.Select( u => new UserDto{
+            Id = u.UserID,
+            FirstName = u.FirstName,
+            LastName = u.LastName,
+            UserName = u.UserName,
+            BirthDate = u.BirthDate,
+            SignUpDate = u.SignUpDate,
+            PasswordHash = u.PasswordHash,
+            PasswordSalt = u.PasswordSalt,
+        });
     }
+    
     public Task<UserDto> GetById(int id)
     {
         throw new NotImplementedException();
@@ -51,7 +63,7 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto>
 
         var userDto = new UserDto
         {
-            UserID = user.UserID,
+            Id = user.UserID,
             FirstName = user.FirstName,
             LastName = user.LastName,
             UserName = user.UserName,
@@ -95,6 +107,16 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto>
             return false;
         }
 
+        return true;
+    }
+
+    public bool ValidateEmail(UserInsertDto userInsertDto)
+    {
+        if( _userRepository.Search(u => u.Email == userInsertDto.Email).Count() > 0)
+        {
+            Errors.Add("This Email is already being used, please use another one");
+            return false;
+        }
         return true;
     }
 }

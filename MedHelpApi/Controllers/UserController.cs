@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Security.Cryptography;
 using FluentValidation;
 using MedHelpApi.DTOs;
@@ -14,18 +15,23 @@ namespace MedHelpApi.Controllers
     {
         private IUserService<UserDto, UserInsertDto, UserUpdateDto> _userService;
         private IValidator<UserInsertDto> _userInsertValidator;
+        private IValidator<UserUpdateDto> _userUpdateValidator;
 
         public UserController(
             [FromKeyedServices("userService")] IUserService<UserDto, UserInsertDto, UserUpdateDto> userService,
-            IValidator<UserInsertDto> userInsertValidator
+            IValidator<UserInsertDto> userInsertValidator,
+            IValidator<UserUpdateDto> userUpdateValidator
         )
         {
             _userService = userService;
             _userInsertValidator = userInsertValidator;
+            _userUpdateValidator = userUpdateValidator;
         }
 
-// TODO: I have to Add validators
-// TODO: Add the other endpoing, get, getById etc...
+// TODO: Add the other endpoint, get, getById etc...
+        [HttpGet]
+        public async Task<IEnumerable<UserDto>> Get()
+            => await _userService.Get();
 
         [HttpPost("register")] //POST: api/user/register
         public async Task<ActionResult<User>> Register(UserInsertDto userInsertDto)
@@ -40,10 +46,13 @@ namespace MedHelpApi.Controllers
             if( !_userService.Validate(userInsertDto)){
                 return BadRequest(_userService.Errors);
             }
+
+            if( !_userService.ValidateEmail(userInsertDto)){
+                return BadRequest(_userService.Errors);
+            }
             
             var userDto = await _userService.Add(userInsertDto);
             return Ok(userDto);
-
         }
     }
 }

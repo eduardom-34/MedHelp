@@ -12,5 +12,5 @@ public interface IUserService<T, TI, TU>
   Task<T> Update(int id, TU userUpdateDto);
   Task<T> Delete(int id);
   bool Validate(TI userInsertDto);
-  bool Validate(TU userUpdateDto);
+  bool ValidateEmail(TI userInsertDto);
 }
