@@ -38,11 +38,11 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto>
         {
             FirstName = userInsertDto.FirstName,
             LastName = userInsertDto.LastName,
-            UserName = userInsertDto.UserName.ToLower(),
+            UserName = userInsertDto.UserName!.ToLower(),
             Email = userInsertDto.Email,
             BirthDate = userInsertDto.BirthDate,
             SignUpDate = DateTime.Now,
-            PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(userInsertDto.Password)),
+            PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(userInsertDto.Password!)),
             PasswordSalt = hmac.Key
         };
 
@@ -58,7 +58,7 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto>
             Email = user.Email,
             BirthDate = user.BirthDate,
             SignUpDate = DateTime.Now,
-            PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(userInsertDto.Password)),
+            PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(userInsertDto.Password!)),
             PasswordSalt = hmac.Key
 
         };
