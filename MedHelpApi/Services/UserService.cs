@@ -38,9 +38,29 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto>
         });
     }
     
-    public Task<UserDto> GetById(int id)
+    public async Task<UserDto> GetById(int id)
     {
-        throw new NotImplementedException();
+        var user = await _userRepository.GetById(id);
+
+        if (user != null)
+        {
+            var userDto = new UserDto
+            {
+                Id = user.UserID,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserName = user.UserName,
+                Email = user.Email,
+                BirthDate = user.BirthDate,
+                SignUpDate = user.SignUpDate,
+                PasswordHash = user.PasswordHash,
+                PasswordSalt = user.PasswordSalt
+            };
+
+            return userDto;
+        }
+
+        return null;
     }
 
     public async Task<UserDto> Add(UserInsertDto userInsertDto)

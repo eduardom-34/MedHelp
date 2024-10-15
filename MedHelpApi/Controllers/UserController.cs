@@ -6,6 +6,7 @@ using MedHelpApi.Models;
 using MedHelpApi.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileProviders;
 
 namespace MedHelpApi.Controllers
 {
@@ -33,6 +34,15 @@ namespace MedHelpApi.Controllers
         public async Task<IEnumerable<UserDto>> Get()
             => await _userService.Get();
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<UserDto>> GetById(int id)
+        {
+            var userDto = await _userService.GetById(id);
+            
+            return userDto == null ? NotFound() : Ok(userDto);
+
+        }
+
         [HttpPost("register")] //POST: api/user/register
         public async Task<ActionResult<User>> Register(UserInsertDto userInsertDto)
         {
@@ -52,7 +62,8 @@ namespace MedHelpApi.Controllers
             }
             
             var userDto = await _userService.Add(userInsertDto);
-            return Ok(userDto);
+
+            return CreatedAtAction(nameof(GetById), new { id = userDto.Id }, userDto);
         }
     }
 }
