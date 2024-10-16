@@ -17,6 +17,9 @@ builder.Services.AddKeyedScoped<ICommonService<SpecialtyDto, SpecialtyInsertDto,
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddKeyedScoped<IUserService<UserDto, UserInsertDto, UserUpdateDto>, UserService>("userService");
 
+//Token Services
+builder.Services.AddScoped<ITokenService<UserDto>, TokenService>();
+
 //Repository
 builder.Services.AddScoped<IRepository<Specialty>, SpecialtyRepository>();
 builder.Services.AddScoped<IRepository<Category>, CategoryRepository>();
