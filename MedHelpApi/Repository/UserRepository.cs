@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MedHelpApi.Repository;
 
-public class UserRepository : IRepository<User>
+public class UserRepository : IUserRepository
 {
     private MedHelpContext _context;
 
@@ -28,6 +28,9 @@ public class UserRepository : IRepository<User>
         _context.Users.Attach(user);
         _context.Users.Entry(user).State = EntityState.Modified;
     }
+
+    public async Task<User> GetByUsername(string username)
+    => await _context.Users.SingleOrDefaultAsync(x => x.UserName == username);
 
     public void Delete(User user)
         => _context.Users.Remove(user);

@@ -18,16 +18,19 @@ namespace MedHelpApi.Controllers
         private IUserService<UserDto, UserInsertDto, UserUpdateDto> _userService;
         private IValidator<UserInsertDto> _userInsertValidator;
         private IValidator<UserUpdateDto> _userUpdateValidator;
+        private IValidator<UserLoginDto> _userLoginValidator;
 
         public UserController(
             [FromKeyedServices("userService")] IUserService<UserDto, UserInsertDto, UserUpdateDto> userService,
             IValidator<UserInsertDto> userInsertValidator,
-            IValidator<UserUpdateDto> userUpdateValidator
+            IValidator<UserUpdateDto> userUpdateValidator,
+            IValidator<UserLoginDto> userLoginValidator
         )
         {
             _userService = userService;
             _userInsertValidator = userInsertValidator;
             _userUpdateValidator = userUpdateValidator;
+            _userLoginValidator = userLoginValidator;
         }
 
         [HttpGet]
@@ -90,6 +93,25 @@ namespace MedHelpApi.Controllers
         {
             var userDto = await _userService.Delete(id);
             return userDto == null ? NotFound() : Ok(userDto);
+        }
+
+        [HttpPost("login")] //POST: api/user/login
+        public async Task<ActionResult<UserLoginDto>> Login(UserLoginDto userLoginDto)
+        {
+            var validationResult = await _userLoginValidator.ValidateAsync(userLoginDto);
+            
+            if( !validationResult.IsValid ){
+                return BadRequest(validationResult.Errors);
+            }
+
+            var userDto = await _userService.Login(userLoginDto.Username!, userLoginDto.Password!);
+
+            if( userDto == null)
+            {
+                return BadRequest(_userService.Errors);
+            }
+
+            return Ok(userDto);
         }
     }
 }

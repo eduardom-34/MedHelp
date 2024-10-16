@@ -12,11 +12,11 @@ namespace MedHelpApi.Services;
 
 public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto>
 {
-    private IRepository<User> _userRepository;
+    private IUserRepository _userRepository;
     public List<string> Errors { get; }
 
     public UserService(
-        IRepository<User> userRepository
+        IUserRepository userRepository
     )
     {
         _userRepository = userRepository;
@@ -27,7 +27,8 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto>
     {
         var users = await _userRepository.Get();
 
-        return users.Select( u => new UserDto{
+        return users.Select(u => new UserDto
+        {
             Id = u.UserID,
             FirstName = u.FirstName,
             LastName = u.LastName,
@@ -38,7 +39,7 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto>
             PasswordSalt = u.PasswordSalt,
         });
     }
-    
+
     public async Task<UserDto> GetById(int id)
     {
         var user = await _userRepository.GetById(id);
@@ -104,7 +105,7 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto>
         using var hmac = new HMACSHA512();
         var user = await _userRepository.GetById(id);
 
-        if( user != null )
+        if (user != null)
         {
             user.FirstName = userUpdateDto.FirstName;
             user.LastName = userUpdateDto.LastName;
@@ -159,9 +160,47 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto>
 
         return null;
     }
+    public async Task<UserDto> Login(string username, string password)
+    {
+        // var user = _userRepository.
+        var user = await _userRepository.GetByUsername(username);
+
+        if (user != null)
+        {
+            using var hmac = new HMACSHA512(user.PasswordSalt!);
+            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+            for (int i = 0; i < computedHash.Length; i++)
+            {
+                if (computedHash[i] != user.PasswordHash![i])
+                {
+
+                    Errors.Add("The password is incorret, please try again");
+                    return null;
+                }
+            }
+
+            var userDto = new UserDto
+            {
+                Id = user.UserID,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserName = user.UserName,
+                Email = user.Email,
+                BirthDate = user.BirthDate,
+                SignUpDate = user.SignUpDate,
+                PasswordHash = user.PasswordHash,
+                PasswordSalt = user.PasswordSalt
+            };
+            return userDto;
+
+        }
+        Errors.Add("This username does not exist,  please try again or create an account");
+        return null;
+    }
+
     public bool Validate(UserInsertDto userInsertDto)
     {
-        if( _userRepository.Search(u => u.UserName == userInsertDto.UserName).Count() > 0)
+        if (_userRepository.Search(u => u.UserName == userInsertDto.UserName).Count() > 0)
         {
             Errors.Add("This Usernames is alreay being used, please user another one");
             return false;
@@ -172,8 +211,8 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto>
 
     public bool Validate(UserUpdateDto userUpdateDto)
     {
-        if( _userRepository.Search(u => u.UserName == userUpdateDto.UserName 
-        && userUpdateDto.Id !=  u.UserID).Count() > 0)
+        if (_userRepository.Search(u => u.UserName == userUpdateDto.UserName
+        && userUpdateDto.Id != u.UserID).Count() > 0)
         {
             Errors.Add("This username is already in used, please use another one");
             return false;
@@ -184,7 +223,7 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto>
 
     public bool ValidateEmail(UserInsertDto userInsertDto)
     {
-        if( _userRepository.Search(u => u.Email == userInsertDto.Email).Count() > 0)
+        if (_userRepository.Search(u => u.Email == userInsertDto.Email).Count() > 0)
         {
             Errors.Add("This Email is already being used, please use another one");
             return false;
