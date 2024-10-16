@@ -15,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 // builder.Services.AddSingleton<ISpecialtiesService, SpecialtiesService>();
 builder.Services.AddKeyedScoped<ICommonService<SpecialtyDto, SpecialtyInsertDto, SpecialtyUpdateDto>, SpecialtyService>("specialtyService");
 builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddKeyedScoped<IUserService<UserDto, UserInsertDto, UserUpdateDto>, UserService>("userService");
+builder.Services.AddKeyedScoped<IUserService<UserDto, UserInsertDto, UserUpdateDto, UserTokenDto>, UserService>("userService");
 
 //Token Services
 builder.Services.AddScoped<ITokenService<UserDto>, TokenService>();

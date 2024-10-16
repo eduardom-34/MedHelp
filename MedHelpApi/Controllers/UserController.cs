@@ -15,25 +15,23 @@ namespace MedHelpApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private IUserService<UserDto, UserInsertDto, UserUpdateDto> _userService;
+        private IUserService<UserDto, UserInsertDto, UserUpdateDto, UserTokenDto> _userService;
         private IValidator<UserInsertDto> _userInsertValidator;
         private IValidator<UserUpdateDto> _userUpdateValidator;
         private IValidator<UserLoginDto> _userLoginValidator;
-        private readonly ITokenService<UserTokenDto> _tokenService;
+        
 
         public UserController(
-            [FromKeyedServices("userService")] IUserService<UserDto, UserInsertDto, UserUpdateDto> userService,
+            [FromKeyedServices("userService")] IUserService<UserDto, UserInsertDto, UserUpdateDto, UserTokenDto> userService,
             IValidator<UserInsertDto> userInsertValidator,
             IValidator<UserUpdateDto> userUpdateValidator,
-            IValidator<UserLoginDto> userLoginValidator,
-            ITokenService<UserTokenDto> tokenService
+            IValidator<UserLoginDto> userLoginValidator
         )
         {
             _userService = userService;
             _userInsertValidator = userInsertValidator;
             _userUpdateValidator = userUpdateValidator;
             _userLoginValidator = userLoginValidator;
-            _tokenService = tokenService;
         }
 
         [HttpGet]
@@ -47,6 +45,13 @@ namespace MedHelpApi.Controllers
             
             return userDto == null ? NotFound() : Ok(userDto);
 
+        }
+        [HttpGet("search/{username}")] //GET: api/user/search/username
+
+        public async Task<ActionResult<UserDto>> GetByUsername([FromRoute]string username)
+        {
+            var userDto = await _userService.GetByUsername(username);
+            return userDto == null ? NotFound() : Ok(userDto);
         }
 
         [HttpPost("register")] //POST: api/user/register
@@ -67,9 +72,9 @@ namespace MedHelpApi.Controllers
                 return BadRequest(_userService.Errors);
             }
             
-            var userDto = await _userService.Add(userInsertDto);
+            var userTokenDto = await _userService.Add(userInsertDto);
 
-            return CreatedAtAction(nameof(GetById), new { id = userDto.Id }, userDto);
+            return CreatedAtAction(nameof(GetByUsername), new { username = userTokenDto.UserName }, userTokenDto);
         }
 
         [HttpPut("{id}")]

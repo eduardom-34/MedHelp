@@ -10,17 +10,21 @@ using Microsoft.Extensions.Configuration.UserSecrets;
 
 namespace MedHelpApi.Services;
 
-public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto>
+public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto, UserTokenDto>
 {
     private IUserRepository _userRepository;
     public List<string> Errors { get; }
+    private readonly ITokenService<UserDto> _tokenService;
 
     public UserService(
-        IUserRepository userRepository
+        IUserRepository userRepository,
+        ITokenService<UserDto> tokenService
+
     )
     {
         _userRepository = userRepository;
         Errors = new List<string>();
+        _tokenService = tokenService;
     }
 
     public async Task<IEnumerable<UserDto>> Get()
@@ -44,28 +48,55 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto>
     {
         var user = await _userRepository.GetById(id);
 
-        if (user != null)
+        if (user == null)
         {
-            var userDto = new UserDto
-            {
-                Id = user.UserID,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                UserName = user.UserName,
-                Email = user.Email,
-                BirthDate = user.BirthDate,
-                SignUpDate = user.SignUpDate,
-                PasswordHash = user.PasswordHash,
-                PasswordSalt = user.PasswordSalt
-            };
-
-            return userDto;
+            Errors.Add($"This id {id} was not found");
+            return null;
         }
 
-        return null;
+        var userDto = new UserDto
+        {
+            Id = user.UserID,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            UserName = user.UserName,
+            Email = user.Email,
+            BirthDate = user.BirthDate,
+            SignUpDate = user.SignUpDate,
+            PasswordHash = user.PasswordHash,
+            PasswordSalt = user.PasswordSalt
+        };
+
+        return userDto;
     }
 
-    public async Task<UserDto> Add(UserInsertDto userInsertDto)
+    public async Task<UserDto> GetByUsername(string username)
+    {
+        var user = await _userRepository.GetByUsername(username);
+
+        if (user == null)
+        {
+            Errors.Add("This username was not found");
+            return null;
+        }
+
+        var userDto = new UserDto
+        {
+            Id = user.UserID,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            UserName = user.UserName,
+            Email = user.Email,
+            BirthDate = user.BirthDate,
+            SignUpDate = user.SignUpDate,
+            PasswordHash = user.PasswordHash,
+            PasswordSalt = user.PasswordSalt
+        };
+
+        return userDto;
+    }
+
+    public async Task<UserTokenDto> Add(UserInsertDto userInsertDto)
     {
         using var hmac = new HMACSHA512();
         var user = new User
@@ -97,7 +128,13 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto>
 
         };
 
-        return userDto;
+        var userTokenDto = new UserTokenDto
+        {
+            UserName = user.UserName,
+            Token = _tokenService.CreateToken(userDto)
+        };
+
+        return userTokenDto;
 
     }
     public async Task<UserDto> Update(int id, UserUpdateDto userUpdateDto)
@@ -160,7 +197,7 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto>
 
         return null;
     }
-    public async Task<UserDto> Login(string username, string password)
+    public async Task<UserTokenDto> Login(string username, string password)
     {
         // var user = _userRepository.
         var user = await _userRepository.GetByUsername(username);
@@ -191,7 +228,13 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto>
                 PasswordHash = user.PasswordHash,
                 PasswordSalt = user.PasswordSalt
             };
-            return userDto;
+
+            var userTokenDto = new UserTokenDto
+            {
+                UserName = user.UserName,
+                Token = _tokenService.CreateToken(userDto)
+            };
+            return userTokenDto;
 
         }
         Errors.Add("This username does not exist,  please try again or create an account");
