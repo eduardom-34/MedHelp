@@ -37,6 +37,7 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto, U
             FirstName = u.FirstName,
             LastName = u.LastName,
             UserName = u.UserName,
+            Email = u.Email,
             BirthDate = u.BirthDate,
             SignUpDate = u.SignUpDate,
             PasswordHash = u.PasswordHash,

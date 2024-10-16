@@ -4,6 +4,7 @@ using FluentValidation;
 using MedHelpApi.DTOs;
 using MedHelpApi.Models;
 using MedHelpApi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
@@ -34,10 +35,12 @@ namespace MedHelpApi.Controllers
             _userLoginValidator = userLoginValidator;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IEnumerable<UserDto>> Get()
             => await _userService.Get();
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetById(int id)
         {
@@ -46,6 +49,8 @@ namespace MedHelpApi.Controllers
             return userDto == null ? NotFound() : Ok(userDto);
 
         }
+
+        [Authorize]
         [HttpGet("search/{username}")] //GET: api/user/search/username
 
         public async Task<ActionResult<UserDto>> GetByUsername([FromRoute]string username)
