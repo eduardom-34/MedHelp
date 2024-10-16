@@ -21,10 +21,7 @@ builder.Services.AddKeyedScoped<IUserService<UserDto, UserInsertDto, UserUpdateD
 builder.Services.AddScoped<IRepository<Specialty>, SpecialtyRepository>();
 builder.Services.AddScoped<IRepository<Category>, CategoryRepository>();
 // builder.Services.AddScoped<IRepository<User>, UserRepository>();
-// builder.Services.AddScoped(typeof(IRepository<>), typeof(IUserRepository));
-// builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<User>));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IUserService<UserDto, UserInsertDto, UserUpdateDto>, UserService>();
 
 //Entity Framework Context
 builder.Services.AddDbContext<MedHelpContext>(options => {
