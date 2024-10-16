@@ -6,9 +6,5 @@ namespace MedHelpApi.Services.Interfaces;
 
 public interface ITokenService<T> //Note: T = userDto
 {
-
-  
-
   string CreateToken(T userDto);
-
 }

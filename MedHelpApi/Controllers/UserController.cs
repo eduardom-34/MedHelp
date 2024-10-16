@@ -19,18 +19,21 @@ namespace MedHelpApi.Controllers
         private IValidator<UserInsertDto> _userInsertValidator;
         private IValidator<UserUpdateDto> _userUpdateValidator;
         private IValidator<UserLoginDto> _userLoginValidator;
+        private readonly ITokenService<UserTokenDto> _tokenService;
 
         public UserController(
             [FromKeyedServices("userService")] IUserService<UserDto, UserInsertDto, UserUpdateDto> userService,
             IValidator<UserInsertDto> userInsertValidator,
             IValidator<UserUpdateDto> userUpdateValidator,
-            IValidator<UserLoginDto> userLoginValidator
+            IValidator<UserLoginDto> userLoginValidator,
+            ITokenService<UserTokenDto> tokenService
         )
         {
             _userService = userService;
             _userInsertValidator = userInsertValidator;
             _userUpdateValidator = userUpdateValidator;
             _userLoginValidator = userLoginValidator;
+            _tokenService = tokenService;
         }
 
         [HttpGet]
