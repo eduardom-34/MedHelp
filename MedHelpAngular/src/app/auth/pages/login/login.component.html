@@ -11,7 +11,9 @@
     <input type="password" matInput placeholder="Password">
   </mat-form-field>
 
-  <button mat-button mat-flat-button >
+  <button mat-button mat-flat-button
+    (click)="onLogin()"
+    >
     <mat-icon>save</mat-icon>
     Login
   </button>
