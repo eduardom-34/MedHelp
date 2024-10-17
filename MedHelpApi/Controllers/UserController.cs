@@ -117,14 +117,14 @@ namespace MedHelpApi.Controllers
                 return BadRequest(validationResult.Errors);
             }
 
-            var userDto = await _userService.Login(userLoginDto.Username!, userLoginDto.Password!);
+            var userTokenDto = await _userService.Login(userLoginDto.Username!, userLoginDto.Password!);
 
-            if( userDto == null)
+            if( userTokenDto == null)
             {
                 return BadRequest(_userService.Errors);
             }
 
-            return Ok(userDto);
+            return Ok(userTokenDto);
         }
     }
 }
