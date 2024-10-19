@@ -29,7 +29,10 @@ export class LayoutPageComponent {
    ) {}
 
   get user(): Sesion | undefined {
+
+
     return this.authService.currentUser;
+
   }
 
   onLogout(): void {

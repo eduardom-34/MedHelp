@@ -16,7 +16,7 @@ export class AuthService {
   get currentUser(): Sesion | undefined {
     if (!this.user) return undefined;
 
-    return structuredClone(this.user);
+    return(this.user);
   }
 
   login(username: string, password: string): Observable<Sesion> {
