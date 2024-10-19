@@ -1,22 +1,27 @@
 <div class="flex flex-column">
+
   <span class="test-lg bt-4">Login</span>
 
-  <mat-form-field class="mt-2">
-    <mat-label>Username</mat-label>
-    <input type="text" matInput placeholder="Username">
-  </mat-form-field>
+  <form [formGroup]="myForm" autocomplete="off">
+    <div class="flex flex-column">
 
-  <mat-form-field>
-    <mat-label>Password</mat-label>
-    <input type="password" matInput placeholder="Password">
-  </mat-form-field>
+      <mat-form-field class="mt-2">
+        <mat-label>Username</mat-label>
+        <input type="text" matInput placeholder="Username" formControlName="username">
+      </mat-form-field>
 
-  <button mat-button mat-flat-button
-    (click)="onLogin()"
-    >
-    <mat-icon>save</mat-icon>
-    Login
-  </button>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input type="password" matInput placeholder="Password" formControlName="password">
+      </mat-form-field>
+    </div>
+
+    <button mat-button mat-flat-button (click)="onLogin()" type="submit">
+      <mat-icon>save</mat-icon>
+      Login
+    </button>
+  </form>
+
 
   <div class="div flex justify-content-end mt-5">
     <a routerLink="/auth/new-account">Don't have an account yet?</a>
