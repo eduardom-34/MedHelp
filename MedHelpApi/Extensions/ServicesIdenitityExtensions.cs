@@ -11,7 +11,7 @@ public static class ServicesIdenitityExtensions
 {
   public static IServiceCollection AddServiceIdentity(this IServiceCollection services, IConfiguration config)
   {
-    //jwto Bearer
+    //jwt Bearer
     services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                      .AddJwtBearer(options =>
                      {

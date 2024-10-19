@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { environments } from '../../../environments/environments';
 import { Sesion } from '../pages/interfaces/sesion.interface';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -32,9 +33,9 @@ export class AuthService {
 
     if (!localStorage.getItem('token')) return of(false);
 
-    const token = localStorage.getItem('token');
+    let token: string | null = localStorage.getItem('token');
 
-    return this.http.get<Sesion>(`${ this.baseUrl }/user/search/user`)
+    return this.http.post<Sesion>(`${ this.baseUrl }/user/validate-token`, {token})
       .pipe(
         tap( user => this.user = user ),
         map( user => !!user ),

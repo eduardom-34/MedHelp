@@ -26,7 +26,7 @@ public class TokenService : ITokenService<UserDto>
 
     _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey));
   }
-  
+
   public string CreateToken(UserDto userDto)
   {
     var claims = new List<Claim>
@@ -46,4 +46,59 @@ public class TokenService : ITokenService<UserDto>
     var token = tokenHandler.CreateToken(tokenDescriptor);
     return tokenHandler.WriteToken(token);
   }
+
+
+  public bool ValidateToken(string token)
+  {
+    if (string.IsNullOrEmpty(token))
+      return false;
+
+    var tokenHandler = new JwtSecurityTokenHandler();
+
+    if (!tokenHandler.CanReadToken(token))
+      return false;
+
+    var validationParameters = new TokenValidationParameters
+    {
+      ValidateIssuerSigningKey = true,
+      IssuerSigningKey = _key,
+      ValidateIssuer = false,
+      ValidateAudience = false
+    };
+    
+    try
+    {
+        tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
+        return validatedToken != null; 
+    }
+    catch (SecurityTokenException)
+    {
+        return false;
+    }
+    catch (Exception)
+    {
+        // hanlde other erros if needed
+        return false;
+    }
+  }
+
+  public string GetUserFromToken(string token)
+  {
+    if (string.IsNullOrEmpty(token)) return null;
+
+    var tokenHandler = new JwtSecurityTokenHandler();
+
+    var jwtToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
+    
+    if (jwtToken == null)
+        return null;
+
+    
+    var nameid = jwtToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.NameId)?.Value;
+
+    return nameid;
+
+  }
+
+
 }

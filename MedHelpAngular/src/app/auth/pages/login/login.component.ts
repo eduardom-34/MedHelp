@@ -20,7 +20,7 @@ export class LoginPageComponent {
 
     this.authService.login('cesar', 'cesar')
       .subscribe( user => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/medhelp/']);
       });
 
   }

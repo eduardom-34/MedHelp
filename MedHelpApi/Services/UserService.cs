@@ -7,6 +7,7 @@ using MedHelpApi.Repository;
 using MedHelpApi.Services.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Configuration.UserSecrets;
+using Microsoft.Extensions.ObjectPool;
 
 namespace MedHelpApi.Services;
 
@@ -240,6 +241,31 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto, U
         }
         Errors.Add("This username does not exist,  please try again or create an account");
         return null;
+    }
+
+    public UserTokenDto ValidateToken(string token)
+    {
+        if (string.IsNullOrEmpty(token)) return null;
+
+        var validationResult = _tokenService.ValidateToken(token);
+
+        if( validationResult == false )
+        {
+            Errors.Add("This  token is invalid");
+            return null;
+        }
+
+        var username = _tokenService.GetUserFromToken(token);
+
+        var UserTokenDto = new UserTokenDto
+        {
+            UserName = username,
+            Token = token
+        };
+
+        return UserTokenDto;
+
+
     }
 
     public bool Validate(UserInsertDto userInsertDto)

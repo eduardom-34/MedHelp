@@ -50,7 +50,7 @@ namespace MedHelpApi.Controllers
 
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpGet("search/{username}")] //GET: api/user/search/username
 
         public async Task<ActionResult<UserDto>> GetByUsername([FromRoute]string username)
@@ -118,6 +118,19 @@ namespace MedHelpApi.Controllers
             }
 
             var userTokenDto = await _userService.Login(userLoginDto.Username!, userLoginDto.Password!);
+
+            if( userTokenDto == null)
+            {
+                return BadRequest(_userService.Errors);
+            }
+
+            return Ok(userTokenDto);
+        }
+
+        [HttpPost("validate-token")] //POST: api/user/validate-token
+        public ActionResult<UserTokenDto> ValidateToken(TokenRequestDto tokenRequestDto)
+        {
+            var userTokenDto = _userService.ValidateToken(tokenRequestDto.Token!);
 
             if( userTokenDto == null)
             {
