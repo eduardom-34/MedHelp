@@ -23,7 +23,7 @@ export class LoginPageComponent {
     })
   }
 
-
+// TODO: show that the password is wrong in case it is
 
   onLogin(): void {
 
