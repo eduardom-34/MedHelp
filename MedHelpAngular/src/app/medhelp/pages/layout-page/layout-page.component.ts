@@ -13,7 +13,7 @@ export class LayoutPageComponent {
 
   public sidebarItems = [
     {
-      label: 'List',
+      label: 'List of specialties',
       icon: 'label',
       url: './list-specialties'
     },

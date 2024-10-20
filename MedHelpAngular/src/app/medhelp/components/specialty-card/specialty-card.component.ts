@@ -2,9 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Specialty } from '../../interfaces/specialty.interface';
 
 @Component({
-  selector: 'specialty-name-card',
-  templateUrl: './card.component.html',
-  styleUrl: './card.component.css'
+  selector: 'specialty-card',
+  templateUrl: './specialty-card.component.html',
+  styleUrl: './specialty-card.component.css'
 })
 export class CardComponent implements OnInit{
 

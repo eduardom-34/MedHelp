@@ -1,10 +1,10 @@
-<h2>List of medic <strong>categories</strong></h2>
+<h2>List of medic <strong>specialties</strong></h2>
 <mat-divider></mat-divider>
 
 
 <div class="grid bm-8">
   <div *ngFor="let specialty of specialties"
    class="col-12 sm:col-4 md:col-3 xl:col-2 m-2">
-   <specialty-name-card [specialty]="specialty"></specialty-name-card>
+   <specialty-card [specialty]="specialty"></specialty-card>
   </div>
 </div>
