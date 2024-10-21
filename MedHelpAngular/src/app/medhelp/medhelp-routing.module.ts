@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LayoutPageComponent } from './pages/layout-page/layout-page.component';
 import { SpecialtyPageComponent } from './pages/specialty-page/specialty-page.component';
 import { ListSpecialtiesPageComponent } from './pages/list-specialties/list-specialties.component';
+import { ListCategoriesPageComponent } from './pages/list-categories/list-categories.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
       {
         path: 'list-specialties',
         component: ListSpecialtiesPageComponent
+      },
+      {
+        path: 'list-categories',
+        component: ListCategoriesPageComponent
       },
       {
         path: ':id',

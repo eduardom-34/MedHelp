@@ -1,1 +1,10 @@
-<p>list-categories works!</p>
+<h2>List of medic <strong>categories</strong></h2>
+<mat-divider></mat-divider>
+
+
+<div class="grid mt-2">
+  <div *ngFor="let category of categories"
+   class="col-12 sm:col-4 md:col-3 xl:col-2">
+   <category-card [category]="category" ></category-card>
+  </div>
+</div>

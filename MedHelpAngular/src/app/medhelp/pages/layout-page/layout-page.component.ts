@@ -18,6 +18,11 @@ export class LayoutPageComponent {
       url: './list-specialties'
     },
     {
+      label: 'List of categories',
+      icon: 'label',
+      url: './list-categories'
+    },
+    {
       label: 'Specialty',
       icon: 'add',
       url: './specialty'
@@ -29,10 +34,7 @@ export class LayoutPageComponent {
    ) {}
 
   get user(): Sesion | undefined {
-
-
     return this.authService.currentUser;
-
   }
 
   onLogout(): void {

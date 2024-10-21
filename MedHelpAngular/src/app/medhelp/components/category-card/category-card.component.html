@@ -1,1 +1,11 @@
-<p>category-card works!</p>
+<mat-card>
+  <mat-card-header class="grid bm-8 pt-2">
+    <mat-card-title>{{ category?.name }}</mat-card-title>
+    <mat-card-subtitle>Description:</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content class="mt-2">
+    {{ category?.description }}
+  </mat-card-content>
+
+</mat-card>

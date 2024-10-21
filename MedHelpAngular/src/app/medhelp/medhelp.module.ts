@@ -8,7 +8,7 @@ import { SpecialtyPageComponent } from './pages/specialty-page/specialty-page.co
 import { LayoutPageComponent } from './pages/layout-page/layout-page.component';
 import { ListSpecialtiesPageComponent } from './pages/list-specialties/list-specialties.component';
 import { CardComponent } from './components/specialty-card/specialty-card.component';
-import { ListCategoriesComponent } from './pages/list-categories/list-categories.component';
+import { ListCategoriesPageComponent } from './pages/list-categories/list-categories.component';
 import { CategoryCardComponent } from './components/category-card/category-card.component';
 
 @NgModule({
@@ -17,7 +17,7 @@ import { CategoryCardComponent } from './components/category-card/category-card.
     LayoutPageComponent,
     ListSpecialtiesPageComponent,
     CardComponent,
-    ListCategoriesComponent,
+    ListCategoriesPageComponent,
     CategoryCardComponent,
   ],
   imports: [
