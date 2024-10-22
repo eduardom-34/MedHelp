@@ -19,13 +19,13 @@ export class LayoutPageComponent {
     },
     {
       label: 'List of categories',
-      icon: 'label',
+      icon: 'group',
       url: './list-categories'
     },
     {
-      label: 'Specialty',
-      icon: 'add',
-      url: './specialty'
+      label: 'Appointment',
+      icon: 'calendar_month',
+      url: './appointment'
     }
   ];
 
