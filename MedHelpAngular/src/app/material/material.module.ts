@@ -9,10 +9,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatListModule} from '@angular/material/list';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatCardModule} from '@angular/material/card';
-
-
-
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatSelectModule} from '@angular/material/select';
 
 
 
@@ -26,7 +24,9 @@ import {MatCardModule} from '@angular/material/card';
     MatToolbarModule,
     MatListModule,
     MatDividerModule,
-    MatCardModule
+    MatCardModule,
+    MatDatepickerModule,
+    MatSelectModule
   ]
 })
 export class MaterialModule { }

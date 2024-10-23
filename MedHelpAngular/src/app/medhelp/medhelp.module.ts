@@ -10,6 +10,7 @@ import { CardComponent } from './components/specialty-card/specialty-card.compon
 import { ListCategoriesPageComponent } from './pages/list-categories/list-categories.component';
 import { CategoryCardComponent } from './components/category-card/category-card.component';
 import { AppointmentPageComponent } from './pages/appointment-page/appointment-page.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AppointmentPageComponent } from './pages/appointment-page/appointment-p
   imports: [
     CommonModule,
     MedhelpRoutingModule,
-    MaterialModule
+    MaterialModule,
+    SharedModule
   ]
 })
 export class MedhelpModule { }

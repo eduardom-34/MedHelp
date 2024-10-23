@@ -1,2 +1,40 @@
 <h2>Do you want to schedule an <strong>appointment?</strong></h2>
 <mat-divider></mat-divider>
+
+
+<form [formGroup]="appointmentForm">
+
+  <!-- Select specialty first -->
+   <mat-form-field appearance="fill">
+
+    <mat-label>Select your medical specialty</mat-label>
+    <mat-select formControlName="specialty">
+      <mat-option *ngFor="let specialty of specialties" [value]="specialty.id">
+        {{ specialty.name }}
+      </mat-option>
+    </mat-select>
+
+   </mat-form-field>
+
+   <br>
+   <!-- Select the date -->
+
+   <!-- <mat-form-field appearance="fill"> -->
+    <mat-label>Choose a date</mat-label>
+    <mat-card class="demo-inline-calendar-card">
+      <mat-calendar [(selected)]="selected" (selectedChange)="onDateSelected($event)"></mat-calendar>
+    </mat-card>
+   <!-- </mat-form-field> -->
+
+
+  </form>
+
+  <!-- <button (click)="getformValue()">click me</button> -->
+
+  <!-- <mat-label>Choose a date</mat-label> -->
+
+  <!-- <mat-card class="demo-inline-calendar-card">
+    <mat-calendar [(selected)]="selected"></mat-calendar>
+  </mat-card> -->
+
+  <!-- <p>Selected date: {{selected()}}</p> -->
