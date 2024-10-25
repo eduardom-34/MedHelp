@@ -1,5 +1,41 @@
-.demo-inline-calendar-card {
-  width: 300px;
+/* QUERIES */
+
+/* deafult - small screens */
+.screen-size {
+  width: 350px;
+}
+
+/* Calendar */
+.calendar {
+  background-color: #b3c6b8;
+  color: white;
 }
 
 
+.calendar{
+  color: #fff !important;
+}
+
+
+/* very small screens */
+@media (min-width: 0px) {
+  .screen-size {
+    width: 200px;
+  }
+}
+
+
+/* medium screens */
+@media (min-width: 410px) {
+  .screen-size {
+    width: 400px;
+  }
+}
+
+
+/* big screens */
+@media (min-width: 1024px) {
+  .screen-size {
+    width: 600px;
+  }
+}

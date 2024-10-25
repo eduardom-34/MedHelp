@@ -2,39 +2,26 @@
 <mat-divider></mat-divider>
 
 
-<form [formGroup]="appointmentForm">
+<form [formGroup]="appointmentForm" class="flex align-items-center flex-column">
 
   <!-- Select specialty first -->
-   <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" class="screen-size custom-form-field mb-2 mt-2"
+    >
+        <mat-label>Select your medical specialty</mat-label>
+        <mat-select formControlName="specialty">
+          <mat-option *ngFor="let specialty of specialties" [value]="specialty.id">
+            {{ specialty.name }}
+          </mat-option>
+        </mat-select>
+    </mat-form-field>
 
-    <mat-label>Select your medical specialty</mat-label>
-    <mat-select formControlName="specialty">
-      <mat-option *ngFor="let specialty of specialties" [value]="specialty.id">
-        {{ specialty.name }}
-      </mat-option>
-    </mat-select>
-
-   </mat-form-field>
-
-   <br>
-   <!-- Select the date -->
-
-   <!-- <mat-form-field appearance="fill"> -->
+  <!-- Select the date -->
+  <div class="flex align-items-center flex-column">
     <mat-label>Choose a date</mat-label>
-    <mat-card class="demo-inline-calendar-card">
-      <mat-calendar [(selected)]="selected" (selectedChange)="onDateSelected($event)"></mat-calendar>
+    <mat-card class="screen-size">
+      <mat-calendar [(selected)]="selected" (selectedChange)="onDateSelected($event)"
+      class="calendar border-round-lg"></mat-calendar>
     </mat-card>
-   <!-- </mat-form-field> -->
+  </div>
 
-
-  </form>
-
-  <!-- <button (click)="getformValue()">click me</button> -->
-
-  <!-- <mat-label>Choose a date</mat-label> -->
-
-  <!-- <mat-card class="demo-inline-calendar-card">
-    <mat-calendar [(selected)]="selected"></mat-calendar>
-  </mat-card> -->
-
-  <!-- <p>Selected date: {{selected()}}</p> -->
+</form>
