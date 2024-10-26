@@ -1,6 +1,8 @@
 import { Component, model, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { Specialty } from '../../interfaces/specialty.interface';
+import { SpecialtiesService } from '../../services/specialty.service';
 
 @Component({
   selector: 'app-appointment-page',
@@ -10,11 +12,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 })
 export class AppointmentPageComponent implements OnInit {
 
-  specialties = [
-    { id: 1, name: 'Cardiology' },
-    { id: 2, name: 'Dermatology' },
-    // Agrega más especialidades según tus datos
-  ];
+  public specialties: Specialty[] = [];
 
   doctors = [
     { id: 1, name: 'Dr. Smith', specialtyId: 1 },
@@ -31,17 +29,22 @@ export class AppointmentPageComponent implements OnInit {
 
   public appointmentForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private specialtiesService: SpecialtiesService) {
+
     this.appointmentForm = this.fb.group({
       specialty: ['', Validators.required],
       date: [''],
       time: [''],
       doctor: ['', Validators.required]
     });
+
+
+
   }
 
   ngOnInit(): void {
-    // console.log(this.appointmentForm);
+    this.specialtiesService.getSpecialties()
+      .subscribe( specialties => this.specialties = specialties )
 
    }
 
