@@ -38,8 +38,6 @@ export class AppointmentPageComponent implements OnInit {
       doctor: ['', Validators.required]
     });
 
-
-
   }
 
   ngOnInit(): void {
