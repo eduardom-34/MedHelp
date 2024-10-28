@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { Sesion } from '../../../auth/pages/interfaces/sesion.interface';
 import { AuthService } from '../../../auth/services/auth.service';
+import { SharedService } from '../../../shared/shared.service';
 
 @Component({
   selector: 'app-layout-page',
@@ -30,7 +31,7 @@ export class LayoutPageComponent {
   ];
 
   constructor( private authService: AuthService,
-    private router: Router
+    private router: Router, private sharedService: SharedService
    ) {}
 
   get user(): Sesion | undefined {
@@ -40,6 +41,7 @@ export class LayoutPageComponent {
   onLogout(): void {
     this.authService.logout();
     this.router.navigate(['/auth/login']);
+    this.sharedService.showSnackbar("You logged out");
   }
 
 }

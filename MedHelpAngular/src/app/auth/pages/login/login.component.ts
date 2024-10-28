@@ -3,6 +3,7 @@ import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Login } from '../interfaces/login.interface';
 import { AuthService } from '../../services/auth.service';
+import { SharedService } from '../../../shared/shared.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ export class LoginPageComponent {
 
   public myForm: FormGroup;
 
-  constructor( private authService: AuthService,
+  constructor( private authService: AuthService, private sharedService: SharedService,
     private router: Router,
     private fb: FormBuilder
   ) {
@@ -35,6 +36,7 @@ export class LoginPageComponent {
     this.authService.login(request.username, request.password)
       .subscribe( user => {
         this.router.navigate(['/medhelp/']);
+        this.sharedService.showSnackbar("You are logged in");
       });
 
   }

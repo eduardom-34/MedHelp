@@ -8,8 +8,8 @@ export class SharedService {
 
   constructor( private snackbar: MatSnackBar ) { }
 
-  showSnackbar( message: string, type: string){
-    this.snackbar.open(message, type, {
+  showSnackbar( message: string){
+    this.snackbar.open(message, 'done', {
       duration: 2500,
     })
   }
