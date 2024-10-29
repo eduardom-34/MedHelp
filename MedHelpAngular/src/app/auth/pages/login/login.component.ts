@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Login } from '../interfaces/login.interface';
 import { AuthService } from '../../services/auth.service';
 import { SharedService } from '../../../shared/shared.service';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -27,18 +28,19 @@ export class LoginPageComponent {
 // TODO: show that the password is wrong in case it is
 
   onLogin(): void {
-
-
     const request: Login = {
       username: this.myForm.value.username,
       password: this.myForm.value.password
     }
-    this.authService.login(request.username, request.password)
-      .subscribe( user => {
+    this.authService.login(request.username, request.password).subscribe({
+      next: (resp) => {
         this.router.navigate(['/medhelp/']);
         this.sharedService.showSnackbar("You are logged in");
-      });
-
+      },
+      error: (e) => {
+        this.sharedService.showSnackbar(e.error[0]);
+      }
+    });
   }
 
 }
