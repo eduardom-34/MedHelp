@@ -76,7 +76,9 @@ namespace MedHelpApi.Controllers
             if( !_userService.ValidateEmail(userInsertDto)){
                 return BadRequest(_userService.Errors);
             }
-            
+
+            // Here we want to return a userTokenDto because when a user a new uer registers
+            // then we need them to be automatically logged in without showing any other data other than the username and create a token 
             var userTokenDto = await _userService.Add(userInsertDto);
 
             return CreatedAtAction(nameof(GetByUsername), new { username = userTokenDto.UserName }, userTokenDto);

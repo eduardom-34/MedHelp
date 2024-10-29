@@ -1,6 +1,7 @@
 using System;
 using System.Security.Cryptography;
 using System.Text;
+using AutoMapper;
 using MedHelpApi.DTOs;
 using MedHelpApi.Models;
 using MedHelpApi.Repository;
@@ -14,36 +15,27 @@ namespace MedHelpApi.Services;
 public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto, UserTokenDto>
 {
     private IUserRepository _userRepository;
+    private IMapper _mapper;
     public List<string> Errors { get; }
     private readonly ITokenService<UserDto> _tokenService;
 
     public UserService(
         IUserRepository userRepository,
-        ITokenService<UserDto> tokenService
-
+        ITokenService<UserDto> tokenService,
+        IMapper mapper
     )
     {
         _userRepository = userRepository;
         Errors = new List<string>();
         _tokenService = tokenService;
+        _mapper = mapper;
     }
 
     public async Task<IEnumerable<UserDto>> Get()
     {
         var users = await _userRepository.Get();
 
-        return users.Select(u => new UserDto
-        {
-            Id = u.UserID,
-            FirstName = u.FirstName,
-            LastName = u.LastName,
-            UserName = u.UserName,
-            Email = u.Email,
-            BirthDate = u.BirthDate,
-            SignUpDate = u.SignUpDate,
-            PasswordHash = u.PasswordHash,
-            PasswordSalt = u.PasswordSalt,
-        });
+        return users.Select(u => _mapper.Map<UserDto>(u));
     }
 
     public async Task<UserDto> GetById(int id)
@@ -55,20 +47,7 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto, U
             Errors.Add($"This id {id} was not found");
             return null;
         }
-
-        var userDto = new UserDto
-        {
-            Id = user.UserID,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            UserName = user.UserName,
-            Email = user.Email,
-            BirthDate = user.BirthDate,
-            SignUpDate = user.SignUpDate,
-            PasswordHash = user.PasswordHash,
-            PasswordSalt = user.PasswordSalt
-        };
-
+        var userDto = _mapper.Map<UserDto>(user);
         return userDto;
     }
 
@@ -82,54 +61,25 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto, U
             return null;
         }
 
-        var userDto = new UserDto
-        {
-            Id = user.UserID,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            UserName = user.UserName,
-            Email = user.Email,
-            BirthDate = user.BirthDate,
-            SignUpDate = user.SignUpDate,
-            PasswordHash = user.PasswordHash,
-            PasswordSalt = user.PasswordSalt
-        };
-
+        var userDto = _mapper.Map<UserDto>(user);
         return userDto;
     }
 
     public async Task<UserTokenDto> Add(UserInsertDto userInsertDto)
     {
         using var hmac = new HMACSHA512();
-        var user = new User
-        {
-            FirstName = userInsertDto.FirstName,
-            LastName = userInsertDto.LastName,
-            UserName = userInsertDto.UserName!.ToLower(),
-            Email = userInsertDto.Email,
-            BirthDate = userInsertDto.BirthDate,
-            SignUpDate = DateTime.Now,
-            PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(userInsertDto.Password!)),
-            PasswordSalt = hmac.Key
-        };
+        
+        var user = _mapper.Map<User>(userInsertDto);
+
+        //We only manually add these two, we cannot do it from the mapper directly
+        //The signup date is already signed from the model directly
+        user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(userInsertDto.Password!));
+        user.PasswordSalt = hmac.Key;
 
         await _userRepository.Add(user);
         await _userRepository.Save();
 
-        var userDto = new UserDto
-        {
-            Id = user.UserID,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            UserName = user.UserName,
-            Email = user.Email,
-            BirthDate = user.BirthDate,
-            SignUpDate = DateTime.Now,
-            PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(userInsertDto.Password!)),
-            PasswordSalt = hmac.Key
-
-        };
-
+        var userDto = _mapper.Map<UserDto>(user);
         var userTokenDto = new UserTokenDto
         {
             UserName = user.UserName,
@@ -137,8 +87,8 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto, U
         };
 
         return userTokenDto;
-
     }
+
     public async Task<UserDto> Update(int id, UserUpdateDto userUpdateDto)
     {
         using var hmac = new HMACSHA512();
@@ -146,28 +96,15 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto, U
 
         if (user != null)
         {
-            user.FirstName = userUpdateDto.FirstName;
-            user.LastName = userUpdateDto.LastName;
-            user.UserName = userUpdateDto.UserName;
-            user.Email = userUpdateDto.Email;
-            user.BirthDate = userUpdateDto.BirthDate;
+            user = _mapper.Map<UserUpdateDto, User>(userUpdateDto, user);
+
+            //We only manually add these two, we cannot do it from the mapper directly
             user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(userUpdateDto.Password!));
             user.PasswordSalt = hmac.Key;
 
             await _userRepository.Save();
 
-            var userDto = new UserDto
-            {
-                Id = user.UserID,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                UserName = user.UserName,
-                Email = user.Email,
-                BirthDate = user.BirthDate,
-                PasswordHash = user.PasswordHash,
-                PasswordSalt = user.PasswordSalt
-
-            };
+            var userDto = _mapper.Map<UserDto>(user);
             return userDto;
         }
 
@@ -179,18 +116,8 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto, U
         var user = await _userRepository.GetById(id);
         if (user != null)
         {
-            var userDto = new UserDto
-            {
-                Id = user.UserID,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                UserName = user.UserName,
-                Email = user.Email,
-                BirthDate = user.BirthDate,
-                SignUpDate = user.SignUpDate,
-                PasswordHash = user.PasswordHash,
-                PasswordSalt = user.PasswordSalt
-            };
+
+            var userDto = _mapper.Map<UserDto>(user);
 
             _userRepository.Delete(user);
             await _userRepository.Save();
@@ -201,7 +128,6 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto, U
     }
     public async Task<UserTokenDto> Login(string username, string password)
     {
-        // var user = _userRepository.
         var user = await _userRepository.GetByUsername(username);
 
         if (user != null)
@@ -218,18 +144,7 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto, U
                 }
             }
 
-            var userDto = new UserDto
-            {
-                Id = user.UserID,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                UserName = user.UserName,
-                Email = user.Email,
-                BirthDate = user.BirthDate,
-                SignUpDate = user.SignUpDate,
-                PasswordHash = user.PasswordHash,
-                PasswordSalt = user.PasswordSalt
-            };
+            var userDto = _mapper.Map<UserDto>(user);
 
             var userTokenDto = new UserTokenDto
             {
