@@ -35,10 +35,14 @@ export class LoginPageComponent {
     this.authService.login(request.username, request.password).subscribe({
       next: (resp) => {
         this.router.navigate(['/medhelp/']);
-        this.sharedService.showSnackbar("You are logged in");
+        this.sharedService.showSnackbar("You are logged in", "Nice");
       },
       error: (e) => {
-        this.sharedService.showSnackbar(e.error[0]);
+        this.sharedService.showSnackbar(e.error[0],  "Error");
+        this.myForm.reset({
+          username: '',
+          password: ''
+        })
       }
     });
   }

@@ -41,7 +41,7 @@ export class LayoutPageComponent {
   onLogout(): void {
     this.authService.logout();
     this.router.navigate(['/auth/login']);
-    this.sharedService.showSnackbar("You logged out");
+    this.sharedService.showSnackbar("You logged out", "nice");
   }
 
 }
