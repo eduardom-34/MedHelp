@@ -152,7 +152,6 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto, U
                 Token = _tokenService.CreateToken(userDto)
             };
             return userTokenDto;
-
         }
         Errors.Add("This username does not exist,  please try again or create an account");
         return null;
