@@ -10,7 +10,7 @@ public class UserInsertValidator : AbstractValidator<UserInsertDto>
   {
     RuleFor(x => x.UserName).NotEmpty().WithMessage("The username is required");
     RuleFor(x => x.Password).NotEmpty().WithMessage("The password is required");
-    
+    RuleFor(x => x.Email).NotEmpty().WithMessage("The email is required");    
   }
 
 }
