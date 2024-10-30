@@ -98,7 +98,6 @@ public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto, U
         {
             user = _mapper.Map<UserUpdateDto, User>(userUpdateDto, user);
 
-            //We only manually add these two, we cannot do it from the mapper directly
             user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(userUpdateDto.Password!));
             user.PasswordSalt = hmac.Key;
 
