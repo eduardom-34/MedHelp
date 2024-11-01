@@ -16,5 +16,5 @@ public class Specialty
 
   [ForeignKey("CategoryID")]
   public virtual Category? Category {get; set;}
-
+  public virtual ICollection<Doctor> Doctors { get; set; } = new List<Doctor>();
 }
