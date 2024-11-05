@@ -85,6 +85,7 @@ public static class ServicesAppExtensions
     services.AddScoped<IRepository<Category>, CategoryRepository>();
     // builder.Services.AddScoped<IRepository<User>, UserRepository>();
     services.AddScoped<IUserRepository, UserRepository>();
+    services.AddScoped<IDoctorRepository, DoctorRepository>();
 
     //Validators
     services.AddScoped<IValidator<SpecialtyInsertDto>, SpecialtyInsertValidator>();
@@ -94,6 +95,8 @@ public static class ServicesAppExtensions
     services.AddScoped<IValidator<UserInsertDto>, UserInsertValidator>();
     services.AddScoped<IValidator<UserUpdateDto>, UserUpdateValidator>();
     services.AddScoped<IValidator<UserLoginDto>, UserLoginValidator>();
+    services.AddScoped<IValidator<DoctorInsertDto>, DoctorInsertValidator>();
+    services.AddScoped<IValidator<DoctorUpdateDto>, DoctorUpdateValidator>();
 
 
     // Mappers

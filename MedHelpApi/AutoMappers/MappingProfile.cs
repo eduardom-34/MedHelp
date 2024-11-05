@@ -31,5 +31,9 @@ public class MappingProfile : Profile
     .ForMember(dto => dto.Id,
               m => m.MapFrom(u => u.UserID));
     CreateMap<UserUpdateDto, User>();
+
+    //Doctors mapping
+    //Origen de informacion, Devolver Datos
+    
   }
 }
