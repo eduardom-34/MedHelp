@@ -34,6 +34,10 @@ public class MappingProfile : Profile
 
     //Doctors mapping
     //Origen de informacion, Devolver Datos
+    CreateMap<DoctorInsertDto, Doctor>();
+    CreateMap<Doctor, DoctorDto>()
+    .ForMember(dto => dto.Id,
+              m => m.MapFrom(d => d.DoctorID));
     
   }
 }

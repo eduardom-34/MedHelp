@@ -32,9 +32,10 @@ public class DoctorService : IDoctorService
     public List<string> Errors => throw new NotImplementedException();
 
 
-    public Task<IEnumerable<DoctorDto>> Get()
+    public async Task<IEnumerable<DoctorDto>> Get()
     {
-        throw new NotImplementedException();
+        var doctors = await _doctorRepository.Get();
+        return doctors.Select(d => _mapper.Map<DoctorDto>(d));
     }
 
     public Task<DoctorDto> GetById(int id)
