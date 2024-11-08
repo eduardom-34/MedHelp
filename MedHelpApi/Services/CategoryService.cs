@@ -63,10 +63,7 @@ public class CategoryService : ICategoryService
             // category.Name = categoryUpdateDto.Name;
             // category.Description = categoryUpdateDto.Description;
 
-            category = _mapper.Map<CategoryUpdateDto, Category>(categoryUpdateDto, category); 
-            // We need to fix this, when we use the mapper, the update endpoint does not work
-
-
+            category = _mapper.Map<CategoryUpdateDto, Category>(categoryUpdateDto, category);
             _categoryRepository.Update(category);
             await _categoryRepository.Save();
 

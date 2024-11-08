@@ -38,6 +38,7 @@ public class MappingProfile : Profile
     CreateMap<Doctor, DoctorDto>()
     .ForMember(dto => dto.Id,
               m => m.MapFrom(d => d.DoctorID));
+    CreateMap<DoctorUpdateDto, Doctor>();
     
   }
 }

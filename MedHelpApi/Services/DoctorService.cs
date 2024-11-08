@@ -17,12 +17,13 @@ public class DoctorService : IDoctorService
     private DoctorInsertValidator _doctorInsertValidator;
     private DoctorUpdateValidator _doctorUpdateValidator;
 
-    public DoctorService( 
-        IDoctorRepository doctorRepository, 
+    public DoctorService(
+        IDoctorRepository doctorRepository,
         IMapper mapper,
         DoctorInsertValidator doctorInsertValidator,
         DoctorUpdateValidator doctorUpdateValidator
-         ) {
+         )
+    {
         _doctorRepository = doctorRepository;
         _mapper = mapper;
         _doctorInsertValidator = doctorInsertValidator;
@@ -38,26 +39,66 @@ public class DoctorService : IDoctorService
         return doctors.Select(d => _mapper.Map<DoctorDto>(d));
     }
 
-    public Task<DoctorDto> GetById(int id)
+    public async Task<DoctorDto> GetById(int id)
     {
-        throw new NotImplementedException();
-    }
-    public Task<DoctorDto> Add(DoctorInsertDto categoryInsertDto)
-    {
-        throw new NotImplementedException();
-    }
+        var doctor = await _doctorRepository.GetById(id);
 
-    public Task<DoctorDto> Update(int id, DoctorUpdateDto categoryUpdateDto)
-    {
-        throw new NotImplementedException();
-    }
-    public Task<DoctorDto> Delete(int id)
-    {
-        throw new NotImplementedException();
-    }
+        if (doctor != null)
+        {
+            var doctorDto = _mapper.Map<DoctorDto>(doctor);
+
+            return doctorDto;
+        }
+        return null;
 
 
-    public bool Validate(DoctorInsertDto categoryInsertDto)
+    }
+    public async Task<DoctorDto> Add(DoctorInsertDto doctorInsertDto)
+    {
+
+        var doctor = _mapper.Map<Doctor>(doctorInsertDto);
+        await _doctorRepository.Add(doctor);
+        await _doctorRepository.Save();
+
+        var doctorDto = _mapper.Map<DoctorDto>(doctor);
+        return doctorDto;
+    }
+
+    public async Task<DoctorDto> Update(int id, DoctorUpdateDto doctorUpdateDto)
+    {
+        var doctor = await _doctorRepository.GetById(id);
+
+        if (doctor != null)
+        {
+            doctor = _mapper.Map<DoctorUpdateDto, Doctor>(doctorUpdateDto, doctor);
+            _doctorRepository.Update(doctor);
+            await _doctorRepository.Save();
+
+            var doctorDto = _mapper.Map<DoctorDto>(doctor);
+            return doctorDto;
+        }
+
+        return null;
+    }
+    public async Task<DoctorDto> Delete(int id)
+    {
+        var doctor = await _doctorRepository.GetById(id);
+
+        if( doctor != null)
+        {
+            var doctorDto = _mapper.Map<DoctorDto>(doctor);
+
+            _doctorRepository.Delete(doctor);
+            await _doctorRepository.Save();
+
+            return doctorDto;
+        }
+
+        return null;
+    }
+
+
+    public bool Validate(DoctorInsertDto doctorInsertDto)
     {
         throw new NotImplementedException();
     }
