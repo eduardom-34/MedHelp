@@ -4,5 +4,5 @@ namespace MedHelpApi.DTOs;
 
 public class TokenRequestDto
 {
-  public string? Token { get; set; }
+  public string Token { get; set; }
 }

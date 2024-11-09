@@ -16,6 +16,7 @@ public class DoctorService : IDoctorService
     private IMapper _mapper;
     private DoctorInsertValidator _doctorInsertValidator;
     private DoctorUpdateValidator _doctorUpdateValidator;
+    public List<string> Errors { get; }
 
     public DoctorService(
         IDoctorRepository doctorRepository,
@@ -28,10 +29,8 @@ public class DoctorService : IDoctorService
         _mapper = mapper;
         _doctorInsertValidator = doctorInsertValidator;
         _doctorUpdateValidator = doctorUpdateValidator;
+        Errors = new List<string>();
     }
-
-    public List<string> Errors => throw new NotImplementedException();
-
 
     public async Task<IEnumerable<DoctorDto>> Get()
     {
@@ -100,11 +99,21 @@ public class DoctorService : IDoctorService
 
     public bool Validate(DoctorInsertDto doctorInsertDto)
     {
-        throw new NotImplementedException();
+        if( _doctorRepository.Search(d => d.UserName == doctorInsertDto.UserName).Count() > 0 ){
+            Errors.Add("This username already exists");
+            return false;
+        }
+        return true;
     }
 
     public bool Validate(DoctorUpdateDto doctorUpdateDto)
     {
-        throw new NotImplementedException();
+        if(_doctorRepository.Search(d => d.UserName == doctorUpdateDto.UserName 
+        && d.DoctorID != doctorUpdateDto.Id).Count() > 0){
+            Errors.Add("This username already exists");
+            return false;
+        }
+        
+        return true;
     }
 }
