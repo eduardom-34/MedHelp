@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Net.Http.Headers;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using FluentValidation;
@@ -58,6 +59,26 @@ namespace MedHelpApi.Controllers
             var doctorDto = await _doctorService.Add(doctorInsertDto);
 
             return CreatedAtAction(nameof(GetById), new {id = doctorDto.Id}, doctorDto );
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<DoctorDto>> Update(DoctorUpdateDto doctorUpdateDto, int id)
+        {
+            var result = _doctorUpdateValidator.Validate(doctorUpdateDto);
+
+            if(!result.IsValid)
+            {
+                return BadRequest(result.Errors);
+            }
+
+            if( _doctorService.Validate(doctorUpdateDto) == false )
+            {
+                return BadRequest(_doctorService.Errors);
+            }
+
+            var doctorDto = await _doctorService.Update(id, doctorUpdateDto);
+
+            return doctorDto == null ? NotFound() : Ok(doctorDto);
 
         }
     }

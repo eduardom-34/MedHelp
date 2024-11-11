@@ -12,5 +12,5 @@ public class DoctorInsertDto
   public DateOnly BirthDate { get; set; }
   public DateTime SignUpDate { get; set; }
   public string Password { get; set; }
-  public virtual List<Specialty> Specialties {get; set;} = new List<Specialty>();
+  public virtual List<int> SpecialtyIds {get; set;} = new List<int>();
 }
