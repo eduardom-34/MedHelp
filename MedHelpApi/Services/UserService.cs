@@ -6,10 +6,6 @@ using MedHelpApi.DTOs;
 using MedHelpApi.Models;
 using MedHelpApi.Repository;
 using MedHelpApi.Services.Interfaces;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.Extensions.Configuration.UserSecrets;
-using Microsoft.Extensions.ObjectPool;
-
 namespace MedHelpApi.Services;
 
 public class UserService : IUserService<UserDto, UserInsertDto, UserUpdateDto, UserTokenDto>

@@ -10,11 +10,11 @@ namespace MedHelpApi.Services;
 
 public class SpecialtyService : ICommonService<SpecialtyDto, SpecialtyInsertDto, SpecialtyUpdateDto>
 {
-    private IRepository<Specialty> _specialtyRepository;
+    private ISpecialtyRepository _specialtyRepository;
     private IMapper _mapper;
     public List<string> Errors { get; }
 
-    public SpecialtyService(IRepository<Specialty> specialtyRepository,
+    public SpecialtyService(ISpecialtyRepository specialtyRepository,
         IMapper mapper
     )
     {

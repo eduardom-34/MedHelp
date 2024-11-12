@@ -1,4 +1,6 @@
 using System;
+using System.Security.Cryptography;
+using System.Text;
 using AutoMapper;
 using MedHelpApi.DTOs;
 using MedHelpApi.Models;
@@ -13,6 +15,7 @@ public class DoctorService : IDoctorService
 {
 
     private IDoctorRepository _doctorRepository;
+    private ISpecialtyRepository _specialtyRepository;
     private IMapper _mapper;
     private DoctorInsertValidator _doctorInsertValidator;
     private DoctorUpdateValidator _doctorUpdateValidator;
@@ -20,12 +23,14 @@ public class DoctorService : IDoctorService
 
     public DoctorService(
         IDoctorRepository doctorRepository,
+        ISpecialtyRepository specialtyRepository,
         IMapper mapper,
         DoctorInsertValidator doctorInsertValidator,
         DoctorUpdateValidator doctorUpdateValidator
          )
     {
         _doctorRepository = doctorRepository;
+        _specialtyRepository = specialtyRepository;
         _mapper = mapper;
         _doctorInsertValidator = doctorInsertValidator;
         _doctorUpdateValidator = doctorUpdateValidator;
@@ -54,8 +59,25 @@ public class DoctorService : IDoctorService
     }
     public async Task<DoctorDto> Add(DoctorInsertDto doctorInsertDto)
     {
+        using var hmac = new HMACSHA512();
+
+        if( doctorInsertDto.SpecialtyIds == null || doctorInsertDto.SpecialtyIds.Any())
+        {
+            Errors.Add("SpecialtyIds is required");
+            return null;
+        }
+
+        // if( _specialtyRepository.Get)
+
+        
+
+        
 
         var doctor = _mapper.Map<Doctor>(doctorInsertDto);
+
+        doctor.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(doctorInsertDto.Password!));
+        doctor.PasswordSalt = hmac.Key;
+
         await _doctorRepository.Add(doctor);
         await _doctorRepository.Save();
 

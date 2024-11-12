@@ -81,7 +81,8 @@ public static class ServicesAppExtensions
 
 
     //Repository
-    services.AddScoped<IRepository<Specialty>, SpecialtyRepository>();
+    // services.AddScoped<IRepository<Specialty>, SpecialtyRepository>();
+    services.AddScoped<ISpecialtyRepository, SpecialtyRepository>();
     services.AddScoped<IRepository<Category>, CategoryRepository>();
     // builder.Services.AddScoped<IRepository<User>, UserRepository>();
     services.AddScoped<IUserRepository, UserRepository>();

@@ -6,7 +6,7 @@ using Microsoft.VisualBasic.FileIO;
 
 namespace MedHelpApi.Repository;
 
-public class SpecialtyRepository : IRepository<Specialty>
+public class SpecialtyRepository : ISpecialtyRepository
 {
     private MedHelpContext _context;
 
@@ -20,7 +20,7 @@ public class SpecialtyRepository : IRepository<Specialty>
 
     public async Task<Specialty> GetById(int id)
         => await _context.Specialties.FindAsync(id);
-    
+
     public async Task Add(Specialty specialty)
         => await _context.Specialties.AddAsync(specialty);
 
@@ -35,6 +35,21 @@ public class SpecialtyRepository : IRepository<Specialty>
 
     public async Task Save()
         => await _context.SaveChangesAsync();
+
+    public async Task<List<int>> GetValidSpecialtyIds(IEnumerable<int> specialtyIds)
+    {
+        return await _context.Specialties
+        .Where(s => specialtyIds.Contains(s.SpecialtyID))
+        .Select(s => s.SpecialtyID)
+        .ToListAsync();
+    }
+    public async Task<List<Specialty>> GetSpecialtiesByIds(IEnumerable<int> specialtyIds)
+    {
+        return await _context.Specialties
+            .Where(s => specialtyIds.Contains(s.SpecialtyID))
+            .ToListAsync();
+    }
+
 
     public IEnumerable<Specialty> Search(Func<Specialty, bool> filter)
     => _context.Specialties.Where(filter).ToList();
