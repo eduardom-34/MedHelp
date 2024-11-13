@@ -12,7 +12,9 @@ public class DoctorRepository : IDoctorRepository
     _context = context;
   }
     public async Task<IEnumerable<Doctor>> Get()
-        => await _context.Doctors.ToListAsync();
+        => await _context.Doctors
+        .Include(d => d.Specialties)
+        .ToListAsync();
 
     public async Task<Doctor> GetById(int id)
         => await _context.Doctors.FindAsync(id);

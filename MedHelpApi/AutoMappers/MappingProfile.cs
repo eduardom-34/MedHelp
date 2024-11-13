@@ -41,7 +41,11 @@ public class MappingProfile : Profile
 
     CreateMap<Doctor, DoctorDto>()
     .ForMember(dto => dto.Id,
-              m => m.MapFrom(d => d.DoctorID));
+              m => m.MapFrom(d => d.DoctorID))
+    .ForMember(dto => dto.SpecialtyNames,
+              m => m.MapFrom(d => d.Specialties.Select(s => s.Name)));
+
+
     CreateMap<DoctorUpdateDto, Doctor>();
     
   }
