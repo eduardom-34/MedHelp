@@ -10,30 +10,25 @@ using MedHelpApi.Validators;
 
 namespace MedHelpApi.Services;
 
-public class DoctorService : IDoctorService
+public class DoctorService : IDoctorService<DoctorDto, DoctorInsertDto, DoctorUpdateDto>
 
 {
 
     private IDoctorRepository _doctorRepository;
     private ISpecialtyRepository _specialtyRepository;
     private IMapper _mapper;
-    private DoctorInsertValidator _doctorInsertValidator;
-    private DoctorUpdateValidator _doctorUpdateValidator;
+    
     public List<string> Errors { get; }
 
     public DoctorService(
         IDoctorRepository doctorRepository,
         ISpecialtyRepository specialtyRepository,
-        IMapper mapper,
-        DoctorInsertValidator doctorInsertValidator,
-        DoctorUpdateValidator doctorUpdateValidator
+        IMapper mapper
          )
     {
         _doctorRepository = doctorRepository;
         _specialtyRepository = specialtyRepository;
         _mapper = mapper;
-        _doctorInsertValidator = doctorInsertValidator;
-        _doctorUpdateValidator = doctorUpdateValidator;
         Errors = new List<string>();
     }
 
@@ -61,27 +56,33 @@ public class DoctorService : IDoctorService
     {
         using var hmac = new HMACSHA512();
 
-        if( doctorInsertDto.SpecialtyIds == null || doctorInsertDto.SpecialtyIds.Any())
+        if( doctorInsertDto.SpecialtyIds == null || !doctorInsertDto.SpecialtyIds.Any())
         {
             Errors.Add("SpecialtyIds is required");
             return null;
         }
 
-        // if( _specialtyRepository.Get)
-
+        if( await _specialtyRepository.GetValidSpecialtyIds(doctorInsertDto.SpecialtyIds) == null)
+        {
+            Errors.Add("This specialty is not valid");
+            return null;
+        }
         
+        var validSpecialtyIds = await _specialtyRepository.GetValidSpecialtyIds(doctorInsertDto.SpecialtyIds);
 
-        
+        var specialties = await _specialtyRepository.GetSpecialtiesByIds(validSpecialtyIds);
 
         var doctor = _mapper.Map<Doctor>(doctorInsertDto);
-
+        doctor.Specialties = await _specialtyRepository.GetSpecialtiesByIds(doctorInsertDto.SpecialtyIds);
         doctor.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(doctorInsertDto.Password!));
         doctor.PasswordSalt = hmac.Key;
 
         await _doctorRepository.Add(doctor);
         await _doctorRepository.Save();
 
+        //This mapper is for the return answer
         var doctorDto = _mapper.Map<DoctorDto>(doctor);
+
         return doctorDto;
     }
 

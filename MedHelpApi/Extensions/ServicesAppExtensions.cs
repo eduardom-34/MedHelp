@@ -52,8 +52,6 @@ public static class ServicesAppExtensions
     var allowedOrigins = config.GetValue<string>("AllowedOrigins")!.Split(",");
 
 
-    //Token Services
-    services.AddScoped<ITokenService<UserDto>, TokenService>();
 
     //Entity Framework Context
     services.AddDbContext<MedHelpContext>(options =>
@@ -77,7 +75,10 @@ public static class ServicesAppExtensions
     services.AddKeyedScoped<ICommonService<SpecialtyDto, SpecialtyInsertDto, SpecialtyUpdateDto>, SpecialtyService>("specialtyService");
     services.AddScoped<ICategoryService, CategoryService>();
     services.AddKeyedScoped<IUserService<UserDto, UserInsertDto, UserUpdateDto, UserTokenDto>, UserService>("userService");
-
+    //Token Services
+    services.AddScoped<ITokenService<UserDto>, TokenService>();
+    //Doctor Service
+    services.AddKeyedScoped<IDoctorService<DoctorDto, DoctorInsertDto, DoctorUpdateDto>, DoctorService>("doctorService");
 
 
     //Repository

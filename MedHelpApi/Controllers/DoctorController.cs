@@ -16,10 +16,11 @@ namespace MedHelpApi.Controllers
     [ApiController]
     public class DoctorController : ControllerBase
     {
-        private IDoctorService _doctorService;
+        private IDoctorService<DoctorDto, DoctorInsertDto, DoctorUpdateDto> _doctorService;
         private IValidator<DoctorInsertDto> _doctorInsertValidator;
         private IValidator<DoctorUpdateDto> _doctorUpdateValidator;
-        public DoctorController(IDoctorService doctorService,
+        public DoctorController(
+        [FromKeyedServices("doctorService")]IDoctorService<DoctorDto, DoctorInsertDto, DoctorUpdateDto> doctorService,
         IValidator<DoctorInsertDto> doctorInsertValidator,
         IValidator<DoctorUpdateDto> doctorUpdateValidator
         )
@@ -58,7 +59,7 @@ namespace MedHelpApi.Controllers
 
             var doctorDto = await _doctorService.Add(doctorInsertDto);
 
-            return CreatedAtAction(nameof(GetById), new {id = doctorDto.Id}, doctorDto );
+            return doctorDto == null ? BadRequest(_doctorService.Errors):  CreatedAtAction(nameof(GetById), new {id = doctorDto.Id}, doctorDto );
         }
 
         [HttpPut("{id}")]

@@ -3,15 +3,15 @@ using MedHelpApi.DTOs;
 
 namespace MedHelpApi.Services.Interfaces;
 
-public interface IDoctorService
+public interface IDoctorService<T, TI, TU>
 {
   public List<string> Errors { get; }
-  Task<IEnumerable<DoctorDto>> Get();
-  Task<DoctorDto> GetById(int id);
-  Task<DoctorDto> Add(DoctorInsertDto doctorInsertDto);
-  Task<DoctorDto> Update(int id, DoctorUpdateDto doctorUpdateDto);
-  Task<DoctorDto> Delete(int id);
+  Task<IEnumerable<T>> Get();
+  Task<T> GetById(int id);
+  Task<T> Add(TI doctorInsertDto);
+  Task<T> Update(int id, TU doctorUpdateDto);
+  Task<T> Delete(int id);
 
-  bool Validate(DoctorInsertDto doctorInsertDto);
-  bool Validate(DoctorUpdateDto doctorUpdateDto);
+  bool Validate(TI doctorInsertDto);
+  bool Validate(TU doctorUpdateDto);
 }
