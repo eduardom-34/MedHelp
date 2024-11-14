@@ -62,13 +62,14 @@ public class DoctorService : IDoctorService<DoctorDto, DoctorInsertDto, DoctorUp
             return null;
         }
 
-        if( await _specialtyRepository.GetValidSpecialtyIds(doctorInsertDto.SpecialtyIds) == null)
+        var validSpecialtyIds = await _specialtyRepository.GetValidSpecialtyIds(doctorInsertDto.SpecialtyIds);
+
+        if( validSpecialtyIds.Count < doctorInsertDto.SpecialtyIds.Count )
         {
-            Errors.Add("This specialty is not valid");
+            Errors.Add("One or more specialties you entered are not valid");
             return null;
         }
         
-        var validSpecialtyIds = await _specialtyRepository.GetValidSpecialtyIds(doctorInsertDto.SpecialtyIds);
 
         var specialties = await _specialtyRepository.GetSpecialtiesByIds(validSpecialtyIds);
 
