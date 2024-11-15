@@ -1,5 +1,6 @@
 <div class="flex flex-column">
 
+  <shared-loading-spinner *ngIf="isLoading"></shared-loading-spinner>
   <span class="test-lg bt-4">Login</span>
 
   <form [formGroup]="myForm" autocomplete="off">

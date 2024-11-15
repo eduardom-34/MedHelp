@@ -14,6 +14,7 @@ import { catchError, of } from 'rxjs';
 export class LoginPageComponent {
 
   public myForm: FormGroup;
+  public isLoading: boolean = false;
 
   constructor( private authService: AuthService, private sharedService: SharedService,
     private router: Router,
@@ -28,6 +29,9 @@ export class LoginPageComponent {
 // TODO: show that the password is wrong in case it is
 
   onLogin(): void {
+
+    this.isLoading = true;
+
     const request: Login = {
       username: this.myForm.value.username,
       password: this.myForm.value.password
@@ -36,9 +40,11 @@ export class LoginPageComponent {
       next: (resp) => {
         this.router.navigate(['/medhelp/']);
         this.sharedService.showSnackbar("You are logged in", "Nice");
+        this.isLoading = false;
       },
       error: (e) => {
         this.sharedService.showSnackbar(e.error[0],  "Error");
+        this.isLoading = false;
         this.myForm.reset({
           username: '',
           password: ''
