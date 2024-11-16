@@ -3,17 +3,19 @@
   <shared-loading-spinner *ngIf="isLoading"></shared-loading-spinner>
   <span class="test-lg bt-4">Login</span>
 
-  <form [formGroup]="myForm" autocomplete="off">
+  <form [formGroup]="myForm" autocomplete="off" novalidate>
     <div class="flex flex-column">
 
       <mat-form-field class="mt-2">
         <mat-label>Username</mat-label>
         <input type="text" matInput placeholder="Username" formControlName="username">
+        <mat-error *ngIf="myForm.get('username')?.hasError('required')">Username is required</mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Password</mat-label>
         <input type="password" matInput placeholder="Password" formControlName="password">
+        <mat-error *ngIf="myForm.get('password')?.hasError('required')">Password is required</mat-error>
       </mat-form-field>
     </div>
 

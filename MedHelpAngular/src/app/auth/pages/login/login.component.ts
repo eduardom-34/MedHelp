@@ -30,12 +30,18 @@ export class LoginPageComponent {
 
   onLogin(): void {
 
+    if (this.myForm.invalid) {
+      this.sharedService.showSnackbar("Please fill out your credentials", "Error");
+      return;
+    }
+
     this.isLoading = true;
 
     const request: Login = {
       username: this.myForm.value.username,
       password: this.myForm.value.password
     }
+
     this.authService.login(request.username, request.password).subscribe({
       next: (resp) => {
         this.router.navigate(['/medhelp/']);
