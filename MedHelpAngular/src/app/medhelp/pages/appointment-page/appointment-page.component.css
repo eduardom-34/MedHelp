@@ -12,9 +12,11 @@
 }
 
 
+
 .calendar{
   color: #fff !important;
 }
+
 
 
 /* very small screens */
@@ -36,6 +38,6 @@
 /* big screens */
 @media (min-width: 1024px) {
   .screen-size {
-    width: 600px;
+    width: 800px;
   }
 }

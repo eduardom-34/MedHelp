@@ -1,0 +1,9 @@
+.doctor-card {
+  max-width: 200px;
+}
+
+.card-header{
+  display: flexbox;
+  align-items: center;
+  justify-content: center
+}

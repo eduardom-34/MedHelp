@@ -11,6 +11,7 @@ import { ListCategoriesPageComponent } from './pages/list-categories/list-catego
 import { CategoryCardComponent } from './components/category-card/category-card.component';
 import { AppointmentPageComponent } from './pages/appointment-page/appointment-page.component';
 import { SharedModule } from '../shared/shared.module';
+import { DoctorCardComponent } from './components/doctor-card/doctor-card.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { SharedModule } from '../shared/shared.module';
     ListCategoriesPageComponent,
     CategoryCardComponent,
     AppointmentPageComponent,
+    DoctorCardComponent,
   ],
   imports: [
     CommonModule,

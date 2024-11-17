@@ -1,22 +1,28 @@
 <h2>Do you want to schedule an <strong>appointment?</strong></h2>
 <mat-divider></mat-divider>
 
+<mat-tab-group>
+  <mat-tab label="First"> Content 1 </mat-tab>
+  <mat-tab label="Second"> Content 2 </mat-tab>
+  <mat-tab label="Third"> Content 3 </mat-tab>
+</mat-tab-group>
 
-<form [formGroup]="appointmentForm" class="flex align-items-center flex-column">
 
-  <!-- Select specialty first -->
+<!-- <form [formGroup]="appointmentForm" class="flex align-items-center flex-column">
+
+  Select specialty first //Comment
     <mat-form-field appearance="fill" class="screen-size custom-form-field mb-2 mt-2"
     >
         <mat-label>Select your medical specialty</mat-label>
-        <mat-select formControlName="specialty">
+        <mat-select formControlName="specialty" class="custom-mat-select">
           <mat-option *ngFor="let specialty of specialties" [value]="specialty.id">
             {{ specialty.name }}
           </mat-option>
         </mat-select>
     </mat-form-field>
 
-  <!-- Select the date -->
-  <div class="flex align-items-center flex-column">
+  Select the date //Comment
+  <div class="flex align-items-center flex-column mb-2">
     <mat-label>Choose a date</mat-label>
     <mat-card class="screen-size">
       <mat-calendar [(selected)]="selected" (selectedChange)="onDateSelected($event)"
@@ -24,4 +30,7 @@
     </mat-card>
   </div>
 
-</form>
+  Select doctor //Comment
+   <doctor-card></doctor-card>
+
+</form> -->
