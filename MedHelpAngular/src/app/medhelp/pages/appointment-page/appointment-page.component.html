@@ -6,20 +6,6 @@
 
     <mat-tab label="Select the specialty">
 
-      <!-- Select specialty first //Comment -->
-
-      <!-- <mat-form-field appearance="fill" class="screen-size custom-form-field p-2">
-
-        <mat-label>Select your medical specialty</mat-label>
-        <mat-select formControlName="specialty" class="custom-mat-select">
-          <mat-option *ngFor="let specialty of specialties" [value]="specialty.id">
-            {{ specialty.name }}
-          </mat-option>
-        </mat-select>
-
-
-      </mat-form-field> -->
-
       <div class="slider-container" *ngFor="let category of categories">
 
         <div class="card-container">
@@ -32,9 +18,6 @@
         </div>
 
       </div>
-
-
-
 
     </mat-tab>
 
