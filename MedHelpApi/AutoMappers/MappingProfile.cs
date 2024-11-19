@@ -14,7 +14,9 @@ public class MappingProfile : Profile
     CreateMap<SpecialtyInsertDto, Specialty>();
     CreateMap<Specialty, SpecialtyDto>()
       .ForMember(dto => dto.Id,
-                m => m.MapFrom(s => s.SpecialtyID));
+                m => m.MapFrom(s => s.SpecialtyID))
+      .ForMember(dto => dto.DoctorID,
+                  m => m.MapFrom(s => s.Doctors.Select(d => d.DoctorID)));
     CreateMap<SpecialtyUpdateDto, Specialty>();
 
     //Categories mapping

@@ -16,7 +16,9 @@ public class SpecialtyRepository : ISpecialtyRepository
     }
 
     public async Task<IEnumerable<Specialty>> Get()
-        => await _context.Specialties.ToListAsync();
+        => await _context.Specialties
+        .Include(s => s.Doctors)
+        .ToListAsync();
 
     public async Task<Specialty> GetById(int id)
         => await _context.Specialties.FindAsync(id);

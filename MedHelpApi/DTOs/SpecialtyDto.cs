@@ -8,5 +8,6 @@ public class SpecialtyDto
   public string Name { get; set; }
   public string Description { get; set; }
   public int CategoryID { get; set; }
+  public List<int> DoctorID { get; set; }
 
 }
