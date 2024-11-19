@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { Specialty } from '../../interfaces/specialty.interface';
 import { SpecialtiesService } from '../../services/specialty.service';
+import { Category } from '../../interfaces/cateogry.interface';
+import { CategoriesServices } from '../../services/category.service';
 
 @Component({
   selector: 'app-appointment-page',
@@ -13,6 +15,7 @@ import { SpecialtiesService } from '../../services/specialty.service';
 export class AppointmentPageComponent implements OnInit {
 
   public specialties: Specialty[] = [];
+  public categories: Category[] = [];
 
   doctors = [
     { id: 1, name: 'Dr. Smith', specialtyId: 1 },
@@ -29,7 +32,7 @@ export class AppointmentPageComponent implements OnInit {
 
   public appointmentForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private specialtiesService: SpecialtiesService) {
+  constructor(private fb: FormBuilder, private specialtiesService: SpecialtiesService, private categoriesServices: CategoriesServices) {
 
     this.appointmentForm = this.fb.group({
       specialty: ['', Validators.required],
@@ -44,6 +47,8 @@ export class AppointmentPageComponent implements OnInit {
     this.specialtiesService.getSpecialties()
       .subscribe( specialties => this.specialties = specialties )
 
+    this.categoriesServices.getCategories()
+      .subscribe( categories => this.categories = categories )
    }
 
   onDateSelected(selectedDate: Date): void {

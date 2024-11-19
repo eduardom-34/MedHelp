@@ -11,6 +11,21 @@
   color: white;
 }
 
+.slider-container {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.card-container{
+  flex: 0 0 auto;
+  width: 150px;
+  height: auto;
+
+}
+
 
 
 .calendar{
