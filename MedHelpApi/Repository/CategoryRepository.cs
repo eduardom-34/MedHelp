@@ -15,7 +15,9 @@ public class CategoryRepository : IRepository<Category>
     }
 
     public async Task<IEnumerable<Category>> Get()
-      => await _context.Categories.ToListAsync();
+      => await _context.Categories
+      .Include(c => c.Specialties)
+      .ToListAsync();
 
     public async Task<Category> GetById(int id)
       => await _context.Categories.FindAsync(id);

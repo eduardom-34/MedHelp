@@ -74,7 +74,7 @@ public class DoctorService : IDoctorService<DoctorDto, DoctorInsertDto, DoctorUp
         var specialties = await _specialtyRepository.GetSpecialtiesByIds(validSpecialtyIds);
 
         var doctor = _mapper.Map<Doctor>(doctorInsertDto);
-        doctor.Specialties = await _specialtyRepository.GetSpecialtiesByIds(doctorInsertDto.SpecialtyIds);
+        doctor.Specialties = specialties;
         doctor.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(doctorInsertDto.Password!));
         doctor.PasswordSalt = hmac.Key;
 

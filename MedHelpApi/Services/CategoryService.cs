@@ -12,16 +12,19 @@ namespace MedHelpApi.Services;
 public class CategoryService : ICategoryService
 {
     private IRepository<Category> _categoryRepository;
+    private ISpecialtyRepository _specialtyRepository;
     private IMapper _mapper;
     public List<string> Errors { get; }
 
     public CategoryService(
         IRepository<Category> categoryRepository,
+        ISpecialtyRepository specialtyRepository,
         IMapper mapper)
     {
         _categoryRepository = categoryRepository;
         _mapper = mapper;
         Errors = new List<string>();
+        _specialtyRepository = specialtyRepository;
     }
     public async Task<IEnumerable<CategoryDto>> Get()
     {
@@ -44,7 +47,25 @@ public class CategoryService : ICategoryService
     }
     public async Task<CategoryDto> Add(CategoryInsertDto categoryInsertDto)
     {
+
+        //see if the user added an specialty
+        if(categoryInsertDto.SpecialtyID == null)
+        {
+            Errors.Add("At least one Specialty is required");
+            return null;
+        }
+
+        var validSpecialtyIds = await _specialtyRepository.GetValidSpecialtyIds(categoryInsertDto.SpecialtyID);
+
+        if(validSpecialtyIds.Count < categoryInsertDto.SpecialtyID.Count ){
+            Errors.Add("One or more specialties you entered are not valid");
+            return null;
+        }
+
+        var specialties = await _specialtyRepository.GetSpecialtiesByIds(validSpecialtyIds);
+
         var category = _mapper.Map<Category>(categoryInsertDto);
+        category.Specialties = specialties;
 
         await _categoryRepository.Add(category);
         await _categoryRepository.Save();

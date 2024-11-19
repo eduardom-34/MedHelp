@@ -57,8 +57,8 @@ namespace MedHelpApi.Controllers
             
             var categoryDto = await _categoryService.Add(categoryInsertDto);
             
-            return CreatedAtAction(nameof(GetById), new { id = categoryDto.Id}, categoryDto);
-
+            // return CreatedAtAction(nameof(GetById), new { id = categoryDto.Id}, categoryDto);
+            return categoryDto == null ? BadRequest(_categoryService.Errors): CreatedAtAction(nameof(GetById), new {id = categoryDto.Id}, categoryDto);
         }
 
         [HttpPut("{id}")]

@@ -23,7 +23,9 @@ public class MappingProfile : Profile
     CreateMap<CategoryInsertDto, Category>();
     CreateMap<Category, CategoryDto>()
           .ForMember(dto => dto.Id,
-                    m => m.MapFrom(c => c.CategoryID));
+                    m => m.MapFrom(c => c.CategoryID))
+          .ForMember(dto => dto.SpecialtyID,
+                    m => m.MapFrom(c => c.Specialties.Select(s => s.SpecialtyID)));
     CreateMap<CategoryUpdateDto, Category>();
 
     //Users mapping
