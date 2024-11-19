@@ -78,7 +78,7 @@ namespace MedHelpApi.Controllers
             
             var categoryDto = await _categoryService.Update(id, categoryUpdateDto);
 
-            return categoryDto == null ? NotFound() : Ok(categoryDto);
+            return categoryDto == null ? BadRequest(_categoryService.Errors) : Ok(categoryDto);
         }
 
         [HttpDelete("{id}")]

@@ -49,7 +49,7 @@ public class CategoryService : ICategoryService
     {
 
         //see if the user added an specialty
-        if(categoryInsertDto.SpecialtyID == null)
+        if (categoryInsertDto.SpecialtyID == null)
         {
             Errors.Add("At least one Specialty is required");
             return null;
@@ -57,7 +57,8 @@ public class CategoryService : ICategoryService
 
         var validSpecialtyIds = await _specialtyRepository.GetValidSpecialtyIds(categoryInsertDto.SpecialtyID);
 
-        if(validSpecialtyIds.Count < categoryInsertDto.SpecialtyID.Count ){
+        if (validSpecialtyIds.Count < categoryInsertDto.SpecialtyID.Count)
+        {
             Errors.Add("One or more specialties you entered are not valid");
             return null;
         }
@@ -79,31 +80,42 @@ public class CategoryService : ICategoryService
     {
         var category = await _categoryRepository.GetById(id);
 
-        if(category != null)
+        if (category == null)
         {
             // category.Name = categoryUpdateDto.Name;
             // category.Description = categoryUpdateDto.Description;
 
-            category = _mapper.Map<CategoryUpdateDto, Category>(categoryUpdateDto, category);
-            _categoryRepository.Update(category);
-            await _categoryRepository.Save();
-
-            var categoryDto = _mapper.Map<CategoryDto>(category);
-
-            return categoryDto;
+            return null;
         }
 
-        return null;
+        category = _mapper.Map<CategoryUpdateDto, Category>(categoryUpdateDto, category);
+        
+        var validSpecialtyIds = await _specialtyRepository.GetValidSpecialtyIds(categoryUpdateDto.SpecialtyID);
+        
+        if(validSpecialtyIds.Count < categoryUpdateDto.SpecialtyID.Count){
+            Errors.Add("One or more specialties you entered are not valid");
+            return null;
+        }
+
+        var specialties = await _specialtyRepository.GetSpecialtiesByIds(validSpecialtyIds);
+        _categoryRepository.Update(category);
+        category.Specialties = specialties;
+
+        await _categoryRepository.Save();
+
+        var categoryDto = _mapper.Map<CategoryDto>(category);
+
+        return categoryDto;
     }
 
     public async Task<CategoryDto> Delete(int id)
     {
         var category = await _categoryRepository.GetById(id);
 
-        if( category != null)
+        if (category != null)
         {
             var categoryDto = _mapper.Map<CategoryDto>(category);
-            
+
             _categoryRepository.Delete(category);
             await _categoryRepository.Save();
             return categoryDto;
@@ -115,7 +127,7 @@ public class CategoryService : ICategoryService
 
     public bool Validate(CategoryInsertDto categoryInsertDto)
     {
-        if (_categoryRepository.Search(c => c.Name == categoryInsertDto.Name).Count() > 0 )
+        if (_categoryRepository.Search(c => c.Name == categoryInsertDto.Name).Count() > 0)
         {
             Errors.Add("This Category already exists");
             return false;
@@ -125,8 +137,8 @@ public class CategoryService : ICategoryService
 
     public bool Validate(CategoryUpdateDto categoryUpdateDto)
     {
-        if (_categoryRepository.Search(c => c.Name == categoryUpdateDto.Name 
-        && categoryUpdateDto.Id != c.CategoryID).Count() > 0 )
+        if (_categoryRepository.Search(c => c.Name == categoryUpdateDto.Name
+        && categoryUpdateDto.Id != c.CategoryID).Count() > 0)
         {
             Errors.Add("This Category already exists");
             return false;
