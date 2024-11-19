@@ -20,7 +20,9 @@ public class CategoryRepository : IRepository<Category>
       .ToListAsync();
 
     public async Task<Category> GetById(int id)
-      => await _context.Categories.FindAsync(id);
+      => await _context.Categories
+      .Include(c => c.Specialties)
+      .FirstOrDefaultAsync(c => c.CategoryID == id);
     
 
     public async Task Add(Category entity)
