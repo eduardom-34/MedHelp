@@ -6,17 +6,17 @@
 
     <mat-tab label="Select the specialty">
 
-      <div class="slider-container" *ngFor="let category of categories">
-
-        <div class="card-container">
+      <div class="slider-container mt-2" >
+        <div class="card-container" *ngFor="let category of categories">
           <div class="categories">
             <h5>{{ category.name }}</h5>
-            <div class="specialties" *ngFor="let specialtyName of category.specialtyNames">
-              {{ specialtyName }}
+            <div class="specialties">
+              <ul class="specialt" *ngFor="let specialtyName of category.specialtyNames">
+                <li>{{ specialtyName }}</li>
+              </ul>
             </div>
           </div>
         </div>
-
       </div>
 
     </mat-tab>
