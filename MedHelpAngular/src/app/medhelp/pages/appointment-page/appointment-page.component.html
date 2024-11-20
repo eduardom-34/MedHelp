@@ -6,13 +6,20 @@
 
     <mat-tab label="Select the specialty">
 
-      <div class="slider-container mt-2" >
+      <div class="slider-container mt-2">
         <div class="card-container" *ngFor="let category of categories">
           <div class="categories">
             <h5>{{ category.name }}</h5>
             <div class="specialties">
-              <ul class="specialt" *ngFor="let specialtyName of category.specialtyNames">
-                <li>{{ specialtyName }}</li>
+              <ul *ngFor="let specialtyName of category.specialtyNames">
+                <!-- <li></li> -->
+                <li>
+                  <div>
+                    <button mat-fab extended class="specialty">
+                      {{ specialtyName }}
+                    </button>
+                  </div>
+                </li>
               </ul>
             </div>
           </div>
