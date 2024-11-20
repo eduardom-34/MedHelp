@@ -14,6 +14,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
 
@@ -33,7 +34,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatSelectModule,
     MatSnackBarModule,
     MatTabsModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatAutocompleteModule
   ]
 })
 export class MaterialModule { }

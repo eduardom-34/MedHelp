@@ -15,60 +15,6 @@
 
 
 
-.slider-container {
-  display: flex;
-  overflow-x: auto;
-  overflow-y: auto;
-  white-space: nowrap;
-  height: auto;
-  max-height: auto;
-  gap: 1rem;
-  padding: 1rem;
-}
-
-.card-container{
-  flex: 0 0 auto;
-  width: 200px;
-  height: 500px;
-  padding: 5px;
-  border: 1px solid black;
-  border-radius: 8px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-  background-color: #b3c6b8;
-}
-
-.categories {
-  align-items: center;
-}
-
-.categories h5 {
-  font-size: 1.2rem;
-  font-weight: bold;
-  line-height: 25px;
-  margin-bottom: 0.5rem;
-  white-space: normal;
-  overflow-wrap: break-word;
-  margin: 0;
-  color: #000000;
-
-}
-
-.specialties {
-  font-size: 1rem;
-  white-space: normal;
-  overflow-wrap: break-word;
-}
-
-.specialties ul{
-  padding-left: 0px;
-  list-style-type: none;
-}
-
-.specialty{
-  height: max-content;
-  padding: 7px;
-}
-
 
 /* Finish of the categories and specialties css */
 
