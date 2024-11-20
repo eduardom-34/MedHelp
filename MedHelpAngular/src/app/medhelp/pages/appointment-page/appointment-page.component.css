@@ -17,10 +17,13 @@
 
 .slider-container {
   display: flex;
-  flex: 0 0 auto;
   overflow-x: auto;
+  overflow-y: auto;
   white-space: nowrap;
+  height: 250px;
+  max-height: 250px;
   gap: 1rem;
+  padding: 1rem;
 }
 
 .card-container{
@@ -32,7 +35,6 @@
   border-radius: 8px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
   background-color: cornflowerblue;
-  /* overflow: hidden; */
 }
 
 .categories {
