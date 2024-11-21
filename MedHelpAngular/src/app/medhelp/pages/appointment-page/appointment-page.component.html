@@ -6,18 +6,15 @@
 
     <mat-tab label="Select the specialty">
 
-      <mat-form-field>
+      <mat-form-field class="autocomplete">
         <mat-label>Choose the specialty</mat-label>
         <input type="text" matInput
         formControlName="specialty"
         [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-          <!-- @for (option of filteredOptions | async; track option) { -->
-          <!-- <mat-option [value]="option">{{option.name}}</mat-option> -->
            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
             {{ option.name }}
            </mat-option>
-          <!-- } -->
         </mat-autocomplete>
       </mat-form-field>
 

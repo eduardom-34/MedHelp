@@ -13,7 +13,10 @@
 
 /* Slider for the Categories and specialties */
 
-
+.autocomplete{
+  width: 100%;
+  margin-top: 1rem;
+}
 
 
 /* Finish of the categories and specialties css */
