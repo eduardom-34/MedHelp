@@ -8,10 +8,14 @@
 
       <mat-form-field class="autocomplete">
         <mat-label>Choose the specialty</mat-label>
-        <input type="text" matInput
+        <input type="text"
+        matInput
         formControlName="specialty"
-        [matAutocomplete]="auto">
-        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        [matAutocomplete]="auto"
+        (focus)="onAutocompleteFocus()"
+        (input)="onAutocompleteInput()"
+        >
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displaySpecialties">
            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
             {{ option.name }}
            </mat-option>

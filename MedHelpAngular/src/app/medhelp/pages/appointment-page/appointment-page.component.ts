@@ -54,7 +54,6 @@ export class AppointmentPageComponent implements OnInit {
       this.options = specialties;
     });
 
-
     this.filteredOptions = this.appointmentForm.get('specialty')!.valueChanges.pipe(
       startWith(''),
       map(value => {
@@ -72,8 +71,20 @@ export class AppointmentPageComponent implements OnInit {
     .subscribe(categories => this.categories = categories)
   }
 
+  onAutocompleteFocus(): void{
+    this.filteredOptions = of(this.options);
+  }
+
+  onAutocompleteInput(): void {
+    const value = this.appointmentForm.get('specialty')!.value;
+    const name = typeof value === 'string' ? value : value?.name;
+    this.filteredOptions = of(
+      name? this._filter(name) : this.options.slice()
+    );
+  }
+
   // Function to display the name in the autocomplete
-  displayFn(specialty: Specialty | null): string {
+  displaySpecialties(specialty: Specialty | null): string {
     return specialty && specialty.name ? specialty.name : '';
   }
 
