@@ -12,6 +12,7 @@ import { CategoryCardComponent } from './components/category-card/category-card.
 import { AppointmentPageComponent } from './pages/appointment-page/appointment-page.component';
 import { SharedModule } from '../shared/shared.module';
 import { DoctorCardComponent } from './components/doctor-card/doctor-card.component';
+import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { DoctorCardComponent } from './components/doctor-card/doctor-card.compon
     CategoryCardComponent,
     AppointmentPageComponent,
     DoctorCardComponent,
+    AutocompleteComponent,
   ],
   imports: [
     CommonModule,

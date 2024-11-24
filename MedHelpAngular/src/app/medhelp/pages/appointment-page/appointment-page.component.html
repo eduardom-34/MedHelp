@@ -5,22 +5,15 @@
   <mat-tab-group>
 
     <mat-tab label="Select the specialty">
+      <app-autocomplete
+      [options]="specialties"
+      [displayWith]="displaySpecialties"
+      [control]="appointmentForm.get('specialty')"
+      placeholder="Choose the specialty"
+      (selected)="onSpecialtySelected($event)"
+      >
 
-      <mat-form-field class="autocomplete">
-        <mat-label>Choose the specialty</mat-label>
-        <input type="text"
-        matInput
-        formControlName="specialty"
-        [matAutocomplete]="auto"
-        (focus)="onAutocompleteFocus()"
-        (input)="onAutocompleteInput()"
-        >
-        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displaySpecialties">
-           <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-            {{ option.name }}
-           </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
+      </app-autocomplete>
 
     </mat-tab>
 
