@@ -21,6 +21,8 @@ export class AppointmentPageComponent implements OnInit {
   public options: Specialty[] = [];
   public filteredOptions: Observable<Specialty[]> = of([]);
 
+  selectedSpecialty: any;
+
   doctors = [
     { id: 1, name: 'Dr. Smith', specialtyId: 1 },
     { id: 2, name: 'Dr. Johnson', specialtyId: 2 },
@@ -49,50 +51,6 @@ export class AppointmentPageComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.specialtiesService.getSpecialties().subscribe((specialties) => {
-      this.specialties = specialties;
-      this.options = specialties;
-    });
-
-    this.filteredOptions = this.appointmentForm.get('specialty')!.valueChanges.pipe(
-      startWith(''),
-      map(value => {
-        const name = typeof value === 'string' ? value : value?.name;
-        return name ? this._filter(name) : this.options.slice();
-      }),
-    );
-
-
-    // Already implemente above along witht the options
-    // this.specialtiesService.getSpecialties()
-    // .subscribe(specialties => this.specialties = specialties)
-
-    this.categoriesServices.getCategories()
-    .subscribe(categories => this.categories = categories)
-  }
-
-  onAutocompleteFocus(): void{
-    this.filteredOptions = of(this.options);
-  }
-
-  onAutocompleteInput(): void {
-    const value = this.appointmentForm.get('specialty')!.value;
-    const name = typeof value === 'string' ? value : value?.name;
-    this.filteredOptions = of(
-      name? this._filter(name) : this.options.slice()
-    );
-  }
-
-  // Function to display the name in the autocomplete
-  displaySpecialties(specialty: Specialty | null): string {
-    return specialty && specialty.name ? specialty.name : '';
-  }
-
-  // Function to filter the options
-  private _filter(name: string): Specialty[] {
-    const filterValue = name.toLowerCase();
-
-    return this.options.filter(option => option.name.toLowerCase().includes(filterValue));
   }
 
 

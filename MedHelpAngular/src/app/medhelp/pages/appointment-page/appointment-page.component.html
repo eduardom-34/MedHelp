@@ -5,15 +5,7 @@
   <mat-tab-group>
 
     <mat-tab label="Select the specialty">
-      <app-autocomplete
-      [options]="specialties"
-      [displayWith]="displaySpecialties"
-      [control]="appointmentForm.get('specialty')"
-      placeholder="Choose the specialty"
-      (selected)="onSpecialtySelected($event)"
-      >
-
-      </app-autocomplete>
+      <!-- Here the autocomplete -->
 
     </mat-tab>
 
