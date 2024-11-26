@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Specialty } from '../../interfaces/specialty.interface';
 import { FormControl } from '@angular/forms';
-import { map, Observable, startWith } from 'rxjs';
+import { map, Observable, of, startWith } from 'rxjs';
+import { SpecialtiesService } from '../../services/specialty.service';
 
 @Component({
   selector: 'autocomplete-specialty',
@@ -14,16 +15,26 @@ export class AutocompleteSpecialtyComponent implements OnInit{
 
   options: Specialty[] = [];
   specialties: Specialty[] = [];
-  filteredOptions: Observable<Specialty[]>;
+  filteredOptions: Observable<Specialty[]> = of([]);
+
+  constructor(private specialtiesService: SpecialtiesService) {}
 
   ngOnInit(): void {
+
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => {
+        if( value == null) {
+          return this.options.slice();
+        }
         const name = typeof value === 'string' ? value : value.name;
         return name ? this._filter(name as string) : this.options.slice();
       })
     )
+
+    this.specialtiesService.getSpecialties()
+      .subscribe( specialties => this.specialties = specialties )
+
   }
 
   displayFn(user: Specialty): string {
