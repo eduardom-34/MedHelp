@@ -21,6 +21,11 @@ export class AutocompleteSpecialtyComponent implements OnInit{
 
   ngOnInit(): void {
 
+    this.specialtiesService.getSpecialties()
+      .subscribe( specialties => {
+        this.specialties = specialties;
+        this.options = specialties;
+
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => {
@@ -31,9 +36,10 @@ export class AutocompleteSpecialtyComponent implements OnInit{
         return name ? this._filter(name as string) : this.options.slice();
       })
     )
+  });
 
-    this.specialtiesService.getSpecialties()
-      .subscribe( specialties => this.specialties = specialties )
+      console.log("specialties");
+      console.log(this.specialties);
 
   }
 
