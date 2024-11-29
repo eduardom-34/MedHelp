@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Specialty } from '../../interfaces/specialty.interface';
 import { FormControl } from '@angular/forms';
 import { map, Observable, of, startWith } from 'rxjs';
@@ -11,7 +11,12 @@ import { SpecialtiesService } from '../../services/specialty.service';
 })
 export class AutocompleteSpecialtyComponent implements OnInit{
 
-  myControl = new FormControl<string | Specialty>('');
+  @Input()
+  placeholder: string = '';
+
+  @Input()
+  // myControl!: FormControl;
+  myControl = new FormControl<string | Specialty >('');
 
   options: Specialty[] = [];
   specialties: Specialty[] = [];
@@ -37,10 +42,6 @@ export class AutocompleteSpecialtyComponent implements OnInit{
       })
     )
   });
-
-      console.log("specialties");
-      console.log(this.specialties);
-
   }
 
   displayFn(user: Specialty): string {

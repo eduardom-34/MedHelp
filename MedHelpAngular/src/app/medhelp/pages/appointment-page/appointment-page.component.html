@@ -6,9 +6,17 @@
 
     <mat-tab label="Select the specialty">
       <!-- Here the autocomplete -->
-       <autocomplete-specialty></autocomplete-specialty>
+       <autocomplete-specialty
+       placeholder="Search the specialty"
+       [myControl]="specialtyControl"
+       >
+       </autocomplete-specialty>
 
-    </mat-tab>
+       <div class="container">
+        <app-list-specialties></app-list-specialties>
+       </div>
+
+      </mat-tab>
 
     <mat-tab label="Choose a date">
 
@@ -31,3 +39,12 @@
   </mat-tab-group>
 
 </form>
+
+<!-- view form status -->
+<code>
+  {{ appointmentForm.value | json }}
+</code>
+<hr>
+<p>
+  is form valid: {{ appointmentForm.valid }}
+</p>

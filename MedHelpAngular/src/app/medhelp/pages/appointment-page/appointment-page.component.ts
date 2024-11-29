@@ -1,5 +1,5 @@
 import { Component, model, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { Specialty } from '../../interfaces/specialty.interface';
 import { SpecialtiesService } from '../../services/specialty.service';
@@ -51,6 +51,10 @@ export class AppointmentPageComponent implements OnInit {
 
   ngOnInit(): void {
 
+  }
+
+  get specialtyControl(): FormControl<string | Specialty | null>{
+    return this.appointmentForm.get('specialty') as FormControl<string | Specialty | null>;
   }
 
 
