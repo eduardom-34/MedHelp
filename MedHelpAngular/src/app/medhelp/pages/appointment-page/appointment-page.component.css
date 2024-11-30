@@ -7,12 +7,6 @@
   box-sizing: border-box; /* Asegúrate de que padding no aumente el tamaño total */
 }
 
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start; /* O 'center' si lo quieres centrado verticalmente */
-  max-width: 100%;
-}
 
 .specialties-box {
   width: 100%;

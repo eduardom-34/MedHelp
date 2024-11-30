@@ -50,6 +50,8 @@ export class AppointmentPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.specialtiesService.getSpecialties()
+      .subscribe( specialties => this.specialties = specialties );
 
   }
 

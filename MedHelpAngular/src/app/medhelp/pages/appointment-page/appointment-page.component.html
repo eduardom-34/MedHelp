@@ -6,19 +6,21 @@
 
     <mat-tab mat-elevation-z4 mat-stretch-tabs="true" disablePagination="true" label="Select the specialty">
       <!-- Here the autocomplete -->
-       <autocomplete-specialty
-       placeholder="Search the specialty"
-       [myControl]="specialtyControl"
-       >
-       </autocomplete-specialty>
+      <autocomplete-specialty placeholder="Search the specialty" [myControl]="specialtyControl">
+      </autocomplete-specialty>
 
-       <div class="container specialties-box">
-        <app-list-specialties></app-list-specialties>
-       </div>
+      <div class="grid mt-2 specialties-box">
+        <div *ngFor="let specialty of specialties"
+        class="col-12 sm:col-4 md:col-3 xl:col-3 "
+        >
+          <specialty-card class="specialties-container" [specialty]="specialty"></specialty-card>
+        </div>
+      </div>
 
-      </mat-tab>
 
-    <mat-tab mat-stretch-tabs="true" label="Choose a date">
+    </mat-tab>
+
+    <mat-tab mat-stretch-tabs="true" label="Choose a doctor">
 
       <!-- Select the date //Comment -->
       <div class="flex align-items-center flex-column p-3">
