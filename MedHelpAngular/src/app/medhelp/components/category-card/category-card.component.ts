@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Category } from '../../interfaces/cateogry.interface';
+import { Category } from '../../interfaces/category.interface';
 
 @Component({
   selector: 'category-card',

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'doctor-card',
@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrl: './doctor-card.component.css'
 })
 export class DoctorCardComponent {
-
+  // @Input()
+  // doctor: Doctor;
 }

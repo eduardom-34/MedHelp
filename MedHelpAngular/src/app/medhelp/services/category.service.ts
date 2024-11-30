@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environments } from '../../../environments/environments';
 import { Observable } from 'rxjs';
-import { Category } from '../interfaces/cateogry.interface';
+import { Category } from '../interfaces/category.interface';
 
 @Injectable({providedIn: 'root'})
 export class CategoriesServices {

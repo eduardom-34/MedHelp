@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { Specialty } from '../../interfaces/specialty.interface';
 import { SpecialtiesService } from '../../services/specialty.service';
-import { Category } from '../../interfaces/cateogry.interface';
+import { Category } from '../../interfaces/category.interface';
 import { CategoriesServices } from '../../services/category.service';
 import { map, Observable, of, startWith } from 'rxjs';
 
