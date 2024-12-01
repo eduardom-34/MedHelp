@@ -6,6 +6,8 @@ import { SpecialtiesService } from '../../services/specialty.service';
 import { Category } from '../../interfaces/category.interface';
 import { CategoriesServices } from '../../services/category.service';
 import { map, Observable, of, startWith } from 'rxjs';
+import { DoctorService } from '../../services/doctor.service';
+import { Doctor } from '../../interfaces/doctor.interface';
 
 @Component({
   selector: 'app-appointment-page',
@@ -16,18 +18,17 @@ import { map, Observable, of, startWith } from 'rxjs';
 export class AppointmentPageComponent implements OnInit {
 
   public specialties: Specialty[] = [];
-  public categories: Category[] = [];
+  public doctors: Doctor[] = [];
 
   public options: Specialty[] = [];
   public filteredOptions: Observable<Specialty[]> = of([]);
 
   selectedSpecialty: any;
 
-  doctors = [
-    { id: 1, name: 'Dr. Smith', specialtyId: 1 },
-    { id: 2, name: 'Dr. Johnson', specialtyId: 2 },
-    // Agrega más doctores según tus datos
-  ];
+  // doctors = [
+  //   { id: 1, name: 'Dr. Smith', specialtyId: 1 },
+  //   { id: 2, name: 'Dr. Johnson', specialtyId: 2 },
+  // ];
 
   availableTimes: string[] = [
     '09:00 AM', '10:00 AM', '11:00 AM', '01:00 PM', '02:00 PM'
@@ -38,7 +39,7 @@ export class AppointmentPageComponent implements OnInit {
 
   public appointmentForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private specialtiesService: SpecialtiesService, private categoriesServices: CategoriesServices) {
+  constructor(private fb: FormBuilder, private specialtiesService: SpecialtiesService, private doctorService: DoctorService) {
 
     this.appointmentForm = this.fb.group({
       specialty: ['', Validators.required],
@@ -52,6 +53,9 @@ export class AppointmentPageComponent implements OnInit {
   ngOnInit(): void {
     this.specialtiesService.getSpecialties()
       .subscribe( specialties => this.specialties = specialties );
+
+    this.doctorService.getDoctors()
+      .subscribe( doctors => this.doctors = doctors );
 
   }
 

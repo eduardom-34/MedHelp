@@ -9,12 +9,21 @@ import { DoctorService } from '../../services/doctor.service';
 })
 export class DoctorCardComponent implements OnInit{
   // @Input()
-  public doctors: Doctor[] = [];
+  // public doctors: Doctor[] = [];
 
-  constructor( private doctorService: DoctorService){}
+  // constructor( private doctorService: DoctorService){}
+
+  // ngOnInit(): void {
+  //   this.doctorService.getDoctors()
+  //   .subscribe(doctors => this.doctors = doctors);
+  // }
+
+  @Input()
+  public doctor?: Doctor;
 
   ngOnInit(): void {
-    this.doctorService.getDoctors()
-    .subscribe(doctors => this.doctors = doctors);
+    if ( !this.doctor ) throw Error('Specialty property is requiered');
+
   }
+
 }

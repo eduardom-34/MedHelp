@@ -1,18 +1,18 @@
-<mat-card class="doctor-card mt-2" appearance="outlined" *ngFor="let doctor of doctors">
+<mat-card class="doctor-card mt-2" appearance="outlined">
   <img
   src="https://jpsonline.co.uk/cdn/shop/files/JPS-VL-FAS129.png?v=1720742725&width=1125"
   alt="Doctor profile pciture"
   width=""
   class="doctor-picture">
   <mat-card-header class="card-header mb-2">
-    <mat-card-title>{{doctor.firstName}}</mat-card-title>
-    <mat-card-subtitle>{{doctor.email}}</mat-card-subtitle>
+    <mat-card-title>{{doctor?.firstName}}</mat-card-title>
+    <mat-card-subtitle>{{doctor?.email}}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
     <h4>Specialties</h4>
     <mat-chip-listbox aria-label="specialties">
       <mat-chip
-      *ngFor="let specialty of doctor.specialtyNames"
+      *ngFor="let specialty of doctor?.specialtyNames"
       class="p-2"
       >
       {{specialty}}

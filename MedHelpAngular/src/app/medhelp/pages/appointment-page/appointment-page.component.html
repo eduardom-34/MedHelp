@@ -19,7 +19,13 @@
     </mat-tab>
 
     <mat-tab mat-stretch-tabs="true" label="Choose a doctor">
-      <doctor-card class="tab-box"></doctor-card>
+
+      <div class="grid mt-2 tab-box">
+        <div *ngFor="let doctor of doctors" class="col-12 sm:col-4 md:col-3 xl:col-4">
+          <doctor-card [doctor]="doctor"></doctor-card>
+        </div>
+      </div>
+      <!-- <doctor-card class="tab-box"></doctor-card> -->
 
     </mat-tab>
 
