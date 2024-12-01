@@ -11,3 +11,11 @@
 .doctor-picture {
   border-radius: 50% !important;
 }
+
+::ng-deep mat-chip span {
+  white-space: normal !important;
+}
+
+/* mat-chip {
+  padding: 5px;
+} */

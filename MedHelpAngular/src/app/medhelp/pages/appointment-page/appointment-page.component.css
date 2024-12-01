@@ -1,16 +1,11 @@
 /* QUERIES */
 
-.specialties-container {
-  max-width: 100%; /* Ajusta según el diseño */
-  width: 100%; /* Para que no ocupe más del espacio disponible */
-  overflow: hidden; /* Por si algo desborda */
-  box-sizing: border-box; /* Asegúrate de que padding no aumente el tamaño total */
-}
+
 
 
 .specialties-box {
   width: 100%;
-  max-width: 600px; /* Ajusta según el diseño */
+  max-width: 600px;
 }
 
 
