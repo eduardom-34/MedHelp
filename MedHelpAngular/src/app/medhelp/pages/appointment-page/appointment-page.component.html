@@ -9,7 +9,7 @@
       <autocomplete-specialty placeholder="Search the specialty" [myControl]="specialtyControl">
       </autocomplete-specialty>
 
-      <div class="grid mt-2 specialties-box">
+      <div class="grid mt-2 tab-box">
         <div *ngFor="let specialty of specialties"
         class="col-12 sm:col-4 md:col-3 xl:col-3 "
         >
@@ -23,7 +23,7 @@
     <mat-tab mat-stretch-tabs="true" label="Choose a doctor">
 
 
-      <doctor-card ></doctor-card>
+      <doctor-card class="tab-box"></doctor-card>
 
     </mat-tab>
 
@@ -31,7 +31,7 @@
 
 
       <!-- Select the date //Comment -->
-      <div class="flex align-items-center flex-column p-3">
+      <div class="flex align-items-center flex-column p-3 tab-box">
         <mat-label class="mb-2">Choose a date</mat-label>
         <mat-card class="screen-size">
           <mat-calendar [(selected)]="selected" (selectedChange)="onDateSelected($event)"
