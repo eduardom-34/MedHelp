@@ -19,6 +19,7 @@ export class AppointmentPageComponent implements OnInit {
 
   public specialties: Specialty[] = [];
   public doctors: Doctor[] = [];
+  public categories: Category[] = [];
 
   public options: Specialty[] = [];
   public filteredOptions: Observable<Specialty[]> = of([]);
@@ -39,7 +40,10 @@ export class AppointmentPageComponent implements OnInit {
 
   public appointmentForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private specialtiesService: SpecialtiesService, private doctorService: DoctorService) {
+  constructor(private fb: FormBuilder,
+    private specialtiesService: SpecialtiesService,
+    private categoriesService: CategoriesServices,
+    private doctorService: DoctorService) {
 
     this.appointmentForm = this.fb.group({
       specialty: ['', Validators.required],
@@ -56,6 +60,9 @@ export class AppointmentPageComponent implements OnInit {
 
     this.doctorService.getDoctors()
       .subscribe( doctors => this.doctors = doctors );
+
+    this.categoriesService.getCategories()
+    .subscribe( categories => this.categories = categories );
 
   }
 
