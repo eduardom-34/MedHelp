@@ -1,13 +1,12 @@
 /* QUERIES */
 
 
-
-
-.tab-box {
+.appointment-form-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
-  max-width: 800px;
 }
-
 
 /* deafult - small screens */
 .screen-size {
@@ -42,7 +41,7 @@
 /* very small screens */
 @media (min-width: 0px) {
   .screen-size {
-    width: 400px;
+    width: 200px;
   }
 }
 

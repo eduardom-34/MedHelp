@@ -6,19 +6,19 @@
 
     <!-- Specialty Seccion -->
     <mat-step
-    [stepControl]="firstAppointmentForm"
     label="Select the specialty"
     >
-    <form [formGroup]="firstAppointmentForm">
+    <!-- [stepControl]="firstAppointmentForm" -->
+    <form [formGroup]="firstAppointmentForm" class="appointment-form-container">
+
       <!-- Here the autocomplete -->
-      <autocomplete-specialty placeholder="Search the specialty" [myControl]="specialtyControl">
-      </autocomplete-specialty>
+      <div class="screen-size">
+        <autocomplete-specialty placeholder="Search the specialty" [myControl]="specialtyControl">
+        </autocomplete-specialty>
+      </div>
 
 
-      <div class="grid mt-2 tab-box">
-        <!-- <div *ngFor="let specialty of specialties" class="col-12 sm:col-4 md:col-3 xl:col-3 ">
-          <specialty-card [specialty]="specialty"></specialty-card>
-        </div> -->
+      <div class="grid mt-2">
         <div class="container">
           <mat-accordion *ngFor="let category of categories">
             <mat-expansion-panel hideToggle>
@@ -53,14 +53,12 @@
 
       <form [formGroup]="secondAppointmentForm">
 
-      <div class="grid mt-2 tab-box">
-        <div *ngFor="let doctor of doctors" class="col-12 sm:col-4 md:col-3 xl:col-4">
+      <div class="grid mt-2">
+        <div *ngFor="let doctor of doctors" class="col-12 sm:col-6 md:col-4 lg:col-3 xl:col-2">
           <doctor-card [doctor]="doctor">
-
           </doctor-card>
         </div>
       </div>
-      <!-- <doctor-card class="tab-box"></doctor-card> -->
 
     </form>
     </mat-step>
@@ -69,8 +67,8 @@
     <mat-step mat-stretch-tabs="true" label="Choose the date">
 
 
-      <!-- Select the date //Comment -->
-      <div class="flex align-items-center flex-column p-3 tab-box">
+      <!-- Select the date -->
+      <div class="flex align-items-center flex-column p-3">
         <mat-label class="mb-2">Choose a date</mat-label>
         <mat-card class="screen-size">
           <mat-calendar [(selected)]="selected" (selectedChange)="onDateSelected($event)"
