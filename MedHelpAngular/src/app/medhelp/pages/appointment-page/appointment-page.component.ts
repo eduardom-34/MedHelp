@@ -66,22 +66,26 @@ export class AppointmentPageComponent implements OnInit {
 
   }
 
-  get specialtyControl(): FormControl<string | Specialty | null>{
-    return this.appointmentForm.get('specialty') as FormControl<string | Specialty | null>;
-  }
-
-
   onDateSelected(selectedDate: Date): void {
     this.appointmentForm.patchValue({ date: selectedDate });
   }
 
+  // Specialties Methods
+
+  get specialtyControl(): FormControl<string | Specialty | null>{
+    return this.appointmentForm.get('specialty') as FormControl<string | Specialty | null>;
+  }
+
   onCheckboxChange(specialty: Specialty) {
-    // Actualiza el valor del formulario con el objeto seleccionado
+    // this updates the value of the form with the selected object
     this.appointmentForm.patchValue({ specialty });
   }
 
   isSelected(specialty: Specialty): boolean {
-    // Verifica si este objeto está actualmente seleccionado
+    //Veirfy if this object is currently selected
     return this.appointmentForm.value.specialty?.id === specialty.id;
   }
+
+
+  // Doctor methods
 }

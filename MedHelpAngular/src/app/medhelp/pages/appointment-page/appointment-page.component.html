@@ -25,18 +25,12 @@
 
               <div *ngFor="let specialty of specialties">
                 <mat-checkbox
-                formControlName="specialty"
                 [checked]="isSelected(specialty)"
                 (change)="onCheckboxChange(specialty)"
                 *ngIf="specialty.categoryID === category.id"
                 >
                 {{ specialty.name }}
                 </mat-checkbox>
-              </div>
-
-
-              <div *ngIf="!category.specialtyNames || category.specialtyNames.length === 0">
-                No specialties available
               </div>
 
             </mat-expansion-panel>
