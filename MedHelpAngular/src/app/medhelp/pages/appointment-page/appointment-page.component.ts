@@ -24,32 +24,25 @@ export class AppointmentPageComponent implements OnInit {
   public options: Specialty[] = [];
   public filteredOptions: Observable<Specialty[]> = of([]);
 
-  selectedSpecialty: any;
-
-  // doctors = [
-  //   { id: 1, name: 'Dr. Smith', specialtyId: 1 },
-  //   { id: 2, name: 'Dr. Johnson', specialtyId: 2 },
-  // ];
-
-  availableTimes: string[] = [
-    '09:00 AM', '10:00 AM', '11:00 AM', '01:00 PM', '02:00 PM'
-  ];
-
-
   selected: Date | null = null;
 
-  public appointmentForm: FormGroup;
+  public firstAppointmentForm: FormGroup;
+  public secondAppointmentForm: FormGroup;
 
   constructor(private fb: FormBuilder,
     private specialtiesService: SpecialtiesService,
     private categoriesService: CategoriesServices,
     private doctorService: DoctorService) {
 
-    this.appointmentForm = this.fb.group({
+    this.firstAppointmentForm = this.fb.group({
       specialty: ['', Validators.required],
-      date: [''],
-      time: [''],
-      doctor: ['', Validators.required]
+    });
+
+    this.secondAppointmentForm = this.fb.group({
+      // specialty: ['', Validators.required],
+      doctor: ['', Validators.required],
+      // date: [''],
+      // time: [''],
     });
 
   }
@@ -66,30 +59,31 @@ export class AppointmentPageComponent implements OnInit {
 
   }
 
+  // here we need to update the form thirdAppointmentForm
   onDateSelected(selectedDate: Date): void {
-    this.appointmentForm.patchValue({ date: selectedDate });
+    this.firstAppointmentForm.patchValue({ date: selectedDate });
   }
 
   // Specialties Methods
 
   get specialtyControl(): FormControl<string | Specialty | null>{
-    return this.appointmentForm.get('specialty') as FormControl<string | Specialty | null>;
+    return this.firstAppointmentForm.get('specialty') as FormControl<string | Specialty | null>;
   }
 
   onCheckboxChange(specialty: Specialty) {
     // this updates the value of the form with the selected object
-    this.appointmentForm.patchValue({ specialty });
+    this.firstAppointmentForm.patchValue({ specialty });
   }
 
   isSelected(specialty: Specialty): boolean {
     //Veirfy if this object is currently selected
-    return this.appointmentForm.value.specialty?.id === specialty.id;
+    return this.firstAppointmentForm.value.specialty?.id === specialty.id;
   }
 
 
   // Doctor methods
 
   get doctorControl(): FormControl<string | Doctor | null>{
-    return this.appointmentForm.get('doctor') as FormControl<string | Doctor | null>;
+    return this.secondAppointmentForm.get('doctor') as FormControl<string | Doctor | null>;
   }
 }

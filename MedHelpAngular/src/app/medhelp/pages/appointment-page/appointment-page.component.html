@@ -1,11 +1,15 @@
 <h2>Do you want to schedule an <strong>appointment?</strong></h2>
 <mat-divider></mat-divider>
 
-<form [formGroup]="appointmentForm" class="flex align-items-center flex-column">
-  <mat-tab-group dynamicHeight>
+<!-- <form [formGroup]="appointmentForm" class="flex align-items-center flex-column"> -->
+  <mat-stepper linear>
 
     <!-- Specialty Seccion -->
-    <mat-tab mat-elevation-z4 mat-stretch-tabs="true" disablePagination="true" label="Select the specialty">
+    <mat-step
+    [stepControl]="firstAppointmentForm"
+    label="Select the specialty"
+    >
+    <form [formGroup]="firstAppointmentForm">
       <!-- Here the autocomplete -->
       <autocomplete-specialty placeholder="Search the specialty" [myControl]="specialtyControl">
       </autocomplete-specialty>
@@ -39,24 +43,30 @@
         </div>
       </div>
 
-
-    </mat-tab>
+    </form>
+    </mat-step>
 
     <!-- Doctor Section -->
-    <mat-tab mat-stretch-tabs="true" label="Choose a doctor">
+    <mat-step
+    [stepControl]="secondAppointmentForm"
+    label="Choose a doctor">
+
+      <form [formGroup]="secondAppointmentForm">
 
       <div class="grid mt-2 tab-box">
         <div *ngFor="let doctor of doctors" class="col-12 sm:col-4 md:col-3 xl:col-4">
           <doctor-card [doctor]="doctor">
-            
+
           </doctor-card>
         </div>
       </div>
       <!-- <doctor-card class="tab-box"></doctor-card> -->
 
-    </mat-tab>
+    </form>
+    </mat-step>
 
-    <mat-tab mat-stretch-tabs="true" label="Choose the date">
+
+    <mat-step mat-stretch-tabs="true" label="Choose the date">
 
 
       <!-- Select the date //Comment -->
@@ -68,16 +78,28 @@
         </mat-card>
       </div>
 
-    </mat-tab>
-  </mat-tab-group>
+    </mat-step>
+  </mat-stepper>
 
-</form>
+<!-- </form> -->
 
 <!-- view form status -->
+
+<h2>specialty from</h2>
 <code>
-  {{ appointmentForm.value | json }}
+  {{ firstAppointmentForm.value | json }}
 </code>
 <hr>
 <p>
-  is form valid: {{ appointmentForm.valid }}
+  is form valid: {{ firstAppointmentForm.valid }}
+</p>
+
+
+<h2>doctor from</h2>
+<code>
+  {{ secondAppointmentForm.value | json }}
+</code>
+<hr>
+<p>
+  is form valid: {{ secondAppointmentForm.valid }}
 </p>
