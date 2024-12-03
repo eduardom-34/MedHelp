@@ -74,4 +74,14 @@ export class AppointmentPageComponent implements OnInit {
   onDateSelected(selectedDate: Date): void {
     this.appointmentForm.patchValue({ date: selectedDate });
   }
+
+  onCheckboxChange(specialty: Specialty) {
+    // Actualiza el valor del formulario con el objeto seleccionado
+    this.appointmentForm.patchValue({ specialty });
+  }
+
+  isSelected(specialty: Specialty): boolean {
+    // Verifica si este objeto está actualmente seleccionado
+    return this.appointmentForm.value.specialty?.id === specialty.id;
+  }
 }
