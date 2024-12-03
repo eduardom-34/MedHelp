@@ -55,7 +55,9 @@
 
       <div class="grid mt-2">
         <div *ngFor="let doctor of doctors" class="col-12 sm:col-6 md:col-4 lg:col-3 xl:col-2">
-          <doctor-card [doctor]="doctor">
+          <doctor-card [doctor]="doctor"
+          (doctorSelected)="onDoctorSelected($event)"
+          >
           </doctor-card>
         </div>
       </div>
@@ -83,21 +85,23 @@
 
 <!-- view form status -->
 
-<h2>specialty from</h2>
-<code>
-  {{ firstAppointmentForm.value | json }}
-</code>
-<hr>
-<p>
-  is form valid: {{ firstAppointmentForm.valid }}
-</p>
+<div>
+  <h2>specialty from</h2>
+  <code>
+    {{ firstAppointmentForm.value | json }}
+  </code>
+  <hr>
+  <p>
+    is form valid: {{ firstAppointmentForm.valid }}
+  </p>
 
 
-<h2>doctor from</h2>
-<code>
-  {{ secondAppointmentForm.value | json }}
-</code>
-<hr>
-<p>
-  is form valid: {{ secondAppointmentForm.valid }}
-</p>
+  <h2>doctor from</h2>
+  <code>
+    {{ secondAppointmentForm.value | json }}
+  </code>
+  <hr>
+  <p>
+    is form valid: {{ secondAppointmentForm.valid }}
+  </p>
+</div>

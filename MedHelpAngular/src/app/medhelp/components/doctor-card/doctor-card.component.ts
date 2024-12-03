@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Doctor } from '../../interfaces/doctor.interface';
 import { DoctorService } from '../../services/doctor.service';
 import { FormControl } from '@angular/forms';
@@ -13,13 +13,15 @@ export class DoctorCardComponent implements OnInit{
   @Input()
   public doctor?: Doctor;
 
-  // @Input()
-  // // myControl!: FormControl;
-  // myControl = new FormControl<string | Doctor >('');
+  @Output()
+  doctorSelected = new EventEmitter<Doctor>();
 
   ngOnInit(): void {
     if ( !this.doctor ) throw Error('Specialty property is requiered');
+  }
 
+  selectDoctor(doctor?: Doctor) {
+    this.doctorSelected.emit(doctor);
   }
 
 }

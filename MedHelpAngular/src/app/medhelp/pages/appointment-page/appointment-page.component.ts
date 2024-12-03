@@ -86,4 +86,8 @@ export class AppointmentPageComponent implements OnInit {
   get doctorControl(): FormControl<string | Doctor | null>{
     return this.secondAppointmentForm.get('doctor') as FormControl<string | Doctor | null>;
   }
+
+  onDoctorSelected( doctor: Doctor): void {
+    this.secondAppointmentForm.patchValue({ doctor });
+  }
 }
