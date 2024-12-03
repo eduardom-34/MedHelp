@@ -88,4 +88,8 @@ export class AppointmentPageComponent implements OnInit {
 
 
   // Doctor methods
+
+  get doctorControl(): FormControl<string | Doctor | null>{
+    return this.appointmentForm.get('doctor') as FormControl<string | Doctor | null>;
+  }
 }
