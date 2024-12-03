@@ -7,7 +7,7 @@ import { Category } from '../../interfaces/category.interface';
 import { CategoriesServices } from '../../services/category.service';
 import { map, Observable, of, startWith } from 'rxjs';
 import { DoctorService } from '../../services/doctor.service';
-import { Doctor } from '../../interfaces/doctor.interface';
+import { Doctor, SpecialtyName } from '../../interfaces/doctor.interface';
 
 @Component({
   selector: 'app-appointment-page',

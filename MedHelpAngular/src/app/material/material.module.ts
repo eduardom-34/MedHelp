@@ -16,6 +16,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 
@@ -37,7 +38,8 @@ import {MatChipsModule} from '@angular/material/chips';
     MatTabsModule,
     MatExpansionModule,
     MatAutocompleteModule,
-    MatChipsModule
+    MatChipsModule,
+    MatCheckboxModule
   ]
 })
 export class MaterialModule { }

@@ -18,9 +18,33 @@
           <mat-accordion *ngFor="let category of categories">
             <mat-expansion-panel hideToggle>
               <mat-expansion-panel-header>
-                <mat-panel-title>{{ category.name }}</mat-panel-title>
-                <!-- <mat-panel-description></mat-panel-description> -->
+                <mat-panel-title>
+                  {{ category.name }}
+                </mat-panel-title>
               </mat-expansion-panel-header>
+
+              <!-- <div *ngIf="category.specialtyNames && category.specialtyNames.length > 0">
+                <mat-checkbox
+                formControlName="specialty"
+                >
+                {{ specialty }}
+              </mat-checkbox>
+            </div> -->
+            <!-- *ngFor="let specialty of category.specialtyNames" -->
+
+              <div *ngFor="let specialty of specialties">
+                <mat-checkbox
+                *ngIf="specialty.categoryID === category.id"
+                formControlName="specialty"
+                >
+                {{ specialty.name }}
+                </mat-checkbox>
+              </div>
+
+
+              <div *ngIf="!category.specialtyNames || category.specialtyNames.length === 0">
+                No specialties available
+              </div>
 
             </mat-expansion-panel>
           </mat-accordion>
