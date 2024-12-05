@@ -13,4 +13,5 @@ public class DoctorDto
   public DateOnly BirthDate { get; set; }
   public DateTime SignUpDate { get; set; }
   public virtual List<string> SpecialtyNames {get; set;}
+  public virtual List<int> SpecialtiesId {get; set;}
 }

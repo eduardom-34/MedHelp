@@ -49,9 +49,15 @@ public class DoctorService : IDoctorService<DoctorDto, DoctorInsertDto, DoctorUp
             return doctorDto;
         }
         return null;
-
-
     }
+
+    public async Task<IEnumerable<DoctorDto>> GetBySpecialties(IEnumerable<int> specialtiesId)
+    {
+
+
+        throw new NotImplementedException();
+    }
+
     public async Task<DoctorDto> Add(DoctorInsertDto doctorInsertDto)
     {
         using var hmac = new HMACSHA512();

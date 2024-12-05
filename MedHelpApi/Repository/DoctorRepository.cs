@@ -19,6 +19,12 @@ public class DoctorRepository : IDoctorRepository
     public async Task<Doctor> GetById(int id)
         => await _context.Doctors.FindAsync(id);
 
+    public async Task<List<Doctor>> GetBySpecialties(IEnumerable<int> specialtyIds) {
+        // return await _context.Doctors.Where( d => d.Specialties. )
+
+        return null;
+    }
+
     public async Task Add(Doctor doctor)
         => await _context.Doctors.AddAsync(doctor);
 
@@ -38,5 +44,4 @@ public class DoctorRepository : IDoctorRepository
     {
         return _context.Doctors.Where(filter).ToList();
     }
-
 }

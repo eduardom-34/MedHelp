@@ -51,7 +51,9 @@ public class MappingProfile : Profile
     .ForMember(dto => dto.Id,
               m => m.MapFrom(d => d.DoctorID))
     .ForMember(dto => dto.SpecialtyNames,
-              m => m.MapFrom(d => d.Specialties.Select(s => s.Name)));
+              m => m.MapFrom(d => d.Specialties.Select(s => s.Name)))
+    .ForMember( dto => dto.SpecialtiesId,
+               m => m.MapFrom(d => d.Specialties.Select(s => s.SpecialtyID)));
 
 
     CreateMap<DoctorUpdateDto, Doctor>();
