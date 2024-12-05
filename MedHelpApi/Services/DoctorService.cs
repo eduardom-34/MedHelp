@@ -51,11 +51,18 @@ public class DoctorService : IDoctorService<DoctorDto, DoctorInsertDto, DoctorUp
         return null;
     }
 
-    public async Task<IEnumerable<DoctorDto>> GetBySpecialties(IEnumerable<int> specialtiesId)
+    public async Task<IEnumerable<DoctorDto>> GetBySpecialty(int specialtyId)
     {
+        Console.WriteLine("this is no working");
+        var doctors = await _doctorRepository.GetBySpecialty(specialtyId);
 
+        if( doctors != null) {
+            var doctorsDto = doctors.Select(d => _mapper.Map<DoctorDto>(d));
 
-        throw new NotImplementedException();
+            return doctorsDto;
+        }
+
+        return null;
     }
 
     public async Task<DoctorDto> Add(DoctorInsertDto doctorInsertDto)

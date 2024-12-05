@@ -19,10 +19,10 @@ public class DoctorRepository : IDoctorRepository
     public async Task<Doctor> GetById(int id)
         => await _context.Doctors.FindAsync(id);
 
-    public async Task<List<Doctor>> GetBySpecialties(IEnumerable<int> specialtyIds) {
-        // return await _context.Doctors.Where( d => d.Specialties. )
-
-        return null;
+    public async Task<IEnumerable<Doctor>> GetBySpecialty(int specialtyId) {
+        return await _context.Doctors.Where( d => d.Specialties.Any( s => s.SpecialtyID == specialtyId ))
+        .Include(d => d.Specialties)
+        .ToListAsync();
     }
 
     public async Task Add(Doctor doctor)

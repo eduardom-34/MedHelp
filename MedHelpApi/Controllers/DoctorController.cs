@@ -42,6 +42,15 @@ namespace MedHelpApi.Controllers
             return doctor == null ? NotFound() : Ok(doctor);
         }
 
+        [HttpGet("specialty/{id}")]
+        public async Task<ActionResult<IEnumerable<DoctorDto>>> GetBySpecialty(int id)
+        {
+            Console.WriteLine("this is working");
+            var doctor = await _doctorService.GetBySpecialty(id);
+            
+            return doctor == null ? NotFound() : Ok(doctor);
+        }
+
         [HttpPost]
         public async Task<ActionResult<DoctorDto>> Add(DoctorInsertDto doctorInsertDto)
         {
