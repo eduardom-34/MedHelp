@@ -15,4 +15,8 @@ export class DoctorService {
     return this.http.get<Doctor[]>(`${this.baseUrl}/doctor`)
   }
 
+  getDoctorsBySpecialty(specialtyId: number): Observable<Doctor[]>{
+    return this.http.get<Doctor[]>(`${this.baseUrl}/specialty/${specialtyId}`)
+  }
+
 }
