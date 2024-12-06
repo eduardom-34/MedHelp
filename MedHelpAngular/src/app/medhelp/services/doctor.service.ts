@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environments } from '../../../environments/environments';
 import { HttpClient } from '@angular/common/http';
 import { Doctor } from '../interfaces/doctor.interface';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class DoctorService {
@@ -16,7 +16,10 @@ export class DoctorService {
   }
 
   getDoctorsBySpecialty(specialtyId: number): Observable<Doctor[]>{
-    return this.http.get<Doctor[]>(`${this.baseUrl}/specialty/${specialtyId}`)
+
+    if( !specialtyId ) return of([]);
+
+    return this.http.get<Doctor[]>(`${this.baseUrl}/doctor/specialty/${specialtyId}`)
   }
 
 }

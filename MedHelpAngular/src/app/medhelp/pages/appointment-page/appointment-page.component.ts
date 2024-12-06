@@ -5,7 +5,7 @@ import { Specialty } from '../../interfaces/specialty.interface';
 import { SpecialtiesService } from '../../services/specialty.service';
 import { Category } from '../../interfaces/category.interface';
 import { CategoriesServices } from '../../services/category.service';
-import { map, Observable, of, startWith } from 'rxjs';
+import { map, Observable, of, startWith, switchMap } from 'rxjs';
 import { DoctorService } from '../../services/doctor.service';
 import { Doctor, SpecialtyName } from '../../interfaces/doctor.interface';
 
@@ -48,6 +48,9 @@ export class AppointmentPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.onSpecialtyChanged();
+
     this.specialtiesService.getSpecialties()
       .subscribe( specialties => this.specialties = specialties );
 
@@ -89,5 +92,16 @@ export class AppointmentPageComponent implements OnInit {
 
   onDoctorSelected( doctor: Doctor): void {
     this.secondAppointmentForm.patchValue({ doctor });
+  }
+
+  onSpecialtyChanged(): void {
+    this.firstAppointmentForm.get('specialty')!.valueChanges
+      .pipe(
+        map( (specialty: Specialty) => specialty.id ),
+        switchMap( specialty => this.doctorService.getDoctorsBySpecialty(specialty))
+      )
+      .subscribe( doctors => {
+        console.log({ doctors } )
+      });
   }
 }
