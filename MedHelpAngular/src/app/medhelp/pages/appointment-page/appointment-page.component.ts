@@ -100,8 +100,6 @@ export class AppointmentPageComponent implements OnInit {
         map( (specialty: Specialty) => specialty.id ),
         switchMap( specialty => this.doctorService.getDoctorsBySpecialty(specialty))
       )
-      .subscribe( doctors => {
-        console.log({ doctors } )
-      });
+      .subscribe( doctors => this.doctors = doctors );
   }
 }
