@@ -18,4 +18,5 @@ public class Doctor
   public byte[] PasswordHash { get; set; }
   public byte[] PasswordSalt { get; set; }
   public virtual List<Specialty> Specialties {get; set;} = new List<Specialty>();
+  public virtual ICollection<Schedule> Schedules { get; set; }
 }
