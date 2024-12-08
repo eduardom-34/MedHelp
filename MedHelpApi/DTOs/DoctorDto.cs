@@ -14,4 +14,5 @@ public class DoctorDto
   public DateTime SignUpDate { get; set; }
   public virtual List<string> SpecialtyNames {get; set;}
   public virtual List<int> SpecialtiesId {get; set;}
+  public virtual List<int> SchedulesId {get; set;}
 }

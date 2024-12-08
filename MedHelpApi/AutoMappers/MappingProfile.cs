@@ -1,4 +1,5 @@
 using System;
+using System.Xml;
 using AutoMapper;
 using MedHelpApi.DTOs;
 using MedHelpApi.Models;
@@ -53,7 +54,9 @@ public class MappingProfile : Profile
     .ForMember(dto => dto.SpecialtyNames,
               m => m.MapFrom(d => d.Specialties.Select(s => s.Name)))
     .ForMember( dto => dto.SpecialtiesId,
-               m => m.MapFrom(d => d.Specialties.Select(s => s.SpecialtyID)));
+               m => m.MapFrom(d => d.Specialties.Select(s => s.SpecialtyID)))
+    .ForMember( dto => dto.SchedulesId,
+                m => m.MapFrom(d => d.Schedules.Select(s => s.ScheduleID )));
 
 
     CreateMap<DoctorUpdateDto, Doctor>();

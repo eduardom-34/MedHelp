@@ -14,6 +14,7 @@ public class DoctorRepository : IDoctorRepository
     public async Task<IEnumerable<Doctor>> Get()
         => await _context.Doctors
         .Include(d => d.Specialties)
+        .Include(d => d.Schedules)
         .ToListAsync();
 
     public async Task<Doctor> GetById(int id)
