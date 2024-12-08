@@ -70,7 +70,7 @@ public static class ServicesAppExtensions
 
     //Other Services
 
-
+    
     // builder.Services.AddSingleton<ISpecialtiesService, SpecialtiesService>();
     services.AddKeyedScoped<ICommonService<SpecialtyDto, SpecialtyInsertDto, SpecialtyUpdateDto>, SpecialtyService>("specialtyService");
     services.AddScoped<ICategoryService, CategoryService>();

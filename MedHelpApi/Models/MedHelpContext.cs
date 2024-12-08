@@ -13,6 +13,7 @@ public class MedHelpContext : DbContext
   public required DbSet<Category> Categories { get; set; }
   public required DbSet<User> Users { get; set; }
   public required DbSet<Doctor> Doctors { get; set; }
+  public required DbSet<Schedule> Schedules { get; set; }
 
 
 }
