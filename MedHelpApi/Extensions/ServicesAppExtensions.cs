@@ -4,6 +4,7 @@ using MedHelpApi.AutoMappers;
 using MedHelpApi.DTOs;
 using MedHelpApi.Models;
 using MedHelpApi.Repository;
+using MedHelpApi.Repository.Interfaces;
 using MedHelpApi.Services;
 using MedHelpApi.Services.Interfaces;
 using MedHelpApi.Validators;
@@ -79,6 +80,8 @@ public static class ServicesAppExtensions
     services.AddScoped<ITokenService<UserDto>, TokenService>();
     //Doctor Service
     services.AddKeyedScoped<IDoctorService<DoctorDto, DoctorInsertDto, DoctorUpdateDto>, DoctorService>("doctorService");
+    // Schedule Service
+    services.AddKeyedScoped<IScheduleService<ScheduleDto, ScheduleInsertDto, ScheduleUpdateDto>, ScheduleService>("scheduleService");
 
 
     //Repository
@@ -88,6 +91,7 @@ public static class ServicesAppExtensions
     // builder.Services.AddScoped<IRepository<User>, UserRepository>();
     services.AddScoped<IUserRepository, UserRepository>();
     services.AddScoped<IDoctorRepository, DoctorRepository>();
+    services.AddScoped<IScheduleRepository, ScheduleRepository>();
 
     //Validators
     services.AddScoped<IValidator<SpecialtyInsertDto>, SpecialtyInsertValidator>();
@@ -99,6 +103,8 @@ public static class ServicesAppExtensions
     services.AddScoped<IValidator<UserLoginDto>, UserLoginValidator>();
     services.AddScoped<IValidator<DoctorInsertDto>, DoctorInsertValidator>();
     services.AddScoped<IValidator<DoctorUpdateDto>, DoctorUpdateValidator>();
+    services.AddScoped<IValidator<ScheduleInsertDto>, ScheduleInsertValidator>();
+    services.AddScoped<IValidator<ScheduleUpdateDto>, ScheduleUpdateValidator>();
 
 
     // Mappers
