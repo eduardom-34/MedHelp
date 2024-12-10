@@ -30,9 +30,13 @@ namespace MedHelpApi.Controllers
         public async Task<IEnumerable<ScheduleDto>> Get()
             => await _scheduleService.Get();
 
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<ScheduleDto>> GetById(int id)
-        => await _scheduleService.GetById(id);
+        {
+            var scheduleDto = await _scheduleService.GetById(id);
+
+            return scheduleDto == null ? NotFound() : Ok(scheduleDto);
+        }
 
         [HttpPost]
         public async Task<ActionResult<ScheduleDto>> Add(ScheduleInsertDto scheduleInsertDto)
