@@ -26,5 +26,29 @@ namespace MedHelpApi.Controllers
             
         }
 
+        [HttpGet]
+        public async Task<IEnumerable<ScheduleDto>> Get()
+            => await _scheduleService.Get();
+
+        [HttpGet("id")]
+        public async Task<ActionResult<ScheduleDto>> GetById(int id)
+        => await _scheduleService.GetById(id);
+
+        [HttpPost]
+        public async Task<ActionResult<ScheduleDto>> Add(ScheduleInsertDto scheduleInsertDto)
+        {
+            var result = _scheduleInsertValidator.Validate(scheduleInsertDto);
+
+            if( !result.IsValid )
+            {
+                return BadRequest(result.Errors);
+            }
+
+            var scheduleDto = await _scheduleService.Add(scheduleInsertDto);
+
+            return CreatedAtAction(nameof(GetById), new { id = scheduleDto.ScheduleId }, scheduleDto);
+
+        }
+
     }
 }

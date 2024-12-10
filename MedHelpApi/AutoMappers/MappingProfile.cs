@@ -57,9 +57,16 @@ public class MappingProfile : Profile
                m => m.MapFrom(d => d.Specialties.Select(s => s.SpecialtyID)))
     .ForMember( dto => dto.SchedulesId,
                 m => m.MapFrom(d => d.Schedules.Select(s => s.ScheduleID )));
-
-
     CreateMap<DoctorUpdateDto, Doctor>();
+
+    // For Schedules 
+    CreateMap<ScheduleInsertDto, Schedule>();
+    CreateMap<ScheduleUpdateDto, Schedule>();
+    CreateMap<Schedule, ScheduleDto>()
+    .ForMember(dto => dto.ScheduleId,
+              m => m.MapFrom(s => s.ScheduleID));
+
+
     
   }
 }

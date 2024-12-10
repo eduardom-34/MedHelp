@@ -2,6 +2,7 @@ using System;
 using AutoMapper;
 using MedHelpApi.DTOs;
 using MedHelpApi.Repository;
+using MedHelpApi.Repository.Interfaces;
 using MedHelpApi.Services.Interfaces;
 
 namespace MedHelpApi.Services;
@@ -9,13 +10,13 @@ namespace MedHelpApi.Services;
 public class ScheduleService : IScheduleService<ScheduleDto, ScheduleInsertDto, ScheduleUpdateDto>
 {
 
-  private ScheduleRepository _scheduleRepository;
-  private Mapper _mapper;
+  private IScheduleRepository _scheduleRepository;
+  private IMapper _mapper;
   public List<string> Errors {get;}
 
   public ScheduleService(
-    ScheduleRepository scheduleRepository,
-    Mapper mapper
+    IScheduleRepository scheduleRepository,
+    IMapper mapper
     )
   {
     _scheduleRepository = scheduleRepository;
@@ -23,22 +24,23 @@ public class ScheduleService : IScheduleService<ScheduleDto, ScheduleInsertDto, 
     Errors = new List<string>();
   }
 
-  public Task<ScheduleDto> Add(ScheduleInsertDto scheduleInsertDto)
-  {
-    throw new NotImplementedException();
-  }
 
-  public Task<ScheduleDto> Delete(int id)
+  public async Task<IEnumerable<ScheduleDto>> Get()
   {
-    throw new NotImplementedException();
-  }
+    var schedules = await _scheduleRepository.Get();
+    
+    return schedules.Select(s => _mapper.Map<ScheduleDto>(s));
 
-  public Task<IEnumerable<ScheduleDto>> Get()
-  {
+
+
     throw new NotImplementedException();
   }
 
   public Task<ScheduleDto> GetById(int id)
+  {
+    throw new NotImplementedException();
+  }
+  public Task<ScheduleDto> Add(ScheduleInsertDto scheduleInsertDto)
   {
     throw new NotImplementedException();
   }
@@ -47,4 +49,9 @@ public class ScheduleService : IScheduleService<ScheduleDto, ScheduleInsertDto, 
   {
     throw new NotImplementedException();
   }
+  public Task<ScheduleDto> Delete(int id)
+  {
+    throw new NotImplementedException();
+  }
+
 }
