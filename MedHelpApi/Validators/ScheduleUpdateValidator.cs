@@ -9,7 +9,7 @@ public class ScheduleUpdateValidator: AbstractValidator<ScheduleUpdateDto>
   
   public ScheduleUpdateValidator()
   {
-    RuleFor(s => s.Day).NotEmpty();
+    // RuleFor(s => s.Day).NotEmpty();
     
   }
 

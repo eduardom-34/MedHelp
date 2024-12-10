@@ -6,6 +6,7 @@ using MedHelpApi.Models;
 using MedHelpApi.Repository;
 using MedHelpApi.Repository.Interfaces;
 using MedHelpApi.Services.Interfaces;
+using Microsoft.VisualBasic;
 
 namespace MedHelpApi.Services;
 
@@ -65,13 +66,34 @@ public class ScheduleService : IScheduleService<ScheduleDto, ScheduleInsertDto, 
 
   }
 
-  public Task<ScheduleDto> Update(int id, ScheduleUpdateDto scheduleUpdateDto)
+  public async Task<ScheduleDto> Update(int id, ScheduleUpdateDto scheduleUpdateDto)
   {
-    throw new NotImplementedException();
+    var schedule = await _scheduleRepository.GetById(scheduleUpdateDto.ScheduleId);
+
+    if( schedule != null ){
+      schedule = _mapper.Map<ScheduleUpdateDto, Schedule>(scheduleUpdateDto, schedule);
+
+      _scheduleRepository.Update(schedule);
+      await _scheduleRepository.Save();
+
+      var scheduleDto = _mapper.Map<ScheduleDto>(schedule);
+      return scheduleDto;
+    }
+
+    return null;
+
   }
-  public Task<ScheduleDto> Delete(int id)
+  public  async Task<ScheduleDto> Delete(int id)
   {
-    throw new NotImplementedException();
+    var schedule = await _scheduleRepository.GetById(id);
+
+    if( schedule != null ){
+      _scheduleRepository.Delete(schedule);
+      await _scheduleRepository.Save();
+      return _mapper.Map<ScheduleDto>(schedule);
+    }
+
+    return null;
   }
 
 }

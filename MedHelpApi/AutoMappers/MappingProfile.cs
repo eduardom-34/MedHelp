@@ -60,8 +60,8 @@ public class MappingProfile : Profile
     CreateMap<DoctorUpdateDto, Doctor>();
 
     // For Schedules 
+    CreateMap<ScheduleUpdateDto, Schedule>(); 
     CreateMap<ScheduleInsertDto, Schedule>();
-    CreateMap<ScheduleUpdateDto, Schedule>();
     CreateMap<Schedule, ScheduleDto>()
     .ForMember(dto => dto.ScheduleId,
               m => m.MapFrom(s => s.ScheduleID));

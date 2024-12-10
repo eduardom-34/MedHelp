@@ -34,7 +34,7 @@ namespace MedHelpApi.Controllers
         public async Task<IEnumerable<DoctorDto>> Get() =>
             await _doctorService.Get();
 
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<DoctorDto>> GetById(int id)
         {
             var doctor = await _doctorService.GetById(id);
@@ -90,6 +90,13 @@ namespace MedHelpApi.Controllers
 
             return doctorDto == null ? NotFound() : Ok(doctorDto);
 
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<DoctorDto>> Delete(int id)
+        {
+            var doctorDto = await _doctorService.Delete(id);
+            return doctorDto == null ? NotFound() : Ok(doctorDto);
         }
     }
 }

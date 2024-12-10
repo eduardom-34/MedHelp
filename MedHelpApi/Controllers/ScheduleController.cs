@@ -54,5 +54,26 @@ namespace MedHelpApi.Controllers
 
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult<ScheduleDto>> Update(ScheduleUpdateDto scheduleUpdateDto, int id)
+        {
+            var result = _scheduleUpdateValidator.Validate(scheduleUpdateDto);
+
+            if( !result.IsValid ){
+                return BadRequest(result.Errors);
+            }
+
+            var scheduleDto = await _scheduleService.Update(id, scheduleUpdateDto);
+
+            return scheduleDto == null ? NotFound() : Ok(scheduleDto);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<ScheduleDto>> Delete(int id)
+        {
+            var scheduleDto = await _scheduleService.Delete(id);
+            return scheduleDto == null ? NotFound() : Ok(scheduleDto);
+        }
+
     }
 }
