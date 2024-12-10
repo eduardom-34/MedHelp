@@ -46,12 +46,12 @@ public class SpecialtyService : ICommonService<SpecialtyDto, SpecialtyInsertDto,
     {
         var specialty = _mapper.Map<Specialty>(specialtyInsertDto);
 
-            await _specialtyRepository.Add(specialty);
-            await _specialtyRepository.Save();
+        await _specialtyRepository.Add(specialty);
+        await _specialtyRepository.Save();
 
-            var specialtyDto =  _mapper.Map<SpecialtyDto>(specialty);
-            
-            return specialtyDto;
+        var specialtyDto =  _mapper.Map<SpecialtyDto>(specialty);
+        
+        return specialtyDto;
     }
 
     public async Task<SpecialtyDto> Update(int id, SpecialtyUpdateDto specialtyUpdateDto)

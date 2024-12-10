@@ -8,7 +8,7 @@ public class ScheduleInsertValidator: AbstractValidator<ScheduleInsertDto>
 {
   public ScheduleInsertValidator()
   {
-    RuleFor(s => s.Day).NotEmpty();
+    // RuleFor(s => s.Day).NotEmpty();
   }
 
 }

@@ -1,6 +1,8 @@
 using System;
+using System.Resources;
 using AutoMapper;
 using MedHelpApi.DTOs;
+using MedHelpApi.Models;
 using MedHelpApi.Repository;
 using MedHelpApi.Repository.Interfaces;
 using MedHelpApi.Services.Interfaces;
@@ -30,19 +32,37 @@ public class ScheduleService : IScheduleService<ScheduleDto, ScheduleInsertDto, 
     var schedules = await _scheduleRepository.Get();
     
     return schedules.Select(s => _mapper.Map<ScheduleDto>(s));
-
-
-
-    throw new NotImplementedException();
   }
 
-  public Task<ScheduleDto> GetById(int id)
+  public async Task<ScheduleDto> GetById(int id)
   {
-    throw new NotImplementedException();
+    var schedule = await _scheduleRepository.GetById(id);
+
+    if( schedule != null ){
+      var scheduleDto = _mapper.Map<ScheduleDto>(schedule);
+      
+      return scheduleDto;
+    }
+
+    return null;
+    
   }
-  public Task<ScheduleDto> Add(ScheduleInsertDto scheduleInsertDto)
+  public async Task<ScheduleDto> Add(ScheduleInsertDto scheduleInsertDto)
   {
-    throw new NotImplementedException();
+    
+    if( scheduleInsertDto.DoctorID < 0 ){
+      Errors.Add("You need to select a doctor ID");
+    }
+
+    var schedule = _mapper.Map<Schedule>(scheduleInsertDto);
+
+    await _scheduleRepository.Add(schedule);
+    await _scheduleRepository.Save();
+
+    var scheduleDto = _mapper.Map<ScheduleDto>(schedule);
+
+    return scheduleDto;
+
   }
 
   public Task<ScheduleDto> Update(int id, ScheduleUpdateDto scheduleUpdateDto)

@@ -53,7 +53,6 @@ public class DoctorService : IDoctorService<DoctorDto, DoctorInsertDto, DoctorUp
 
     public async Task<IEnumerable<DoctorDto>> GetBySpecialty(int specialtyId)
     {
-        Console.WriteLine("this is no working");
         var doctors = await _doctorRepository.GetBySpecialty(specialtyId);
 
         if( doctors != null) {
