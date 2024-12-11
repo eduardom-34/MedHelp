@@ -24,7 +24,14 @@ export class AppointmentPageComponent implements OnInit {
   public options: Specialty[] = [];
   public filteredOptions: Observable<Specialty[]> = of([]);
 
+  // Calendar
   selected: Date | null = null;
+  availableDates: Date[] = [
+    new Date(2024, 11, 12), // 12 de diciembre de 2024
+    new Date(2024, 11, 15), // 15 de diciembre de 2024
+    new Date(2024, 11, 20), // 20 de diciembre de 2024
+  ];
+
 
   public firstAppointmentForm: FormGroup;
   public secondAppointmentForm: FormGroup;
@@ -39,10 +46,7 @@ export class AppointmentPageComponent implements OnInit {
     });
 
     this.secondAppointmentForm = this.fb.group({
-      // specialty: ['', Validators.required],
       doctor: ['', Validators.required],
-      // date: [''],
-      // time: [''],
     });
 
   }
@@ -60,11 +64,6 @@ export class AppointmentPageComponent implements OnInit {
     this.categoriesService.getCategories()
     .subscribe( categories => this.categories = categories );
 
-  }
-
-  // here we need to update the form thirdAppointmentForm
-  onDateSelected(selectedDate: Date): void {
-    this.firstAppointmentForm.patchValue({ date: selectedDate });
   }
 
   // Specialties Methods
@@ -102,4 +101,24 @@ export class AppointmentPageComponent implements OnInit {
       )
       .subscribe( doctors => this.doctors = doctors );
   }
+
+  // Calendar methods:
+
+  // Filtro de fechas
+  dateFilter = (date: Date | null): boolean => {
+    if (!date) return false;
+    // Verifica si la fecha está en la lista de días disponibles
+    return this.availableDates.some(
+      (availableDate) =>
+        availableDate.getDate() === date.getDate() &&
+        availableDate.getMonth() === date.getMonth() &&
+        availableDate.getFullYear() === date.getFullYear()
+    );
+  };
+
+  // here we need to update the form thirdAppointmentForm
+  onDateSelected(selectedDate: Date | null): void {
+    this.firstAppointmentForm.patchValue({ date: selectedDate });
+  }
+
 }

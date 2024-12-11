@@ -73,8 +73,11 @@
       <div class="flex align-items-center flex-column p-3">
         <mat-label class="mb-2">Choose a date</mat-label>
         <mat-card class="screen-size">
-          <mat-calendar [(selected)]="selected" (selectedChange)="onDateSelected($event)"
-            class="calendar border-round-lg"></mat-calendar>
+          <mat-calendar
+          [(selected)]="selected"
+          (selectedChange)="onDateSelected($event)"
+          [dateFilter]="dateFilter"
+          class="calendar border-round-lg"></mat-calendar>
         </mat-card>
       </div>
 
