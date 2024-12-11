@@ -16,10 +16,6 @@ public class Schedule
 
   [ForeignKey("DoctorID")]
   public virtual Doctor Doctor { get; set; }
-
-  
-  [Required]
-  public DayOfWeek Day { get; set; }
   [Required]
   public DateOnly Date { get; set; }
   public TimeSpan StartTime { get; set; }
