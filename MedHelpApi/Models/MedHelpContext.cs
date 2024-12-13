@@ -14,6 +14,6 @@ public class MedHelpContext : DbContext
   public required DbSet<User> Users { get; set; }
   public required DbSet<Doctor> Doctors { get; set; }
   public required DbSet<Schedule> Schedules { get; set; }
-
+  public required DbSet<ScheduleDate> ScheduleDate { get; set; }
 
 }
