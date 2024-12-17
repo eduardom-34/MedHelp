@@ -55,13 +55,33 @@ public class ScheduleDateService : IScheduleDateService<ScheduleDateDto, Schedul
 
     }
 
-    public Task<ScheduleDateDto> Update(int id, ScheduleDateUpdateDto scheduleDateUpdateDto)
+    public async Task<ScheduleDateDto> Update(int id, ScheduleDateUpdateDto scheduleDateUpdateDto)
     {
-        throw new NotImplementedException();
+      var scheduleDate = await _scheduleDateRepository.GetById(id);
+
+      if( scheduleDate != null) {
+        scheduleDate = _mapper.Map<ScheduleDateUpdateDto, ScheduleDate>(scheduleDateUpdateDto, scheduleDate);
+        
+        _scheduleDateRepository.Update(scheduleDate);
+        await _scheduleDateRepository.Save();
+
+        var scheduleDateDto = _mapper.Map<ScheduleDateDto>(scheduleDate);
+
+        return scheduleDateDto;
+      }
+
+      return null;
     }
-    public Task<ScheduleDateDto> Delete(int id)
+    public async Task<ScheduleDateDto> Delete(int id)
     {
-        throw new NotImplementedException();
+      var scheduleDate = await _scheduleDateRepository.GetById(id);
+
+      if(scheduleDate != null){
+        _scheduleDateRepository.Delete(scheduleDate);
+        await _scheduleDateRepository.Save();
+      }
+
+      return null;
     }
 
 }
