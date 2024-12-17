@@ -67,6 +67,12 @@ public class MappingProfile : Profile
               m => m.MapFrom(s => s.ScheduleID));
 
 
+    // For ScheduleDate
+    CreateMap<ScheduleDateDto, ScheduleDate>();
+    CreateMap<ScheduleDateInsertDto, Schedule>();
+    CreateMap<Schedule, ScheduleDateDto>()
+    .ForMember(dto => dto.ScheduleID,
+                m => m.MapFrom(s => s.ScheduleID));
     
   }
 }
