@@ -53,9 +53,16 @@ public class ScheduleService : IScheduleService<ScheduleDto, ScheduleInsertDto, 
     
     if( scheduleInsertDto.DoctorID < 0 ){
       Errors.Add("You need to select a doctor ID");
+      return null;
     }
 
     var schedule = _mapper.Map<Schedule>(scheduleInsertDto);
+
+    if (!schedule.IsValidTimeRange)
+    {
+        Errors.Add("StartTime must be earlier than EndTime");
+        return null;
+    }
 
     await _scheduleRepository.Add(schedule);
     await _scheduleRepository.Save();

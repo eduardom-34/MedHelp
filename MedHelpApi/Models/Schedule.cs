@@ -24,5 +24,5 @@ public class Schedule
   [NotMapped]
   public bool IsValidTimeRange => StartTime < EndTime;
 
-  public virtual ICollection<ScheduleDate> ScheduleDates { get; set; } = new List<ScheduleDate>();
+  // public virtual ICollection<ScheduleDate> ScheduleDates { get; set; } = new List<ScheduleDate>();
 }
