@@ -82,6 +82,8 @@ public static class ServicesAppExtensions
     services.AddKeyedScoped<IDoctorService<DoctorDto, DoctorInsertDto, DoctorUpdateDto>, DoctorService>("doctorService");
     // Schedule Service
     services.AddKeyedScoped<IScheduleService<ScheduleDto, ScheduleInsertDto, ScheduleUpdateDto>, ScheduleService>("scheduleService");
+    // ScheduleDate Service
+    services.AddKeyedScoped<IScheduleDateService<ScheduleDateDto, ScheduleDateInsertDto, ScheduleDateUpdateDto>, ScheduleDateService>("scheduleDateService");
 
 
     //Repository
@@ -92,6 +94,7 @@ public static class ServicesAppExtensions
     services.AddScoped<IUserRepository, UserRepository>();
     services.AddScoped<IDoctorRepository, DoctorRepository>();
     services.AddScoped<IScheduleRepository, ScheduleRepository>();
+    services.AddScoped<IScheduleDateRepository, ScheduleDateRepository>();
 
     //Validators
     services.AddScoped<IValidator<SpecialtyInsertDto>, SpecialtyInsertValidator>();
@@ -105,7 +108,8 @@ public static class ServicesAppExtensions
     services.AddScoped<IValidator<DoctorUpdateDto>, DoctorUpdateValidator>();
     services.AddScoped<IValidator<ScheduleInsertDto>, ScheduleInsertValidator>();
     services.AddScoped<IValidator<ScheduleUpdateDto>, ScheduleUpdateValidator>();
-
+    services.AddScoped<IValidator<ScheduleDateInsertDto>, ScheduleDateInsertValidator>();
+    services.AddScoped<IValidator<ScheduleDateUpdateDto>, ScheduleDateUpdateValidator>();
 
     // Mappers
     services.AddAutoMapper(typeof(MappingProfile));
