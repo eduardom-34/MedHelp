@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { environments } from '../../../environments/environments';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Schedule } from '../interfaces/schedules.interface';
+import { Schedule } from '../interfaces/schedule.interface';
 
 @Injectable({providedIn: 'root'})
-export class ServiceNameService {
+export class scheduleService {
 
   private baseUrl: string = environments.baseUrl;
 

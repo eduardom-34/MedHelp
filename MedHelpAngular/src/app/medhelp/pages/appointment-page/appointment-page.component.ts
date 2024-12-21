@@ -8,6 +8,8 @@ import { CategoriesServices } from '../../services/category.service';
 import { map, Observable, of, startWith, switchMap } from 'rxjs';
 import { DoctorService } from '../../services/doctor.service';
 import { Doctor, SpecialtyName } from '../../interfaces/doctor.interface';
+import { scheduleService } from '../../services/schedule.service';
+import { Schedule } from '../../interfaces/schedule.interface';
 
 @Component({
   selector: 'app-appointment-page',
@@ -20,6 +22,7 @@ export class AppointmentPageComponent implements OnInit {
   public specialties: Specialty[] = [];
   public doctors: Doctor[] = [];
   public categories: Category[] = [];
+  public schedules: Schedule[] = [];
 
   public options: Specialty[] = [];
   public filteredOptions: Observable<Specialty[]> = of([]);
@@ -39,7 +42,8 @@ export class AppointmentPageComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private specialtiesService: SpecialtiesService,
     private categoriesService: CategoriesServices,
-    private doctorService: DoctorService) {
+    private doctorService: DoctorService,
+    private scheduleService: scheduleService) {
 
     this.firstAppointmentForm = this.fb.group({
       specialty: ['', Validators.required],
@@ -63,6 +67,9 @@ export class AppointmentPageComponent implements OnInit {
 
     this.categoriesService.getCategories()
     .subscribe( categories => this.categories = categories );
+
+    this.scheduleService.getSchedules()
+    .subscribe( schedules => this.schedules = schedules );
 
   }
 
