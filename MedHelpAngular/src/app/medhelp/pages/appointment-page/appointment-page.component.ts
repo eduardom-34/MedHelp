@@ -30,9 +30,9 @@ export class AppointmentPageComponent implements OnInit {
   // Calendar
   selected: Date | null = null;
   availableDates: Date[] = [
-    new Date(2024, 11, 12), // 12 de diciembre de 2024
-    new Date(2024, 11, 15), // 15 de diciembre de 2024
-    new Date(2024, 11, 20), // 20 de diciembre de 2024
+    // new Date(2024, 11, 12), // 12 de diciembre de 2024
+    // new Date(2024, 11, 15), // 15 de diciembre de 2024
+    // new Date(2024, 11, 20), // 20 de diciembre de 2024
   ];
 
 
@@ -110,6 +110,10 @@ export class AppointmentPageComponent implements OnInit {
   }
 
   // Calendar methods:
+  updateAvailableDates(): void {
+    this.availableDates = this.schedules.map((schedule) =>
+    new Date(schedule.date))
+  }
 
   // Filtro de fechas
   dateFilter = (date: Date | null): boolean => {
