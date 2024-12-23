@@ -69,7 +69,10 @@ export class AppointmentPageComponent implements OnInit {
     .subscribe( categories => this.categories = categories );
 
     this.scheduleService.getSchedules()
-    .subscribe( schedules => this.schedules = schedules );
+    .subscribe( schedules => {
+      this.schedules = schedules;
+      this.updateAvailableDates();
+    } );
 
   }
 
