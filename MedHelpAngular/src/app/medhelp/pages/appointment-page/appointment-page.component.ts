@@ -24,17 +24,14 @@ export class AppointmentPageComponent implements OnInit {
   public categories: Category[] = [];
   public schedules: Schedule[] = [];
 
+  public datesFromBackend: Date[] = [];
+
   public options: Specialty[] = [];
   public filteredOptions: Observable<Specialty[]> = of([]);
 
   // Calendar
-  selected: Date | null = null;
-  availableDates: Date[] = [
-    // new Date(2024, 11, 12), // 12 de diciembre de 2024
-    // new Date(2024, 11, 15), // 15 de diciembre de 2024
-    // new Date(2024, 11, 20), // 20 de diciembre de 2024
-  ];
-
+  public selected: Date | null = null;
+  public availableDates: Date[] = [];
 
   public firstAppointmentForm: FormGroup;
   public secondAppointmentForm: FormGroup;
@@ -70,8 +67,11 @@ export class AppointmentPageComponent implements OnInit {
 
     this.scheduleService.getSchedules()
     .subscribe( schedules => {
+
+      // Updating dates from backend
       this.schedules = schedules;
       this.updateAvailableDates();
+
     } );
 
   }
@@ -88,6 +88,7 @@ export class AppointmentPageComponent implements OnInit {
   }
 
   isSelected(specialty: Specialty): boolean {
+
     //Veirfy if this object is currently selected
     return this.firstAppointmentForm.value.specialty?.id === specialty.id;
   }
@@ -114,14 +115,15 @@ export class AppointmentPageComponent implements OnInit {
 
   // Calendar methods:
   updateAvailableDates(): void {
+
     this.availableDates = this.schedules.map((schedule) =>
-    new Date(schedule.date))
+    new Date(schedule.date));
   }
 
-  // Filtro de fechas
+  // Date filters
   dateFilter = (date: Date | null): boolean => {
     if (!date) return false;
-    // Verifica si la fecha está en la lista de días disponibles
+    // Verifies if the given date is available
     return this.availableDates.some(
       (availableDate) =>
         availableDate.getDate() === date.getDate() &&
