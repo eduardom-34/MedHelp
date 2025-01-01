@@ -103,4 +103,15 @@ public class ScheduleService : IScheduleService<ScheduleDto, ScheduleInsertDto, 
     return null;
   }
 
+    public async Task<IEnumerable<ScheduleDto>> GetByDoctorId(int id)
+    {
+      var schedules = await _scheduleRepository.GetByDoctorId( id );
+
+      if( schedules!= null ){
+        var schedulesDto = schedules.Select(s => _mapper.Map<ScheduleDto>(s));
+
+        return schedulesDto;
+      }
+      return null;
+    }
 }

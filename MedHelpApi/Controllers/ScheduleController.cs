@@ -1,5 +1,6 @@
 using FluentValidation;
 using MedHelpApi.DTOs;
+using MedHelpApi.Migrations;
 using MedHelpApi.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -73,6 +74,14 @@ namespace MedHelpApi.Controllers
         {
             var scheduleDto = await _scheduleService.Delete(id);
             return scheduleDto == null ? NotFound() : Ok(scheduleDto);
+        }
+
+        [HttpGet("doctor/{id}")]
+        public async Task<ActionResult<ScheduleDate>> GetByDoctorId(int id)
+        {
+            var scheduleDto = await _scheduleService.GetByDoctorId(id);
+            return scheduleDto == null ? NotFound() : Ok(scheduleDto);
+
         }
 
     }

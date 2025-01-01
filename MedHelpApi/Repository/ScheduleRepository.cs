@@ -39,4 +39,7 @@ public class ScheduleRepository : IScheduleRepository
   public IEnumerable<Schedule> Search(Func<Schedule, bool> filter)
     => _context.Schedules.Where(filter).ToList();
 
+  public async Task<List<Schedule>> GetByDoctorId(int id)
+  => await _context.Schedules.Where( s => s.DoctorID == id).ToListAsync();
+  
 }
