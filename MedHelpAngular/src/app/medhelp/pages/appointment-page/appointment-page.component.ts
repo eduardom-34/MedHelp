@@ -120,6 +120,10 @@ export class AppointmentPageComponent implements OnInit {
     new Date(schedule.date));
   }
 
+  getSheduleByDoctorId(id: number): void {
+    this.scheduleService.getScheduleByDoctorId
+  }
+
   // Date filters
   dateFilter = (date: Date | null): boolean => {
     if (!date) return false;
