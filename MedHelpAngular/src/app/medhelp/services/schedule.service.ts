@@ -15,4 +15,8 @@ export class scheduleService {
     return this.http.get<Schedule[]>(`${this.baseUrl}/schedule`)
   }
 
+  getScheduleByDoctorI(id: number): Observable<Schedule[]>{
+    return this.http.get<Schedule[]>(`${this.baseUrl}/schedule/doctor/${id}`)
+  }
+
 }
