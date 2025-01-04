@@ -5,7 +5,7 @@ import { Specialty } from '../../interfaces/specialty.interface';
 import { SpecialtiesService } from '../../services/specialty.service';
 import { Category } from '../../interfaces/category.interface';
 import { CategoriesServices } from '../../services/category.service';
-import { map, Observable, of, startWith, switchMap } from 'rxjs';
+import { lastValueFrom, map, Observable, of, startWith, switchMap } from 'rxjs';
 import { DoctorService } from '../../services/doctor.service';
 import { Doctor, SpecialtyName } from '../../interfaces/doctor.interface';
 import { scheduleService } from '../../services/schedule.service';
@@ -70,7 +70,7 @@ export class AppointmentPageComponent implements OnInit {
 
       // Updating dates from backend
       this.schedules = schedules;
-      this.updateAvailableDates();
+      // this.updateAvailableDates();
 
     } );
 
@@ -114,14 +114,31 @@ export class AppointmentPageComponent implements OnInit {
   }
 
   // Calendar methods:
-  updateAvailableDates(): void {
+  async updateAvailableDates(doctor: Doctor): Promise<void> {
 
-    this.availableDates = this.schedules.map((schedule) =>
-    new Date(schedule.date));
+    try {
+      const schedules = await this.getSheduleByDoctorId(doctor.id);
+
+      this.schedules = schedules;
+
+      this.availableDates = this.schedules.map((schedule) =>
+      new Date(schedule.date));
+    } catch (error) {
+      console.error(error);
+    }
+
   }
 
-  getSheduleByDoctorId(id: number): void {
-    this.scheduleService.getScheduleByDoctorId
+  // Investigating ifd we can use async await so we don have to double click for it
+
+  async getSheduleByDoctorId(id: number): Promise<Schedule[]> {
+    try {
+      const schedules = await lastValueFrom(this.scheduleService.getScheduleByDoctorId(id));
+      return schedules
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   }
 
   // Date filters
