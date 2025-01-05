@@ -13,6 +13,8 @@ import { AppointmentPageComponent } from './pages/appointment-page/appointment-p
 import { SharedModule } from '../shared/shared.module';
 import { DoctorCardComponent } from './components/doctor-card/doctor-card.component';
 import { AutocompleteSpecialtyComponent } from './components/autocomplete-specialty/autocomplete-specialty.component';
+import { AdminPageComponent } from './pages/admin-page/admin-page.component';
+
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { AutocompleteSpecialtyComponent } from './components/autocomplete-specia
     AppointmentPageComponent,
     DoctorCardComponent,
     AutocompleteSpecialtyComponent,
+    AdminPageComponent,
   ],
   imports: [
     CommonModule,

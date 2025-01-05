@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, UrlHandlingStrategy } from '@angular/router';
 
 import { Sesion } from '../../../auth/pages/interfaces/sesion.interface';
 import { AuthService } from '../../../auth/services/auth.service';
@@ -27,6 +27,11 @@ export class LayoutPageComponent {
       label: 'Appointment',
       icon: 'calendar_month',
       url: './appointment'
+    },
+    {
+      label: 'Administrator',
+      icon: 'calendar_month',
+      url: './Administrate'
     }
   ];
 

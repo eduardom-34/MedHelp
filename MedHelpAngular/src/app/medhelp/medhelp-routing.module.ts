@@ -4,6 +4,7 @@ import { LayoutPageComponent } from './pages/layout-page/layout-page.component';
 import { ListSpecialtiesPageComponent } from './pages/list-specialties/list-specialties.component';
 import { ListCategoriesPageComponent } from './pages/list-categories/list-categories.component';
 import { AppointmentPageComponent } from './pages/appointment-page/appointment-page.component';
+import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: 'appointment',
         component: AppointmentPageComponent
+      },
+      {
+        path: 'Administrate',
+        component: AdminPageComponent
       },
       // {
       //   path: ':id',
